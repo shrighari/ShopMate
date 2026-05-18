@@ -367,6 +367,146 @@ function initializeItemForm() {
 //   showSnackbar("Item added");
 // }
 
+/* Create Item */
+
+function createItem() {
+  const itemNameInput = document.getElementById("itemNameInput");
+
+  const itemQuantityInput = document.getElementById("itemQuantityInput");
+
+  const itemNotesInput = document.getElementById("itemNotesInput");
+
+  const itemShopInput = document.getElementById("itemShopInput");
+
+  const itemName = itemNameInput.value.trim();
+
+  const itemQuantity = itemQuantityInput.value.trim();
+
+  const itemNotes = itemNotesInput.value.trim();
+
+  const itemShop = itemShopInput.value.trim();
+
+  if (!itemName || !itemQuantity) {
+    showSnackbar("Please enter item details");
+
+    return;
+  }
+
+  const currentCategory = getActiveCategory();
+
+  if (!currentCategory) {
+    return;
+  }
+
+  const existingItem = currentCategory.items.find(function (item) {
+    return item.name.toLowerCase() === itemName.toLowerCase();
+  });
+
+  /* Existing Item Found */
+
+  if (existingItem) {
+    bottomSheetContent.innerHTML = `
+            <div class="bottomSheetHeader">
+
+                <h2>
+                    Item Already Exists
+                </h2>
+
+                <button
+                    class="closeButton"
+                    onclick="closeBottomSheet()"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+            <div class="bottomSheetBody">
+
+                <p class="duplicateMessage">
+                    "${existingItem.name}" already exists with quantity
+                    ${existingItem.quantity}.
+                </p>
+
+                <p class="duplicateMessage">
+                    Do you want to add ${itemQuantity} more?
+                </p>
+
+                <div class="bottomSheetButtonRow">
+
+                    <button
+                        class="secondaryButton"
+                        onclick="closeBottomSheet()"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        class="primaryButton"
+                        onclick="updateDuplicateQuantity(
+                            '${existingItem.name}',
+                            '${itemQuantity}'
+                        )"
+                    >
+                        Update Quantity
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+    return;
+  }
+
+  currentCategory.items.unshift({
+    name: itemName,
+
+    quantity: itemQuantity,
+
+    notes: itemNotes,
+
+    preferredShop: itemShop,
+
+    purchased: false,
+  });
+
+  saveAppState();
+
+  renderFilteredItems();
+
+  closeBottomSheet();
+
+  showSnackbar("Item added");
+}
+
+/* Update Duplicate Quantity */
+
+function updateDuplicateQuantity(itemName, newQuantity) {
+  const currentCategory = getActiveCategory();
+
+  if (!currentCategory) {
+    return;
+  }
+
+  const item = currentCategory.items.find(function (item) {
+    return item.name === itemName;
+  });
+
+  if (!item) {
+    return;
+  }
+
+  item.quantity = Number(item.quantity) + Number(newQuantity);
+
+  saveAppState();
+
+  renderFilteredItems();
+
+  closeBottomSheet();
+
+  showSnackbar("Quantity updated");
+}
 /* Update Item */
 
 // function updateItem(originalItemName) {
@@ -450,6 +590,19 @@ function updateItem(originalItemName) {
 
   if (!updatedName || !updatedQuantity) {
     showSnackbar("Please enter item details");
+
+    return;
+  }
+
+  const duplicateItem = currentCategory.items.find(function (existingItem) {
+    return (
+      existingItem.name.toLowerCase() === updatedName.toLowerCase() &&
+      existingItem.name !== originalItemName
+    );
+  });
+
+  if (duplicateItem) {
+    showSnackbar("Another item already exists with same name");
 
     return;
   }

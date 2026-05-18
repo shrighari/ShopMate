@@ -849,3 +849,13 @@ body {
 
   margin: 0;
 }
+
+.duplicateMessage {
+  font-size: 15px;
+
+  line-height: 1.5;
+
+  color: #4b5563;
+
+  margin-bottom: 14px;
+}
