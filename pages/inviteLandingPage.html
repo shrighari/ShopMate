@@ -1,0 +1,58 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Invite</title>
+
+    <link rel="stylesheet" href="../css/appStyles.css" />
+  </head>
+
+  <body>
+    <div class="authPage">
+      <div class="authCard">
+        <h1 class="authTitle">Group Invitation</h1>
+
+        <p class="authSubtitle">You were invited to join a group</p>
+
+        <input
+          type="text"
+          class="authInput"
+          id="inviteCodeInput"
+          placeholder="Invite Code"
+        />
+
+        <button class="authButton" onclick="processInvite()">Continue</button>
+      </div>
+    </div>
+
+    <script src="../js/stateManager.js"></script>
+
+    <script src="../js/authManager.js"></script>
+
+    <script>
+      function processInvite() {
+        const inviteCode = document
+          .getElementById("inviteCodeInput")
+          .value.trim();
+
+        if (!appState.loggedIn) {
+          localStorage.setItem(
+            "pendingInvite",
+
+            inviteCode,
+          );
+
+          window.location.href = "./registerPage.html";
+
+          return;
+        }
+
+        joinGroupFromInvite(inviteCode);
+      }
+    </script>
+  </body>
+</html>

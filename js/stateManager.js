@@ -1,6 +1,10 @@
 const STORAGE_KEY = "shopMateData";
 
 const defaultAppState = {
+  loggedIn: false,
+
+  currentUser: null,
+
   activeGroup: null,
 
   activeCategory: null,
@@ -15,6 +19,20 @@ const defaultAppState = {
 
   favoriteItems: [],
 
+  users: [
+    {
+      id: "user_1",
+
+      name: "Hari",
+
+      email: "hari@shopmate.app",
+
+      password: "123456",
+
+      biometricEnabled: true,
+    },
+  ],
+
   groups: {
     "Family Group": [
       {
@@ -23,23 +41,53 @@ const defaultAppState = {
         items: [
           {
             name: "Milk",
+
             quantity: 2,
+
             notes: "Low Fat",
+
             preferredShop: "Woolworths",
+
             purchased: false,
           },
 
           {
             name: "Bread",
+
             quantity: 1,
+
             notes: "",
+
             preferredShop: "",
+
             purchased: false,
           },
         ],
       },
     ],
   },
+
+  groupMembers: {
+    "Family Group": [
+      {
+        id: "user_1",
+
+        name: "Hari",
+
+        email: "hari@shopmate.app",
+
+        role: "admin",
+      },
+    ],
+  },
+
+  pendingInvites: [
+    {
+      code: "INVITE123",
+
+      groupName: "Family Group",
+    },
+  ],
 };
 
 function loadAppState() {

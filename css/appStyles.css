@@ -121,14 +121,6 @@ body {
   flex-direction: column;
   gap: var(--spacingMedium);
 }
-/* Category Card */
-.categoryCard {
-  background-color: var(--cardColor);
-  border-radius: var(--borderRadiusMedium);
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-}
 /* Category Title */
 .categoryTitle {
   font-size: 20px;
@@ -261,34 +253,56 @@ body {
 /* Button Row */
 .bottomSheetButtonRow {
   display: flex;
-  gap: var(--spacingMedium);
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 12px;
 }
 /* Primary Button */
 .primaryButton {
   flex: 1;
+  height: 54px;
   border: none;
+  border-radius: 18px;
   background-color: var(--primaryColor);
   color: white;
-  padding: 18px;
-  border-radius: var(--borderRadiusMedium);
   font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 /* Secondary Button */
 .secondaryButton {
-  flex: 1;
+  min-width: 96px;
+  height: 54px;
   border: none;
-  background-color: #e4e4e4;
-  color: black;
-  padding: 18px;
-  border-radius: var(--borderRadiusMedium);
+  border-radius: 18px;
+  background-color: #f1f1f1;
+  color: #111111;
   font-size: 16px;
+  font-weight: 600;
+  padding: 0 20px;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
-/* Hidden State */
-.hidden {
-  opacity: 0;
-  pointer-events: none;
+/* Delete Button */
+.bottomSheetDeleteButton {
+  flex: 1;
+  height: 54px;
+  border: none;
+  border-radius: 18px;
+  background: #ef4444;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+/* Button Press */
+.primaryButton:active,
+.secondaryButton:active,
+.bottomSheetDeleteButton:active {
+  transform: scale(0.98);
 }
 /* Category Header */
 .categoryHeader {
@@ -413,7 +427,7 @@ body {
 .swipePurchased {
   background-color: #18b34a;
   color: white;
-  height: 100%;
+  height: 97%;
   display: flex;
   align-items: center;
   padding: 0 20px;
@@ -423,7 +437,7 @@ body {
 .swipeDelete {
   background-color: #d9534f;
   color: white;
-  height: 100%;
+  height: 97%;
   display: flex;
   align-items: center;
   padding: 0 20px;
@@ -470,7 +484,7 @@ body {
 }
 /* Hidden Snackbar */
 .snackbar.hidden {
-  display: none;
+  display: none !important;
 }
 /* Prevent Swipe Blocking Buttons */
 .itemActionButtons {
@@ -481,59 +495,6 @@ body {
   position: relative;
   z-index: 30;
   pointer-events: auto;
-}
-/* Bulk Action Bar */
-.bulkActionBar {
-  position: fixed;
-  left: 50%;
-  bottom: 90px;
-  transform: translateX(-50%);
-  width: calc(100% - 32px);
-  background-color: white;
-  border-radius: var(--borderRadiusLarge);
-  padding: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  z-index: 300;
-}
-/* Bulk Action Button */
-.bulkActionButton {
-  border: none;
-  background: none;
-  font-size: 24px;
-  cursor: pointer;
-}
-/* Selected Item */
-.selectedItem {
-  border: 3px solid #0ea5e9;
-  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2);
-  transform: scale(0.98);
-}
-/* Bulk Action Bar */
-.bulkActionBar {
-  position: fixed;
-  left: 50%;
-  bottom: 90px;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 18px;
-  border-radius: 999px;
-  background-color: #111827;
-  z-index: 999;
-}
-/* Bulk Action Button */
-.bulkActionButton {
-  width: 52px;
-  height: 52px;
-  border: none;
-  border-radius: 50%;
-  font-size: 22px;
-  cursor: pointer;
-  background-color: white;
 }
 /* Swipe Animation */
 .swipeCard {
@@ -573,6 +534,13 @@ body {
 .categoryCard {
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  min-height: 124px;
+  padding: 24px;
+  background-color: white;
 }
 /* Category Hover */
 .categoryCard:active {
@@ -584,41 +552,38 @@ body {
   font-size: 13px;
   opacity: 0.7;
 }
-/* Category More Button */
-.categoryMoreButton {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 36px;
-  height: 36px;
-  border: none;
-  border-radius: 50%;
-  background: transparent;
-  font-size: 20px;
-  cursor: pointer;
-}
 /* Bottom Sheet Action Button */
 .bottomSheetActionButton {
   width: 100%;
+  min-height: 56px;
   border: none;
-  padding: 16px;
-  border-radius: 14px;
-  margin-bottom: 12px;
+  padding: 0 18px;
+  border-radius: 16px;
+  margin-bottom: 14px;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   text-align: left;
   font-size: 15px;
+  font-weight: 500;
   cursor: pointer;
 }
 /* Bottom Sheet Delete Button */
 .bottomSheetDeleteButton {
   width: 100%;
+  min-height: 56px;
   border: none;
-  padding: 16px;
-  border-radius: 14px;
-  background-color: #dc2626;
+  border-radius: 16px;
+  background: #ef4444;
   color: white;
-  text-align: left;
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 /* Group Item Row */
 .groupItemRow {
@@ -626,16 +591,6 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-}
-/* Group More Button */
-.groupMoreButton {
-  width: 38px;
-  height: 38px;
-  border: none;
-  border-radius: 50%;
-  background: transparent;
-  font-size: 18px;
-  cursor: pointer;
 }
 @keyframes snackbarSlideUp {
   from {
@@ -647,9 +602,7 @@ body {
     transform: translateX(-50%) translateY(0);
   }
 }
-/* =========================
-   MODERN CATEGORY PAGE UI
-========================= */
+/* MODERN CATEGORY PAGE UI */
 .modernHeader {
   display: flex;
   align-items: center;
@@ -672,9 +625,7 @@ body {
   color: #111111;
   margin: 0;
 }
-/* =========================
-   TABS
-========================= */
+/* TABS */
 .modernTabContainer {
   display: flex;
   align-items: center;
@@ -696,9 +647,7 @@ body {
   color: white;
   box-shadow: 0 4px 12px rgba(17, 138, 178, 0.25);
 }
-/* =========================
-   SEARCH
-========================= */
+/* SEARCH */
 .searchWrapper {
   position: relative;
   display: flex;
@@ -720,18 +669,7 @@ body {
   align-items: center;
   justify-content: center;
 }
-/* .modernSearchInput {
-  width: 100%;
-  height: 56px;
-  border: 1px solid #e5e7eb;
-  border-radius: 22px;
-  padding: 0 18px 0 52px;
-  font-size: 16px;
-  outline: none;
-  background: white;
-  box-sizing: border-box;
-  transition: all 0.2s ease;
-} */
+
 .modernSearchInput {
   width: 100%;
   height: 48px;
@@ -748,9 +686,7 @@ body {
   border-color: #118ab2;
   box-shadow: 0 0 0 4px rgba(17, 138, 178, 0.08);
 }
-/* =========================
-   SNACKBAR
-========================= */
+/* SNACKBAR */
 .snackbar {
   position: fixed;
   bottom: 90px;
@@ -824,27 +760,9 @@ body {
     0 6px 14px rgba(0, 0, 0, 0.08),
     inset 0 1px 1px rgba(255, 255, 255, 0.7);
 }
-.favoriteActionButton {
-  background: #fff1f2;
-  color: #e11d48;
-}
 .activeFavoriteButton {
   background: #e11d48;
   color: white;
-}
-/* .purchasedActionButton {
-  background: #ecfdf5;
-  color: #059669;
-}
-.activePurchasedButton {
-  background: #059669;
-  color: white;
-} */
-.purchasedActionButton {
-  background: #ecfdf5 !important;
-  color: #059669 !important;
-  font-size: 22px;
-  font-weight: 700;
 }
 .activePurchasedButton {
   background: #059669 !important;
@@ -855,9 +773,6 @@ body {
 .addActionButton {
   background: #eff6ff;
   color: #2563eb;
-}
-.modernActionButton:active {
-  transform: scale(0.95);
 }
 /* Multi Select */
 .selectedItem {
@@ -880,6 +795,9 @@ body {
   justify-content: space-between;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   z-index: 9999;
+}
+.bulkActionBar.hidden {
+  display: none !important;
 }
 .bulkSelectionCount {
   font-size: 15px;
@@ -929,4 +847,347 @@ body {
 }
 .modernActionButton:active {
   transform: scale(0.94);
+}
+/* Dashboard Management */
+.deleteMessage {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #4b5563;
+  margin-bottom: 18px;
+}
+.categoryMoreButton,
+.groupMoreButton {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 25px;
+  background: #f3f4f6;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+.categoryMoreButton:active,
+.groupMoreButton:active {
+  transform: scale(0.94);
+}
+
+/* Authentication */
+
+.authPage {
+  min-height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 24px;
+
+  background: #f5f5f5;
+}
+
+.authCard {
+  width: 100%;
+
+  max-width: 420px;
+
+  background: white;
+
+  border-radius: 28px;
+
+  padding: 32px 24px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.authTitle {
+  font-size: 32px;
+
+  font-weight: 700;
+
+  margin-bottom: 10px;
+}
+
+.authSubtitle {
+  font-size: 15px;
+
+  color: #6b7280;
+
+  margin-bottom: 28px;
+}
+
+.authInput {
+  width: 100%;
+
+  height: 56px;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 18px;
+
+  padding: 0 18px;
+
+  font-size: 16px;
+
+  margin-bottom: 18px;
+
+  outline: none;
+}
+
+.authInput:focus {
+  border-color: #118ab2;
+}
+
+.authButton {
+  width: 100%;
+
+  height: 56px;
+
+  border: none;
+
+  border-radius: 18px;
+
+  background: #118ab2;
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  margin-top: 10px;
+}
+
+.authSecondaryButton {
+  width: 100%;
+
+  height: 56px;
+
+  border: none;
+
+  border-radius: 18px;
+
+  background: #f3f4f6;
+
+  color: #111827;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  margin-top: 14px;
+}
+
+/* Authentication */
+
+.authPage {
+  min-height: 100vh;
+
+  background: #f5f5f5;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 24px;
+}
+
+.authCard {
+  width: 100%;
+
+  max-width: 420px;
+
+  background: white;
+
+  border-radius: 32px;
+
+  padding: 32px 24px;
+
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+}
+
+.authLogoSection {
+  text-align: center;
+
+  margin-bottom: 32px;
+}
+
+.authLogoPlaceholder {
+  width: 82px;
+
+  height: 82px;
+
+  border-radius: 24px;
+
+  background: #dbeafe;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin: 0 auto 16px;
+
+  font-weight: 700;
+
+  color: #2563eb;
+}
+
+.authBrand {
+  font-size: 32px;
+
+  font-weight: 700;
+
+  margin-bottom: 8px;
+}
+
+.authTagline {
+  color: #6b7280;
+
+  font-size: 15px;
+}
+
+.authBiometricRow {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 18px;
+
+  margin-bottom: 28px;
+}
+
+.biometricButton {
+  width: 62px;
+
+  height: 62px;
+
+  border: none;
+
+  border-radius: 20px;
+
+  background: #f3f4f6;
+
+  font-size: 28px;
+
+  cursor: pointer;
+}
+
+.authOrText {
+  font-size: 14px;
+
+  color: #6b7280;
+}
+
+.authTitle {
+  font-size: 28px;
+
+  font-weight: 700;
+
+  margin-bottom: 24px;
+}
+
+.authSubtitle {
+  color: #6b7280;
+
+  margin-bottom: 24px;
+}
+
+.authInput {
+  width: 100%;
+
+  height: 56px;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 18px;
+
+  padding: 0 18px;
+
+  font-size: 16px;
+
+  margin-bottom: 16px;
+
+  outline: none;
+}
+
+.authInput:focus {
+  border-color: #118ab2;
+}
+
+.authButton {
+  width: 100%;
+
+  height: 56px;
+
+  border: none;
+
+  border-radius: 18px;
+
+  background: #118ab2;
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  margin-top: 8px;
+}
+
+.authTextButton {
+  border: none;
+
+  background: transparent;
+
+  margin-top: 16px;
+
+  color: #118ab2;
+
+  font-size: 15px;
+
+  cursor: pointer;
+}
+
+.authInviteText {
+  margin-top: 24px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+
+  text-align: center;
+
+  line-height: 1.5;
+}
+
+.biometricToggle {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin: 8px 0 18px;
+
+  font-size: 15px;
 }
