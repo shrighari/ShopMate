@@ -1422,3 +1422,139 @@ body {
 .clickableMember {
   cursor: pointer;
 }
+
+/* Settings */
+
+.settingsSection {
+  margin-bottom: 28px;
+}
+
+.settingsSectionTitle {
+  font-size: 20px;
+
+  font-weight: 700;
+
+  margin-bottom: 14px;
+}
+
+.settingsCard {
+  width: 100%;
+
+  min-height: 58px;
+
+  border: none;
+
+  border-radius: 20px;
+
+  background: white;
+
+  margin-bottom: 14px;
+
+  padding: 0 18px;
+
+  text-align: left;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+/* Notifications */
+
+.notificationCard {
+  background: white;
+
+  border-radius: 22px;
+
+  padding: 18px;
+
+  margin-bottom: 16px;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.notificationTitle {
+  font-size: 16px;
+
+  font-weight: 600;
+
+  margin-bottom: 8px;
+}
+
+.notificationTime {
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+/* Budget */
+
+.budgetHero {
+  background: linear-gradient(135deg, #118ab2, #0f6d8d);
+
+  border-radius: 28px;
+
+  padding: 32px 24px;
+
+  color: white;
+
+  margin-bottom: 24px;
+}
+
+.budgetAmount {
+  font-size: 42px;
+
+  font-weight: 700;
+
+  margin-bottom: 10px;
+}
+
+.budgetSubtitle {
+  font-size: 16px;
+
+  opacity: 0.9;
+}
+
+.budgetStats {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 16px;
+}
+
+.budgetCard {
+  background: white;
+
+  border-radius: 24px;
+
+  padding: 22px;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.budgetCardTitle {
+  font-size: 15px;
+
+  color: #6b7280;
+
+  margin-bottom: 10px;
+}
+
+.budgetCardAmount {
+  font-size: 28px;
+
+  font-weight: 700;
+}
+
+/* Dark Mode */
+
+.darkMode {
+  background: #111827;
+
+  color: white;
+}

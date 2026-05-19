@@ -605,6 +605,36 @@ function renderDashboardMenu() {
     >
 </label>
         </div>
+
+        <button
+  class="bottomSheetActionButton"
+  onclick="
+    window.location.href =
+    '../pages/notificationsPage.html'
+  "
+>
+  🔔 Notifications
+</button>
+
+<button
+  class="bottomSheetActionButton"
+  onclick="
+    window.location.href =
+    '../pages/budgetPage.html'
+  "
+>
+  💰 Budget
+</button>
+
+<button
+  class="bottomSheetActionButton"
+  onclick="
+    window.location.href =
+    '../pages/settingsPage.html'
+  "
+>
+  ⚙ Settings
+</button>
     `;
   openBottomSheet();
 }

@@ -1,0 +1,57 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Settings</title>
+
+    <link rel="stylesheet" href="../css/appStyles.css" />
+  </head>
+
+  <body>
+    <div class="appContainer">
+      <header class="modernHeader">
+        <button class="modernBackButton" onclick="goBack()">←</button>
+
+        <h1 class="modernPageTitle">Settings</h1>
+      </header>
+
+      <main class="pageContent">
+        <section class="settingsSection">
+          <h2 class="settingsSectionTitle">Account</h2>
+
+          <button class="settingsCard" onclick="openProfilePage()">
+            👤 Profile
+          </button>
+
+          <button class="settingsCard" onclick="toggleBiometric()">
+            🔐 Biometrics
+          </button>
+
+          <button class="settingsCard" onclick="logoutUser()">🚪 Logout</button>
+        </section>
+
+        <section class="settingsSection">
+          <h2 class="settingsSectionTitle">Preferences</h2>
+
+          <button class="settingsCard" onclick="toggleDarkMode()">
+            🌙 Dark Mode
+          </button>
+
+          <button class="settingsCard" onclick="toggleNotifications()">
+            🔔 Notifications
+          </button>
+        </section>
+      </main>
+    </div>
+
+    <script src="../js/stateManager.js"></script>
+
+    <script src="../js/authManager.js"></script>
+
+    <script src="../js/settingsPage.js"></script>
+  </body>
+</html>

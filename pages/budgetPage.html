@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Budget</title>
+
+    <link rel="stylesheet" href="../css/appStyles.css" />
+  </head>
+
+  <body>
+    <div class="appContainer">
+      <header class="modernHeader">
+        <button class="modernBackButton" onclick="goBack()">←</button>
+
+        <h1 class="modernPageTitle">Budget</h1>
+      </header>
+
+      <main class="pageContent">
+        <section class="budgetHero">
+          <h2 class="budgetAmount">$1,200</h2>
+
+          <p class="budgetSubtitle">Monthly Budget</p>
+        </section>
+
+        <section class="budgetStats">
+          <div class="budgetCard">
+            <h3 class="budgetCardTitle">Spent</h3>
+
+            <p class="budgetCardAmount">$420</p>
+          </div>
+
+          <div class="budgetCard">
+            <h3 class="budgetCardTitle">Remaining</h3>
+
+            <p class="budgetCardAmount">$780</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="../js/stateManager.js"></script>
+
+    <script src="../js/budgetPage.js"></script>
+  </body>
+</html>
