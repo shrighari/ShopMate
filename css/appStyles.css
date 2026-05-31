@@ -49,6 +49,7 @@ body {
 /* Dashboard Header */
 .dashboardHeader {
   height: var(--headerHeight);
+  width: 100%;
   background-color: #d8eef3;
   display: flex;
   align-items: center;
@@ -340,13 +341,19 @@ body {
 /* Group Item */
 .groupItem {
   border: 1px solid var(--borderColor);
-  border-radius: var(--borderRadiusMedium);
   padding: 18px;
   background-color: var(--backgroundColor);
   cursor: pointer;
+  border-radius: 28px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 /* Primary Button */
 .primaryButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 54px;
   border: none;
   border-radius: var(--radiusMedium);
@@ -406,8 +413,9 @@ body {
   background: var(--cardColor);
   border-radius: var(--radiusLarge);
   padding: 24px;
-  min-height: 140px;
+  min-height: 100px;
   box-shadow: var(--shadowMedium);
+  margin-bottom: 16px;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
@@ -419,10 +427,10 @@ body {
 .categoryCard::after {
   content: "";
   position: absolute;
-  right: -20px;
-  top: -20px;
-  width: 90px;
-  height: 90px;
+  right: 20px;
+  top: 20px;
+  width: 25px;
+  height: 25px;
   border-radius: 999px;
   background: rgba(17, 138, 178, 0.08);
 }
@@ -709,8 +717,8 @@ body {
 .groupItemRow {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  justify-content: center;
+  padding-bottom: 10px;
 }
 /* MODERN CATEGORY PAGE UI */
 .modernHeader {
@@ -865,8 +873,9 @@ body {
   color: #e11d48;
 }
 .purchasedActionButton {
-  background: linear-gradient(145deg, #f3fff8, #dcfce7);
+
   color: #059669;
+  opacity: 1;
 }
 /* Dashboard Management */
 .deleteMessage {
@@ -926,6 +935,7 @@ body {
   line-height: 1;
   position: relative;
   z-index: 2;
+  opacity: 1;
 }
 .categoryMoreButton,
 .groupMoreButton {

@@ -139,7 +139,7 @@ function renderGroupDropdown() {
             class="primaryButton"
             onclick="renderCreateGroupForm()"
         >
-            + Create New Group
+            Create New Group
         </button>
     `;
   openBottomSheet();

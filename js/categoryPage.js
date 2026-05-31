@@ -111,7 +111,11 @@ function renderItems(items) {
                    : " "
                }" data-item-name="${
                  item.name
-               }" onclick="${"appState.selectionMode ? toggleItemSelection('" + item.name + "') : "}" oncontextmenu=" event.preventDefault(); toggleItemSelection('${item.name}');">
+               }" onclick=" event.stopPropagation();
+
+    if(appState.selectionMode){
+        toggleItemSelection('${item.name}');
+    }" oncontextmenu=" event.preventDefault(); toggleItemSelection('${item.name}');">
                <div class="itemCardTopRow">
                <div class="itemTitleSection">
                <h2 class="itemName" onclick=" event.stopPropagation();
