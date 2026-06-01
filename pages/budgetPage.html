@@ -20,26 +20,33 @@
       </header>
 
       <main class="pageContent">
-        <section class="budgetHero">
-          <h2 class="budgetAmount">$1,200</h2>
+        <section class="budgetHero" id="budgetHero"></section>
 
-          <p class="budgetSubtitle">Monthly Budget</p>
-        </section>
+        <section class="budgetStats" id="budgetStats"></section>
 
-        <section class="budgetStats">
-          <div class="budgetCard">
-            <h3 class="budgetCardTitle">Spent</h3>
+        <section class="budgetCategorySection">
+          <div class="budgetSectionHeader">
+            <h2 class="settingsSectionTitle">Category Budgets</h2>
 
-            <p class="budgetCardAmount">$420</p>
+            <button class="primaryButton" onclick="renderCreateBudgetForm()">
+              + Budget
+            </button>
           </div>
 
-          <div class="budgetCard">
-            <h3 class="budgetCardTitle">Remaining</h3>
-
-            <p class="budgetCardAmount">$780</p>
-          </div>
+          <div id="budgetCategoryList"></div>
         </section>
       </main>
+    </div>
+
+    <!-- Screen Overlay -->
+    <div class="screenOverlay hidden" id="screenOverlay"></div>
+
+    <!-- Bottom Sheet -->
+
+    <div class="bottomSheet hidden" id="bottomSheet">
+      <div class="bottomSheetHandle"></div>
+
+      <div id="bottomSheetContent"></div>
     </div>
 
     <script src="../js/stateManager.js"></script>

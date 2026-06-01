@@ -12,6 +12,7 @@ const menuButton = document.querySelector(".menuButton");
 function initializeDashboard() {
   restoreLastGroup();
   renderCategories();
+  renderBudgetDashboardWidget();
 }
 /* Restore Last Group */
 function restoreLastGroup() {
@@ -248,6 +249,23 @@ function createCategory() {
     name: categoryName,
     items: [],
   });
+
+  if (!appState.budgets) {
+    appState.budgets = {
+      groupBudget: {
+        monthlyLimit: 20000,
+        spent: 0,
+      },
+
+      categoryBudgets: {},
+    };
+  }
+
+  appState.budgets.categoryBudgets[categoryName] = {
+    monthlyLimit: 1000,
+
+    spent: 0,
+  };
   saveAppState();
   renderCategories();
   closeBottomSheet();
@@ -637,6 +655,50 @@ function renderDashboardMenu() {
 </button>
     `;
   openBottomSheet();
+}
+
+function renderBudgetDashboardWidget() {
+  const budgetWidget = document.getElementById("budgetDashboardWidget");
+
+  if (!budgetWidget) {
+    return;
+  }
+
+  const limit = appState.budgets.groupBudget.monthlyLimit;
+
+  const spent = appState.budgets.groupBudget.spent;
+
+  const percent = Math.round((spent / limit) * 100) || 0;
+
+  budgetWidget.innerHTML = `
+
+    <div class="budgetWidgetCard">
+
+      <h3>
+        Monthly Budget
+      </h3>
+
+      <p class="budgetWidgetAmount">
+        $${spent}
+        /
+        $${limit}
+      </p>
+
+      <div class="budgetProgressBar">
+
+        <div
+          class="budgetProgressFill"
+          style="
+            width:${percent}%
+          "
+        >
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
 }
 /* Export App Data */
 function exportAppData() {

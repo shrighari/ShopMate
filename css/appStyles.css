@@ -201,26 +201,17 @@ body {
 /* Overlay */
 .screenOverlay {
   position: fixed;
+  inset: 0;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  background: rgba(0, 0, 0, 0.4);
   background-color: var(--overlayColor);
-  z-index: 40;
-  transition: opacity var(--animationSpeed);
   opacity: 1;
-  transition: opacity 0.2s ease;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--overlayColor);
-  z-index: 40;
-  opacity: 1;
-  transition: opacity var(--animationSpeed);
-  opacity: 1;
-  transition: opacity 0.2s ease;
+  z-index: 999;
+  transition: 0.25s ease;
+  pointer-events: none;
 }
 /* Hidden Overlay */
 .screenOverlay.hidden {
@@ -233,20 +224,20 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--cardColor);
-  border-top-left-radius: 34px;
-  border-top-right-radius: 34px;
-  padding: 20px 20px 34px;
-  z-index: 9999;
+  background: white;
+  border-radius: 28px 28px 0 0;
+  padding: 20px;
+  z-index: 1000;
   box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.18);
-  transform: translateY(100%);
-  transition: transform 0.24s ease;
+  transition: transform 0.25s ease;
+  max-height: 80vh;
+  overflow-y: auto;
 }
-/* Bottom Sheet Visible */
+/* Visible */
 .bottomSheet:not(.hidden) {
   transform: translateY(0);
 }
-/* Hidden Bottom Sheet */
+/* Hidden */
 .bottomSheet.hidden {
   transform: translateY(100%);
 }
@@ -254,9 +245,10 @@ body {
 .bottomSheetHandle {
   width: 60px;
   height: 5px;
+  background: #d1d5db;
   background-color: #cccccc;
   border-radius: 999px;
-  margin: 0 auto 20px auto;
+  margin: 0 auto 20px;
 }
 /* Bottom Sheet Header */
 .bottomSheetHeader {
@@ -599,34 +591,23 @@ body {
 /* Swipe Wrapper */
 .swipeWrapper {
   position: relative;
-
   overflow: hidden;
-
   border-radius: 28px;
-
   margin-bottom: 16px;
-
   display: inline-block;
-
   width: 100%;
 }
 /* Swipe Background */
 .swipeBackground {
   position: absolute;
-
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-
   display: flex;
-
   border-radius: inherit;
-
   overflow: hidden;
-
   z-index: 1;
-
   /* opacity: 0; */
   transition: opacity 0.15s ease;
 }
@@ -873,7 +854,6 @@ body {
   color: #e11d48;
 }
 .purchasedActionButton {
-
   color: #059669;
   opacity: 1;
 }
@@ -887,9 +867,7 @@ body {
 /* Multi Select */
 .selectedItem {
   border: 2px solid #2563eb;
-
   background: #eff6ff;
-
   box-shadow: 0 8px 24px rgba(37, 99, 235, 0.18);
 }
 .bulkActionBar {
@@ -1428,9 +1406,11 @@ body {
   gap: 16px;
 }
 .budgetCard {
+  position: relative;
   background: white;
   border-radius: 24px;
   padding: 22px;
+  margin-bottom: 20px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
 }
 .budgetCardTitle {
@@ -1441,6 +1421,20 @@ body {
 .budgetCardAmount {
   font-size: 28px;
   font-weight: 700;
+}
+.budgetMenuButton {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(17, 138, 178, 0.08);
+  cursor: pointer;
+}
+.destructiveAction {
+  color: #ef4444;
 }
 /* Dark Mode */
 .darkMode {
@@ -1456,6 +1450,46 @@ body {
 }
 .fullWidth {
   width: 100%;
+}
+/* BUDGET SECTION */
+.budgetCategorySection {
+  margin-top: 24px;
+}
+.budgetProgressBar {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 18px;
+}
+.budgetProgressFill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #22c55e, #10b981);
+}
+.budgetProgressText {
+  margin-top: 12px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+.budgetSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.budgetWidgetCard {
+  background: white;
+  border-radius: 24px;
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadowMedium);
+}
+.budgetWidgetAmount {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 8px;
 }
 /* PASTE ABOVE THIS FOR NORMAL CSS ATTRIBUTES */
 /* KEYFRAMES FOR ANIMATION */

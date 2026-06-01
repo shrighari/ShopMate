@@ -88,6 +88,22 @@ const defaultAppState = {
       groupName: "Family Group",
     },
   ],
+
+  budgets: {
+    groupBudget: {
+      monthlyLimit: 20000,
+
+      spent: 0,
+    },
+
+    categoryBudgets: {
+      "Monthly Groceries": {
+        monthlyLimit: 8000,
+
+        spent: 0,
+      },
+    },
+  },
 };
 
 function loadAppState() {
@@ -97,7 +113,27 @@ function loadAppState() {
     return structuredClone(defaultAppState);
   }
 
-  return JSON.parse(savedState);
+  const parsedState = JSON.parse(savedState);
+
+  if (!parsedState.budgets) {
+    parsedState.budgets = {
+      groupBudget: {
+        monthlyLimit: 20000,
+
+        spent: 0,
+      },
+
+      categoryBudgets: {
+        "Monthly Groceries": {
+          monthlyLimit: 8000,
+
+          spent: 0,
+        },
+      },
+    };
+  }
+
+  return parsedState;
 }
 
 const appState = loadAppState();
