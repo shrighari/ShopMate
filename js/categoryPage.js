@@ -144,7 +144,7 @@ function renderItems(items) {
     "
     onclick="
         event.stopPropagation();
-        togglePurchased('${item.name}');
+        openPurchaseConfirmation('${item.name}');
     "
 >
     <span class="actionButtonIcon">
@@ -187,22 +187,7 @@ function initializeTabs() {
     });
   });
 }
-/* Toggle Purchased */
-function togglePurchased(itemName) {
-  const currentCategory = getActiveCategory();
-  if (!currentCategory) {
-    return;
-  }
-  const item = currentCategory.items.find(function (item) {
-    return item.name === itemName;
-  });
-  if (!item) {
-    return;
-  }
-  item.purchased = !item.purchased;
-  saveAppState();
-  renderFilteredItems();
-}
+
 /* Search */
 if (searchInput) {
   searchInput.addEventListener("input", function (event) {

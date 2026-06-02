@@ -60,7 +60,7 @@ function bulkFavoriteItems() {
 /* Bulk Purchased */
 function bulkPurchasedItems() {
   appState.selectedItems.forEach(function (itemName) {
-    togglePurchased(itemName);
+    openPurchaseConfirmation(itemName);
   });
   clearSelectionMode();
 }

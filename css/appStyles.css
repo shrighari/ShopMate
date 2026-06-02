@@ -1463,12 +1463,28 @@ body {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 999px;
   overflow: hidden;
-  margin-top: 18px;
+  margin-top: 16px;
 }
 .budgetProgressFill {
   height: 100%;
   border-radius: 999px;
   background: linear-gradient(90deg, #22c55e, #10b981);
+  transition: width 0.4s ease;
+}
+.budgetHealthy {
+  background: #22c55e;
+}
+.budgetWarning {
+  background: #f59e0b;
+}
+.budgetCritical {
+  background: #ef4444;
+}
+.budgetStatusText {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.95;
 }
 .budgetProgressText {
   margin-top: 12px;
@@ -1481,26 +1497,12 @@ body {
   align-items: center;
   margin-bottom: 16px;
 }
-.budgetWidgetCard {
-  background: white;
-  border-radius: 24px;
-  padding: 18px;
-  margin-bottom: 18px;
-  box-shadow: var(--shadowMedium);
-}
-.budgetWidgetAmount {
-  font-size: 18px;
-  font-weight: 700;
-  margin-top: 8px;
-}
 
 /* FORM UX IMPROVEMENTS */
-
 .formField {
   margin-bottom: 12px;
   width: 90%;
 }
-
 .formLabel {
   display: block;
   font-size: 12px;
@@ -1508,23 +1510,19 @@ body {
   color: #64748b;
   margin-bottom: 4px;
 }
-
 .formRow {
   display: flex;
   gap: 10px;
   margin-bottom: 12px;
   width: 90%;
 }
-
 .halfWidthField {
   flex: 1;
   padding-right: 25px;
 }
-
 .currencyInputWrapper {
   position: relative;
 }
-
 .currencySymbol {
   position: absolute;
   left: 12px;
@@ -1534,11 +1532,55 @@ body {
   font-weight: 600;
   pointer-events: none;
 }
-
 .currencyInput {
   padding-left: 28px;
 }
-
+.topSpendingCard {
+  margin-top: 14px;
+}
+.topCategoryName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--secondaryTextColor);
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+/* Budget Insights */
+.budgetInsightCard {
+  margin-top: 14px;
+}
+.budgetInsightText {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+/* Overspend Alerts*/
+.overspendCard {
+  border: 2px solid #ef4444;
+}
+.overspendText {
+  color: #ef4444;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+/* Dashboard Budget Widget */
+.budgetWidgetCard {
+  background: var(--cardColor);
+  border-radius: 24px;
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadowMedium);
+}
+.budgetWidgetAmount {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 12px 0;
+}
+.budgetWidgetText {
+  margin-top: 10px;
+  font-size: 14px;
+}
 /* PASTE ABOVE THIS FOR NORMAL CSS ATTRIBUTES */
 /* KEYFRAMES FOR ANIMATION */
 @keyframes snackbarSlideUp {

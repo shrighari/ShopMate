@@ -387,6 +387,135 @@ function updateItem(originalItemName) {
   closeBottomSheet();
   showSnackbar("Item updated");
 }
+/*  Purchase Confirmation */
+function openPurchaseConfirmation(itemName) {
+  const currentCategory = getActiveCategory();
+  if (!currentCategory) {
+    return;
+  }
+  const item = currentCategory.items.find(function (item) {
+    return item.name === itemName;
+  });
+  if (!item) {
+    return;
+  }
+  if (item.purchased) {
+    item.purchased = false;
+    saveAppState();
+    renderFilteredItems();
+    showSnackbar("Moved back to List");
+    return;
+  }
+  bottomSheetContent.innerHTML = `
+    <div class="bottomSheetHeader">
+      <h2>
+        Confirm Purchase
+      </h2>
+      <button
+        class="closeButton"
+        onclick="
+          closeBottomSheet()
+        "
+      >
+        ✕
+      </button>
+    </div>
+    <div class="bottomSheetBody">
+      <div class="purchaseSummaryCard">
+        <h3>
+          ${item.name}
+        </h3>
+        <p>
+          Estimated:
+          $${item.estimatedPrice || 0}
+        </p>
+      </div>
+      <div class="formField">
+        <label class="formLabel">
+          Actual Price Paid
+        </label>
+        <div
+          class="currencyInputWrapper"
+        >
+          <span
+            class="currencySymbol"
+          >
+            $
+          </span>
+          <input
+            type="number"
+            id="purchasePriceInput"
+            class="
+              bottomSheetInput
+              currencyInput
+            "
+            value="
+              ${item.estimatedPrice || 0}
+            "
+          >
+        </div>
+      </div>
+      <div
+        class="
+          bottomSheetButtonRow
+        "
+      >
+        <button
+          class="secondaryButton"
+          onclick="
+            closeBottomSheet()
+          "
+        >
+          Cancel
+        </button>
+        <button
+          class="primaryButton"
+          onclick="
+            confirmPurchase(
+              '${item.name}'
+            )
+          "
+        >
+          Confirm
+        </button>
+      </div>
+    </div>
+  `;
+  openBottomSheet();
+}
+/* Confirm Purchase */
+function confirmPurchase(itemName) {
+  const currentCategory = getActiveCategory();
+  if (!currentCategory) {
+    return;
+  }
+  const item = currentCategory.items.find(function (item) {
+    return item.name === itemName;
+  });
+  if (!item) {
+    return;
+  }
+  const actualPrice =
+    Number(document.getElementById("purchasePriceInput").value) || 0;
+  item.actualPrice = actualPrice;
+  item.purchaseDate = new Date().toISOString();
+  item.purchased = !item.purchased;
+  updateBudgetTracking(currentCategory.name, actualPrice);
+  saveAppState();
+  renderFilteredItems();
+  closeBottomSheet();
+  showSnackbar("Item purchased");
+}
+/* Update Budget Tracking */
+function updateBudgetTracking(categoryName, amount) {
+  if (!appState.budgets) {
+    return;
+  }
+  appState.budgets.groupBudget.spent += amount;
+  if (appState.budgets.categoryBudgets[categoryName]) {
+    appState.budgets.categoryBudgets[categoryName].spent += amount;
+  }
+}
 /* Delete Item */
 function deleteItem(itemName) {
   const currentCategory = getActiveCategory();

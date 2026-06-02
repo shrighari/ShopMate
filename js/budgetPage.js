@@ -7,6 +7,23 @@ function goBack() {
 const budgetHero = document.getElementById("budgetHero");
 const budgetStats = document.getElementById("budgetStats");
 const budgetCategoryList = document.getElementById("budgetCategoryList");
+function getTopSpendingCategory() {
+  let topCategory = null;
+  let highestSpend = 0;
+  Object.entries(appState.budgets.categoryBudgets).forEach(function ([
+    categoryName,
+    budget,
+  ]) {
+    if (budget.spent > highestSpend) {
+      highestSpend = budget.spent;
+      topCategory = categoryName;
+    }
+  });
+  return {
+    name: topCategory || "No Spending Yet",
+    amount: highestSpend,
+  };
+}
 function initializeBudgetPage() {
   renderBudgetSummary();
   renderCategoryBudgets();
@@ -23,9 +40,25 @@ function closeBottomSheet() {
 }
 function renderBudgetSummary() {
   const limit = appState.budgets.groupBudget.monthlyLimit;
-  const spent = appState.budgets.groupBudget.spent;
+  const spent = calculateTotalSpent();
   const remaining = limit - spent;
+  const usagePercentage = limit > 0 ? Math.min((spent / limit) * 100, 100) : 0;
   const percentUsed = Math.min(Math.round((spent / limit) * 100) || 0, 100);
+  let insightTitle = "Budget Healthy";
+  let insightMessage = `You have used only ${percentUsed}% of your budget.`;
+  if (percentUsed >= 80) {
+    insightTitle = "Budget Critical";
+    insightMessage = `You have used ${percentUsed}% of your budget.`;
+  } else if (percentUsed >= 50) {
+    insightTitle = "Budget Warning";
+    insightMessage = `You have used ${percentUsed}% of your budget.`;
+  }
+  let progressClass = "budgetHealthy";
+  if (percentUsed >= 80) {
+    progressClass = "budgetCritical";
+  } else if (percentUsed >= 50) {
+    progressClass = "budgetWarning";
+  }
   budgetHero.innerHTML = `
       <h2
         class="budgetAmount"
@@ -41,47 +74,51 @@ function renderBudgetSummary() {
         class="budgetProgressBar"
       >
         <div
-          class="budgetProgressFill"
+  class="
+    budgetProgressFill
+    ${progressClass}
+  "
           style="
             width:${percentUsed}%
           "
         >
         </div>
       </div>
-      <p
-        class="budgetProgressText"
-      >
-        ${percentUsed}% Used
-      </p>
+     <p
+  class="budgetProgressText"
+>
+  ${percentUsed}% Used
+</p>
+<p
+  class="budgetStatusText"
+>
+  ${
+    percentUsed < 50
+      ? "Budget Healthy"
+      : percentUsed < 80
+        ? "Budget Warning"
+        : "Budget Critical"
+  }
+</p>
   `;
+  const topCategory = getTopSpendingCategory();
   budgetStats.innerHTML = `
-      <div
-        class="budgetCard"
-      >
-          <h3
-            class="budgetCardTitle"
-          >
-            Spent
-          </h3>
-          <p
-            class="budgetCardAmount"
-          >
-            $${spent.toLocaleString()}
-          </p>
+      <div class="budgetCard">
+          <h3 class="budgetCardTitle">Spent</h3>
+            <p class="budgetCardAmount">$${spent.toLocaleString()}</p>
       </div>
-      <div
-        class="budgetCard"
-      >
-          <h3
-            class="budgetCardTitle"
-          >
-            Remaining
-          </h3>
-          <p
-            class="budgetCardAmount"
-          >
-            $${remaining.toLocaleString()}
-          </p>
+      <div class="budgetCard">
+        <h3 class="budgetCardTitle">Remaining</h3>
+          <p class="budgetCardAmount">$${remaining.toLocaleString()}</p>
+      </div>
+      <div class="budgetCard topSpendingCard">
+        <h3 class="budgetCardTitle">Top Spending Category</h3>
+          <p class="topCategoryName">${topCategory.name}</p>
+          <p class="budgetCardAmount">$${topCategory.amount.toLocaleString()}</p>
+      </div>
+      <div class="budgetCard budgetInsightCard">
+        <h3 class="budgetCardTitle">${insightTitle}</h3>
+          <p class="budgetInsightText">${insightMessage}</p>
       </div>
   `;
 }
@@ -96,8 +133,11 @@ function renderCategoryBudgets() {
         ) || 0,
         100,
       );
+      const overspendAmount =
+        categoryBudget.spent - categoryBudget.monthlyLimit;
+      const isOverspent = overspendAmount > 0;
       budgetCategoryList.innerHTML += `
-      <div class="budgetCard">
+      <div class="budgetCard ${isOverspent ? "overspendCard" : ""}">
       <button class="budgetMenuButton" onclick="event.stopPropagation(); openBudgetMenu('${categoryName}');">⋮</button>
         <h3
           class="budgetCardTitle"
@@ -110,6 +150,20 @@ function renderCategoryBudgets() {
           $${categoryBudget.spent}
           /
           $${categoryBudget.monthlyLimit}
+          ${
+            isOverspent
+              ? `
+      <p
+        class="
+          overspendText
+        "
+      >
+        ⚠ Over Budget by
+        $${overspendAmount}
+      </p>
+    `
+              : ""
+          }
         </p>
         <div
           class="budgetProgressBar"
@@ -288,5 +342,18 @@ function saveEditedBudget(categoryName) {
   saveAppState();
   renderCategoryBudgets();
   closeBottomSheet();
+}
+function calculateTotalSpent() {
+  let total = 0;
+  Object.values(appState.groups).forEach(function (categories) {
+    categories.forEach(function (category) {
+      category.items.forEach(function (item) {
+        if (item.purchased) {
+          total += Number(item.actualPrice) || 0;
+        }
+      });
+    });
+  });
+  return total;
 }
 initializeBudgetPage();

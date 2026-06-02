@@ -249,21 +249,17 @@ function createCategory() {
     name: categoryName,
     items: [],
   });
-
   if (!appState.budgets) {
     appState.budgets = {
       groupBudget: {
         monthlyLimit: 20000,
         spent: 0,
       },
-
       categoryBudgets: {},
     };
   }
-
   appState.budgets.categoryBudgets[categoryName] = {
     monthlyLimit: 1000,
-
     spent: 0,
   };
   saveAppState();
@@ -623,7 +619,6 @@ function renderDashboardMenu() {
     >
 </label>
         </div>
-
         <button
   class="bottomSheetActionButton"
   onclick="
@@ -633,7 +628,6 @@ function renderDashboardMenu() {
 >
   🔔 Notifications
 </button>
-
 <button
   class="bottomSheetActionButton"
   onclick="
@@ -643,7 +637,6 @@ function renderDashboardMenu() {
 >
   💰 Budget
 </button>
-
 <button
   class="bottomSheetActionButton"
   onclick="
@@ -656,11 +649,10 @@ function renderDashboardMenu() {
     `;
   openBottomSheet();
 }
-
 function renderBudgetDashboardWidget() {
   const budgetWidget = document.getElementById("budgetDashboardWidget");
 
-  if (!budgetWidget) {
+  if (!budgetWidget || !appState.budgets) {
     return;
   }
 
@@ -668,33 +660,92 @@ function renderBudgetDashboardWidget() {
 
   const spent = appState.budgets.groupBudget.spent;
 
-  const percent = Math.round((spent / limit) * 100) || 0;
+  const remaining = limit - spent;
+
+  const percentUsed = Math.min(Math.round((spent / limit) * 100) || 0, 100);
+
+  let progressClass = "budgetHealthy";
+
+  if (percentUsed >= 80) {
+    progressClass = "budgetCritical";
+  } else if (percentUsed >= 50) {
+    progressClass = "budgetWarning";
+  }
+
+  let topCategory = "No Spending Yet";
+
+  let highestSpend = 0;
+
+  Object.entries(appState.budgets.categoryBudgets).forEach(function ([
+    name,
+    budget,
+  ]) {
+    if (budget.spent > highestSpend) {
+      highestSpend = budget.spent;
+
+      topCategory = name;
+    }
+  });
 
   budgetWidget.innerHTML = `
 
-    <div class="budgetWidgetCard">
+    <div
+      class="
+        budgetWidgetCard
+      "
+    >
 
       <h3>
-        Monthly Budget
+        💰 Budget Snapshot
       </h3>
 
-      <p class="budgetWidgetAmount">
+      <p
+        class="
+          budgetWidgetAmount
+        "
+      >
         $${spent}
         /
         $${limit}
       </p>
 
-      <div class="budgetProgressBar">
+      <div
+        class="
+          budgetProgressBar
+        "
+      >
 
         <div
-          class="budgetProgressFill"
+          class="
+            budgetProgressFill
+            ${progressClass}
+          "
           style="
-            width:${percent}%
+            width:
+            ${percentUsed}%;
           "
         >
         </div>
 
       </div>
+
+      <p
+        class="
+          budgetWidgetText
+        "
+      >
+        Remaining:
+        $${remaining}
+      </p>
+
+      <p
+        class="
+          budgetWidgetText
+        "
+      >
+        Top Category:
+        ${topCategory}
+      </p>
 
     </div>
 

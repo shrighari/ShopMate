@@ -22,7 +22,7 @@ function initializeSwipeGestures() {
       const diffX = currentX - startX;
       const itemName = card.dataset.itemName;
       if (diffX > 120) {
-        togglePurchased(itemName);
+        openPurchaseConfirmation(itemName);
       } else if (diffX < -120) {
         deleteItem(itemName);
       }
