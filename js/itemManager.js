@@ -61,6 +61,11 @@ function renderAddItemForm() {
         </div>
       </div>
       <div class="formField">
+        <label class="formLabel">Item Image</label>
+        <input type="file" id="itemImageInput" accept="image/*" class="bottomSheetInput">
+        <img id="itemImagePreview" class="itemImagePreview hidden">
+      </div>
+      <div class="formField">
         <label class="formLabel">
           Preferred Shop
         </label>
@@ -100,6 +105,7 @@ function renderAddItemForm() {
   `;
   openBottomSheet();
   initializeItemForm();
+  initializeImagePreview();
 }
 /* Render Edit Item Form */
 function renderEditItemForm(itemName) {
@@ -170,6 +176,25 @@ function renderEditItemForm(itemName) {
         </div>
       </div>
       <div class="formField">
+  <label class="formLabel">
+    Item Image
+  </label>
+  <input
+    type="file"
+    id="editItemImageInput"
+    accept="image/*"
+    class="bottomSheetInput"
+  >
+  <img
+    id="editItemImagePreview"
+    class="
+      itemImagePreview
+      ${item.imageUrl ? "" : "hidden"}
+    "
+    src="${item.imageUrl || ""}"
+  >
+</div>
+      <div class="formField">
         <label class="formLabel">
           Notes
         </label>
@@ -208,6 +233,7 @@ function renderEditItemForm(itemName) {
     </div>
   `;
   openBottomSheet();
+  initializeEditImagePreview();
 }
 /* Initialize Item Form */
 function initializeItemForm() {
@@ -242,6 +268,55 @@ function initializeItemForm() {
     }
   });
 }
+/*Image Preview */
+function initializeImagePreview() {
+  const imageInput = document.getElementById("itemImageInput");
+  const preview = document.getElementById("itemImagePreview");
+  if (!imageInput || !preview) {
+    return;
+  }
+  imageInput.addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (!file) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      preview.src = e.target.result;
+      preview.classList.remove("hidden");
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+/* Image Preview for Edit Form */
+function initializeEditImagePreview() {
+  const imageInput = document.getElementById("editItemImageInput");
+
+  const preview = document.getElementById("editItemImagePreview");
+
+  if (!imageInput || !preview) {
+    return;
+  }
+
+  imageInput.addEventListener("change", function (event) {
+    const file = event.target.files[0];
+
+    if (!file) {
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      preview.src = e.target.result;
+
+      preview.classList.remove("hidden");
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
 /* Create Item */
 function createItem() {
   const itemNameInput = document.getElementById("itemNameInput");
@@ -254,6 +329,8 @@ function createItem() {
   const itemShop = itemShopInput.value.trim();
   const itemPrice =
     Number(document.getElementById("itemPriceInput").value) || 0;
+  const imagePreview = document.getElementById("itemImagePreview");
+  const imageUrl = imagePreview && imagePreview.src ? imagePreview.src : "";
   if (!itemName || !itemQuantity) {
     showSnackbar("Please enter item details");
     return;
@@ -313,6 +390,7 @@ function createItem() {
     quantity: itemQuantity,
     notes: itemNotes,
     preferredShop: itemShop,
+    imageUrl: imageUrl,
     estimatedPrice: itemPrice,
     actualPrice: 0,
     purchaseDate: null,
@@ -363,6 +441,9 @@ function updateItem(originalItemName) {
   const updatedShop = document.getElementById("editItemShopInput").value.trim();
   const updatedPrice =
     Number(document.getElementById("editItemPriceInput").value) || 0;
+  const imagePreview = document.getElementById("editItemImagePreview");
+  const updatedImage =
+    imagePreview && imagePreview.src ? imagePreview.src : item.imageUrl || "";
   if (!updatedName || !updatedQuantity) {
     showSnackbar("Please enter item details");
     return;
@@ -382,6 +463,7 @@ function updateItem(originalItemName) {
   item.notes = updatedNotes;
   item.preferredShop = updatedShop;
   item.estimatedPrice = updatedPrice;
+  item.imageUrl = updatedImage;
   saveAppState();
   renderFilteredItems();
   closeBottomSheet();

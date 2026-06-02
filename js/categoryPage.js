@@ -155,19 +155,15 @@ function renderItems(items) {
                }
     </div>
 </div>
-                    <p class="itemDetails">
-                        Notes: ${item.notes || "-"}
-                    </p>
-                    <p class="itemDetails">
-                        Shop: ${item.preferredShop || "-"}
-                    </p>
-                    <p class="itemDetails">
-    Est Price:
-    $${item.estimatedPrice || 0}
-</p>
-                </div>
-            </div>
-        `;
+<div class="itemCardContent">
+  <div class="itemDetailsSection">
+    <p class="itemDetails">Notes: ${item.notes || "-"}</p>
+    <p class="itemDetails">Shop: ${item.preferredShop || "-"}</p>
+    <p class="itemDetails">Est Price: $${item.estimatedPrice || 0}</p>
+  </div>
+  <div class="itemImageContainer">${item.imageUrl ? `<img src="${item.imageUrl}" class="itemImage" alt="${item.name}">` : `<div class="itemImagePlaceholder">📦</div>`}</div></div>
+  </div>
+</div>`;
   });
 }
 /* Initialize Tabs */
@@ -187,7 +183,6 @@ function initializeTabs() {
     });
   });
 }
-
 /* Search */
 if (searchInput) {
   searchInput.addEventListener("input", function (event) {
