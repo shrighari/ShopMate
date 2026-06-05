@@ -64,7 +64,7 @@ function joinGroupFromInvite(inviteCode) {
   const invite = validateInvite(inviteCode);
 
   if (!invite) {
-    alert("Invalid invite");
+    showDialog("Invalid Invite", "The invite code you entered is invalid.");
 
     return;
   }
@@ -78,7 +78,7 @@ function joinGroupFromInvite(inviteCode) {
   });
 
   if (alreadyMember) {
-    alert("Already part of this group");
+    showDialog("Already a Member", "You are already a member of this group.");
 
     return;
   }

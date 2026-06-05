@@ -87,13 +87,13 @@
           document.getElementById("biometricCheckbox").checked;
 
         if (!name || !email || !password || !confirmPassword || !familyName) {
-          alert("Please fill all fields");
+          showDialog("Please fill all fields");
 
           return;
         }
 
         if (password !== confirmPassword) {
-          alert("Passwords do not match");
+          showDialog("Passwords do not match");
 
           return;
         }
@@ -103,7 +103,10 @@
         });
 
         if (existingUser) {
-          alert("Account already exists");
+          showDialog(
+            "Account already exists",
+            "An account with this email address already exists.",
+          );
 
           return;
         }

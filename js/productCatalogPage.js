@@ -16,69 +16,18 @@ function renderProductCatalog() {
     })
     .forEach(function ([name, product]) {
       productCatalogList.innerHTML += `
-        <div
-          class="catalogCard"
-        >
-          <div
-            class="
-              catalogCardHeader
-            "
-          >
-            <div>
-              <h3>
-                ${name}
-              </h3>
-              <p>
-                $${product.defaultPrice}
-              </p>
-              <p>
-                ${product.preferredShop}
-              </p>
+        <div class="catalogCard">
+          <div class="catalogCardHeader">
+            <div class="catalogInfo">
+              <h3 class="catalogTitle">${name}</h3>
+              <p class="catalogPrice">$${product.defaultPrice || 0}</p>
+              <p class="catalogShop">${product.preferredShop || "-"}</p>
             </div>
-            ${
-              product.imageUrl
-                ? `
-                <img
-                  src="
-                    ${product.imageUrl}
-                  "
-                  class="
-                    catalogImage
-                  "
-                >
-              `
-                : ""
-            }
+            ${product.imageUrl ? ` <img src="${product.imageUrl}" class="catalogImage"> ` : ""}
           </div>
-          <div
-            class="
-              catalogActions
-            "
-          >
-            <button
-              class="
-                secondaryButton
-              "
-              onclick="
-                editProduct(
-                  '${name}'
-                )
-              "
-            >
-              Edit
-            </button>
-            <button
-              class="
-                dangerButton
-              "
-              onclick="
-                deleteProduct(
-                  '${name}'
-                )
-              "
-            >
-              Delete
-            </button>
+          <div class="catalogActions">
+            <button class="secondaryButton" onclick="editProduct('${name}')">Edit</button>
+            <button class="dangerButton" onclick="deleteProduct('${name}')">Delete</button>
           </div>
         </div>
       `;
@@ -89,10 +38,8 @@ function deleteProduct(productName) {
   if (!confirm("Delete Product?")) {
     return;
   }
-
   delete appState.productCatalog[productName];
-
   saveAppState();
-
+  showToast("Product Deleted");
   renderProductCatalog();
 }

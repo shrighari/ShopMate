@@ -1,56 +1,44 @@
 <!doctype html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Budget</title>
-
     <link rel="stylesheet" href="../css/appStyles.css" />
   </head>
-
   <body>
     <div class="appContainer">
       <header class="modernHeader">
         <button class="modernBackButton" onclick="goBack()">←</button>
-
         <h1 class="modernPageTitle">Budget</h1>
       </header>
-
       <main class="pageContent">
         <section class="budgetHero" id="budgetHero"></section>
-
         <section class="budgetStats" id="budgetStats"></section>
-
         <section class="budgetCategorySection">
           <div class="budgetSectionHeader">
             <h2 class="settingsSectionTitle">Category Budgets</h2>
-
-            <button class="primaryButton" onclick="renderCreateBudgetForm()">
+            <button
+              id="createBudgetButton"
+              class="primaryButton"
+              onclick="renderCreateBudgetForm()"
+            >
               + Budget
             </button>
           </div>
-
           <div id="budgetCategoryList"></div>
         </section>
       </main>
     </div>
-
     <!-- Screen Overlay -->
     <div class="screenOverlay hidden" id="screenOverlay"></div>
-
     <!-- Bottom Sheet -->
-
     <div class="bottomSheet hidden" id="bottomSheet">
       <div class="bottomSheetHandle"></div>
-
       <div id="bottomSheetContent"></div>
     </div>
-
     <script src="../js/stateManager.js"></script>
-
+    <script src="../js/helpers.js"></script>
     <script src="../js/budgetPage.js"></script>
   </body>
 </html>

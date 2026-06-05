@@ -17,7 +17,7 @@ function toggleNotifications() {
 
   saveAppState();
 
-  alert(
+  showDialog(
     appState.notificationsEnabled
       ? "Notifications Enabled"
       : "Notifications Disabled",
@@ -41,7 +41,9 @@ function toggleBiometric() {
 
   saveAppState();
 
-  alert(user.biometricEnabled ? "Biometrics Enabled" : "Biometrics Disabled");
+  showDialog(
+    user.biometricEnabled ? "Biometrics Enabled" : "Biometrics Disabled",
+  );
 }
 
 /* Open Profile */

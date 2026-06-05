@@ -7,6 +7,7 @@ function goBack() {
 const budgetHero = document.getElementById("budgetHero");
 const budgetStats = document.getElementById("budgetStats");
 const budgetCategoryList = document.getElementById("budgetCategoryList");
+/*Get Top Spending Category */
 function getTopSpendingCategory() {
   let topCategory = null;
   let highestSpend = 0;
@@ -24,15 +25,18 @@ function getTopSpendingCategory() {
     amount: highestSpend,
   };
 }
+/* Initialize Budget Page */
 function initializeBudgetPage() {
   renderBudgetSummary();
   renderCategoryBudgets();
 }
+/*Open Bottom Sheet */
 function openBottomSheet() {
   screenOverlay.classList.remove("hidden");
   bottomSheet.classList.remove("hidden");
   document.body.style.overflow = "hidden";
 }
+/* Close Bottom Sheet */
 function closeBottomSheet() {
   screenOverlay.classList.add("hidden");
   bottomSheet.classList.add("hidden");
@@ -222,12 +226,20 @@ function openBudgetMenu(categoryName) {
   openBottomSheet();
 }
 function deleteCategoryBudget(categoryName) {
+  if (!canManageBudget()) {
+    showDialog("Only Admin can delete budgets.");
+    return;
+  }
   delete appState.budgets.categoryBudgets[categoryName];
   saveAppState();
   renderCategoryBudgets();
   closeBottomSheet();
 }
 function renderCreateBudgetForm() {
+  if (!canManageBudget()) {
+    showDialog("Only Admin can manage budgets.");
+    return;
+  }
   let categoryOptions = "";
   const categories = appState.groups[appState.activeGroup] || [];
   categories.forEach(function (category) {
@@ -252,20 +264,36 @@ function renderCreateBudgetForm() {
       </button>
     </div>
     <div class="bottomSheetBody">
-      <select
-        id="budgetCategorySelect"
-        class="bottomSheetInput"
-      >
-        ${categoryOptions}
-      </select>
-      <input
-        type="number"
-        id="budgetLimitInput"
-        class="bottomSheetInput"
-        placeholder="
-          Monthly Limit
-        "
-      >
+      <div class="formField">
+  <label class="formLabel">
+    Category
+  </label>
+  <select
+    id="budgetCategorySelect"
+    class="bottomSheetInput"
+  >
+    ${categoryOptions}
+  </select>
+</div>
+      <div class="formField">
+  <label class="formLabel">
+    Monthly Budget Limit
+  </label>
+  <div class="currencyInputWrapper">
+    <span class="currencySymbol">
+      $
+    </span>
+    <input
+      type="number"
+      id="budgetLimitInput"
+      class="
+        bottomSheetInput
+        currencyInput
+      "
+      placeholder="Enter Budget Limit"
+    >
+  </div>
+</div>
       <button
         class="primaryButton"
         onclick="
@@ -293,10 +321,15 @@ function saveCategoryBudget() {
     spent: 0,
   };
   saveAppState();
+  showToast("Budget Saved");
   renderCategoryBudgets();
   closeBottomSheet();
 }
 function editCategoryBudget(categoryName) {
+  if (!canManageBudget()) {
+    showDialog("Only Admin can edit budgets.");
+    return;
+  }
   const categoryBudget = appState.budgets.categoryBudgets[categoryName];
   bottomSheetContent.innerHTML = `
     <div class="bottomSheetHeader">
@@ -340,6 +373,7 @@ function saveEditedBudget(categoryName) {
   const newLimit = Number(document.getElementById("editBudgetLimit").value);
   appState.budgets.categoryBudgets[categoryName].monthlyLimit = newLimit;
   saveAppState();
+  showToast("Budget Updated");
   renderCategoryBudgets();
   closeBottomSheet();
 }

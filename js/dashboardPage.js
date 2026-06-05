@@ -198,7 +198,7 @@ function createGroup() {
 /* Render Create Category Form */
 function renderCreateCategoryForm() {
   if (!appState.activeGroup) {
-    alert("Please select a group first");
+    showDialog("Please select a group first");
     return;
   }
   bottomSheetContent.innerHTML = `
@@ -788,9 +788,15 @@ function importAppData(event) {
       saveAppState();
       renderCategories();
       closeBottomSheet();
-      alert("Backup restored");
+      showDialog(
+        "Backup Restored",
+        "Your app data has been successfully restored.",
+      );
     } catch {
-      alert("Invalid backup file");
+      showDialog(
+        "Invalid Backup File",
+        "The selected file is not a valid backup file.",
+      );
     }
   };
   reader.readAsText(file);

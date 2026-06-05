@@ -75,7 +75,7 @@ function addFavoriteToList(itemName) {
   });
 
   if (existingItem) {
-    alert("Item already exists");
+    showDialog("Item already exists", "This item is already in your list.");
 
     return;
   }

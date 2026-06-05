@@ -104,7 +104,7 @@ function setupPermissions() {
   }
 
   if (currentMember.role !== "admin" && currentMember.role !== "owner") {
-    inviteMemberButton.style.display = "none";
+    inviteMemberButton.style.display = canManageGroup() ? "flex" : "none";
 
     readOnlyBanner.classList.remove("hidden");
   } else {
@@ -503,7 +503,10 @@ inviteMemberButton.addEventListener(
 function copyInviteCode(inviteCode) {
   navigator.clipboard.writeText(inviteCode);
 
-  alert("Invite code copied");
+  showDialog(
+    "Invite code copied",
+    "The invite code has been copied to your clipboard.",
+  );
 }
 
 /* Leave Group Dialog */
@@ -576,7 +579,10 @@ function leaveCurrentGroup() {
     adminCount === 1 &&
     members.length > 1
   ) {
-    alert("Please assign another admin before leaving.");
+    showDialog(
+      "Cannot Leave Group",
+      "Please assign another admin before leaving.",
+    );
 
     return;
   }
