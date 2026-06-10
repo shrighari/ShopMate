@@ -10,6 +10,7 @@ const defaultAppState = {
   selectedItems: [],
   favoriteItems: [],
   productCatalog: {},
+  notifications: [],
   users: [
     {
       id: "user_1",

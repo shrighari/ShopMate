@@ -477,6 +477,7 @@ function createItem() {
   renderFilteredItems();
   closeBottomSheet();
   showSnackbar("Item added");
+  createNotification("item", "Item Added", `${itemName} was added`);
 }
 /* Update Duplicate Quantity */
 function updateDuplicateQuantity(itemName, newQuantity) {
@@ -676,16 +677,39 @@ function confirmPurchase(itemName) {
   renderFilteredItems();
   closeBottomSheet();
   showSnackbar("Item purchased");
+  createNotification(
+    "purchase",
+    "Item Purchased",
+    `${item.name} purchased for $${purchasePrice}`,
+  );
 }
+/* Update Budget Tracking */
 /* Update Budget Tracking */
 function updateBudgetTracking(categoryName, amount) {
   if (!appState.budgets) {
     return;
   }
+  /* Update Group Budget */
   appState.budgets.groupBudget.spent += amount;
-  if (appState.budgets.categoryBudgets[categoryName]) {
-    appState.budgets.categoryBudgets[categoryName].spent += amount;
+  const categoryBudget = appState.budgets.categoryBudgets[categoryName];
+  if (categoryBudget) {
+    /* Update Category Budget */
+    categoryBudget.spent += amount;
+    /* Overspend Check */
+    if (
+      categoryBudget.spent > categoryBudget.monthlyLimit &&
+      !categoryBudget.overspendNotified
+    ) {
+      categoryBudget.overspendNotified = true;
+      createNotification(
+        "budget",
+        "Budget Exceeded",
+        `${categoryName} exceeded its budget`,
+      );
+      showToast(`${categoryName} budget exceeded`, "info");
+    }
   }
+  saveAppState();
 }
 /* Delete Item */
 function deleteItem(itemName) {

@@ -1789,6 +1789,30 @@ body {
   font-size: 14px;
   font-weight: 600;
 }
+.notificationCard {
+  background: white;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadowSmall);
+}
+.unreadNotification {
+  border-left: 5px solid var(--primaryColor);
+}
+.notificationTitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.notificationMessage {
+  font-size: 14px;
+  color: var(--secondaryTextColor);
+  margin-bottom: 8px;
+}
+.notificationTime {
+  font-size: 12px;
+  color: var(--secondaryTextColor);
+}
 /* PASTE ABOVE THIS FOR NORMAL CSS ATTRIBUTES */
 /* KEYFRAMES FOR ANIMATION */
 @keyframes snackbarSlideUp {

@@ -490,6 +490,11 @@ inviteMemberButton.addEventListener("click", function () {
     status: "pending",
   });
   saveAppState();
+  createNotification(
+    "group",
+    "Invite Created",
+    `Invite code ${inviteCode} was generated`,
+  );
   bottomSheetContent.innerHTML = `
       <div class="bottomSheetHeader">
         <h2>
