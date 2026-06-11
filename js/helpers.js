@@ -223,3 +223,52 @@ function showToast(message, type = "success") {
     }
   }, 2500);
 }
+/* Mark Read */
+function markNotificationRead(notificationId) {
+  const notification = appState.notifications.find(function (notification) {
+    return notification.id === notificationId;
+  });
+  if (notification) {
+    notification.read = true;
+    saveAppState();
+    renderNotifications();
+    updateNotificationBadge();
+  }
+}
+/* Notification Badge */
+function updateNotificationBadge() {
+  const badge = document.getElementById("notificationBadge");
+  if (!badge) {
+    return;
+  }
+  const unreadCount = appState.notifications.filter(function (notification) {
+    return !notification.read;
+  }).length;
+  badge.textContent = unreadCount;
+  badge.classList.toggle("hidden", unreadCount === 0);
+}
+/* Mark All Read */
+function markAllNotificationsRead() {
+  appState.notifications.forEach(function (notification) {
+    notification.read = true;
+  });
+  saveAppState();
+  if (typeof renderNotifications === "function") {
+    renderNotifications();
+  }
+  updateNotificationBadge();
+  showToast("All Notifications Read");
+}
+/* Create Notification */
+function createNotification(type, title, message) {
+  appState.notifications.unshift({
+    id: "notif_" + Date.now(),
+    type,
+    title,
+    message,
+    createdAt: Date.now(),
+    read: false,
+  });
+  saveAppState();
+  updateNotificationBadge();
+}
