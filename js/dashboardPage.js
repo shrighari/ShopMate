@@ -8,6 +8,8 @@ const openCategoryBottomSheetButton = document.getElementById(
 const bottomSheetContent = document.getElementById("bottomSheetContent");
 const screenOverlay = document.getElementById("screenOverlay");
 const menuButton = document.querySelector(".menuButton");
+const sideDrawer = document.getElementById("sideDrawer");
+const sideDrawerOverlay = document.getElementById("sideDrawerOverlay");
 /* Initialize Dashboard */
 function initializeDashboard() {
   restoreLastGroup();
@@ -539,34 +541,22 @@ function renameGroup(groupName) {
 /* Save Renamed Group */
 function saveRenamedGroup(oldGroupName) {
   const newGroupName = document.getElementById("renameGroupInput").value.trim();
-
   if (!newGroupName) {
     showDialog("Missing Name", "Please enter a group name.");
-
     return;
   }
-
   appState.groups[newGroupName] = appState.groups[oldGroupName];
-
   delete appState.groups[oldGroupName];
-
   if (appState.activeGroup === oldGroupName) {
     appState.activeGroup = newGroupName;
-
     selectedGroupName.textContent = newGroupName;
-
     localStorage.setItem("activeGroup", newGroupName);
   }
-
   saveAppState();
-
   renderCategories();
-
   closeBottomSheet();
-
   showToast("Group Renamed");
 }
-
 /* Delete Group */
 function deleteGroup(groupName) {
   const confirmation = confirm("Delete this group?");
@@ -614,95 +604,185 @@ function sortCategoriesByPending() {
   closeBottomSheet();
 }
 /* Render Dashboard Menu */
-function renderDashboardMenu() {
-  bottomSheetContent.innerHTML = `
-        <div class="bottomSheetHeader">
-            <h2>
-                Dashboard Menu
-            </h2>
-            <button
-                class="closeButton"
-                onclick="closeBottomSheet()"
-            >
-                ✕
-            </button>
-        </div>
-        <button
-        class="bottomSheetActionButton"
-        onclick="window.location.href ='../pages/familyManagementPage.html'">
-        👨‍👩‍👧 Group Management </button>
-        <div class="bottomSheetBody">
-            <button
-                class="bottomSheetActionButton"
-                onclick="sortCategories()"
-            >
-                🔤 Sort A-Z
-            </button>
-            <button
-                class="bottomSheetActionButton"
-                onclick="
-                    sortCategoriesByPending()
-                "
-            >
-                📋 Sort By Pending
-            </button>
-            <button
-    class="bottomSheetActionButton"
-    onclick="exportAppData()"
->
-    📤 Export Backup
-</button>
-<label
-    class="bottomSheetActionButton importBackupButton"
->
-    📥 Import Backup
-    <input
-        type="file"
-        accept=".json"
-        hidden
-        onchange="importAppData(event)"
-    >
-</label>
-        </div>
-        <button
-  class="bottomSheetActionButton"
-  onclick="
-    window.location.href =
-    '../pages/notificationsPage.html'
-  "
->
-  🔔 Notifications
-</button>
-<button
-  class="bottomSheetActionButton"
-  onclick="
-    window.location.href =
-    '../pages/budgetPage.html'
-  "
->
-  💰 Budget
-</button>
-<button
-  class="bottomSheetActionButton"
-  onclick="
-    window.location.href =
-    '../pages/productCatalogPage.html'
-  "
->
-  📦 Product Catalog
-</button>
-<button
-  class="bottomSheetActionButton"
-  onclick="
-    window.location.href =
-    '../pages/settingsPage.html'
-  "
->
-  ⚙ Settings
-</button>
-    `;
-  openBottomSheet();
+// function renderDashboardMenu() {
+//   bottomSheetContent.innerHTML = `
+//         <div class="bottomSheetHeader">
+//             <h2>
+//                 Dashboard Menu
+//             </h2>
+//             <button
+//                 class="closeButton"
+//                 onclick="closeBottomSheet()"
+//             >
+//                 ✕
+//             </button>
+//         </div>
+//         <button
+//         class="bottomSheetActionButton"
+//         onclick="window.location.href ='../pages/familyManagementPage.html'">
+//         👨‍👩‍👧 Group Management </button>
+//         <div class="bottomSheetBody">
+//             <button
+//                 class="bottomSheetActionButton"
+//                 onclick="sortCategories()"
+//             >
+//                 🔤 Sort A-Z
+//             </button>
+//             <button
+//                 class="bottomSheetActionButton"
+//                 onclick="
+//                     sortCategoriesByPending()
+//                 "
+//             >
+//                 📋 Sort By Pending
+//             </button>
+//             <button
+//     class="bottomSheetActionButton"
+//     onclick="exportAppData()"
+// >
+//     📤 Export Backup
+// </button>
+// <label
+//     class="bottomSheetActionButton importBackupButton"
+// >
+//     📥 Import Backup
+//     <input
+//         type="file"
+//         accept=".json"
+//         hidden
+//         onchange="importAppData(event)"
+//     >
+// </label>
+//         </div>
+//         <button
+//   class="bottomSheetActionButton"
+//   onclick="
+//     window.location.href =
+//     '../pages/notificationsPage.html'
+//   "
+// >
+//   🔔 Notifications
+// </button>
+// <button
+//   class="bottomSheetActionButton"
+//   onclick="
+//     window.location.href =
+//     '../pages/budgetPage.html'
+//   "
+// >
+//   💰 Budget
+// </button>
+// <button
+//   class="bottomSheetActionButton"
+//   onclick="
+//     window.location.href =
+//     '../pages/productCatalogPage.html'
+//   "
+// >
+//   📦 Product Catalog
+// </button>
+// <button
+//   class="bottomSheetActionButton"
+//   onclick="
+//     window.location.href =
+//     '../pages/settingsPage.html'
+//   "
+// >
+//   ⚙ Settings
+// </button>
+//     `;
+//   openBottomSheet();
+// }
+/* Open Side Drawer */
+function openSideDrawer() {
+  renderSideDrawer();
+  const drawerPosition = appState.drawerPosition || "right";
+  sideDrawer.classList.remove("left", "right");
+  sideDrawer.classList.add(drawerPosition);
+  sideDrawer.classList.add("active");
+  sideDrawerOverlay.classList.add("active");
 }
+function closeSideDrawer() {
+  sideDrawer.classList.remove("active");
+  sideDrawerOverlay.classList.remove("active");
+}
+/* Render Side Drawer */
+function renderSideDrawer() {
+  sideDrawer.innerHTML = `
+    <div class="drawerHeader">
+      <div class="drawerTitle">
+        ShopMate
+      </div>
+    </div>
+    <div class="drawerMenu">
+      <button
+        class="drawerItem"
+        onclick="
+          window.location.href =
+          '../pages/familyManagementPage.html'
+        "
+      >
+        👨‍👩‍👧 Group Management
+      </button>
+      <button
+        class="drawerItem"
+        onclick="
+          window.location.href =
+          '../pages/notificationsPage.html'
+        "
+      >
+        🔔 Notifications
+      </button>
+      <button
+        class="drawerItem"
+        onclick="
+          window.location.href =
+          '../pages/budgetPage.html'
+        "
+      >
+        💰 Budget
+      </button>
+      <button
+        class="drawerItem"
+        onclick="
+          window.location.href =
+          '../pages/productCatalogPage.html'
+        "
+      >
+        📦 Product Catalog
+      </button>
+      <button
+        class="drawerItem"
+        onclick="
+          window.location.href =
+          '../pages/settingsPage.html'
+        "
+      >
+        ⚙ Settings
+      </button>
+      <button
+        class="drawerItem"
+        onclick="exportAppData()"
+      >
+        📤 Export Backup
+      </button>
+      <label
+        class="drawerItem"
+      >
+        📥 Import Backup
+        <input
+          type="file"
+          accept=".json"
+          hidden
+          onchange="
+            importAppData(event)
+          "
+        >
+      </label>
+    </div>
+  `;
+}
+/* Render Budget Dashboard Widget */
 function renderBudgetDashboardWidget() {
   const budgetWidget = document.getElementById("budgetDashboardWidget");
   if (!budgetWidget || !appState.budgets) {
@@ -838,7 +918,7 @@ if (screenOverlay) {
   screenOverlay.addEventListener("click", closeBottomSheet);
 }
 if (menuButton) {
-  menuButton.addEventListener("click", renderDashboardMenu);
+  menuButton.addEventListener("click", openSideDrawer);
 }
 /* Initial Render */
 initializeDashboard();

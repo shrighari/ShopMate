@@ -12,6 +12,7 @@ const defaultAppState = {
   productCatalog: {},
   notifications: [],
   dashboardBudgetExpanded: false,
+  drawerPosition: "right",
   users: [
     {
       id: "user_1",

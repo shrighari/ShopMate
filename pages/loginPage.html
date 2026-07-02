@@ -1,16 +1,11 @@
 <!doctype html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>ShopMate Login</title>
-
     <link rel="stylesheet" href="../css/appStyles.css" />
   </head>
-
   <body>
     <div class="authPage">
       <div class="authCard">
@@ -24,76 +19,54 @@
           </div>
           <p class="authTagline">Manage family shopping together</p>
         </div>
-
         <input
           type="email"
           placeholder="Username"
           class="authInput"
           id="loginEmailInput"
         />
-
         <input
           type="password"
           placeholder="Password"
           class="authInput"
           id="loginPasswordInput"
         />
-
         <div class="authBiometricRow">
           <button class="biometricButton">👆</button>
-
           <span class="authOrText"> OR </span>
-
           <button class="biometricButton">😊</button>
         </div>
-
         <button class="authButton" onclick="loginUser()">LOGIN</button>
-
         <button class="authTextButton">Forgot Password?</button>
-
         <p class="authInviteText">
           New user? To join, please use the invite link provided by your Admin.
         </p>
       </div>
     </div>
-
     <script src="../js/stateManager.js"></script>
-
     <script src="../js/authManager.js"></script>
-
     <script>
       function loginUser() {
         const email = document.getElementById("loginEmailInput").value.trim();
-
         const password = document
           .getElementById("loginPasswordInput")
           .value.trim();
-
         const user = appState.users.find(function (user) {
           return user.email === email && user.password === password;
         });
-
         if (!user) {
           showDialog("Invalid Login", "Please check your email and password.");
-
           return;
         }
-
         appState.currentUser = {
           id: user.id,
-
           name: user.name,
-
           email: user.email,
           role: "admin",
         };
-
         appState.loggedIn = true;
-
         appState.activeGroup = "Family Group";
-
         saveAppState();
-
         window.location.href = "./dashboardPage.html";
       }
     </script>

@@ -2,14 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>ShopMate Dashboard</title>
-
     <link rel="stylesheet" href="../css/appStyles.css" />
   </head>
-
   <body>
     <div class="appContainer">
       <header class="dashboardHeader">
@@ -19,46 +15,39 @@
             alt="ShopMate Logo"
             class="appLogo"
           />
-
           <h1 class="appName">ShopMate</h1>
         </div>
-
         <button class="menuButton">☰</button>
       </header>
-
       <main class="pageContent">
         <section class="groupDropdownSection">
           <button class="groupDropdownButton" id="groupDropdownButton">
             <span id="selectedGroupName"> No Group Selected </span>
-
             <span class="dropdownArrow"> ▼ </span>
           </button>
         </section>
-
         <section id="budgetDashboardWidget"></section>
-
         <section class="emptyStateSection" id="emptyStateSection">
           <p class="emptyStateText">Select or create a group</p>
         </section>
-
         <section class="categoryList" id="categoryList"></section>
       </main>
-
       <footer class="appFooter">© Wisemen IT Solutions</footer>
-
       <button class="floatingActionButton" id="openCategoryBottomSheetButton">
         +
       </button>
-
+      <div
+        class="sideDrawerOverlay"
+        id="sideDrawerOverlay"
+        onclick="closeSideDrawer()"
+      ></div>
+      <div class="sideDrawer right" id="sideDrawer"></div>
       <div class="screenOverlay hidden" id="screenOverlay"></div>
-
       <div class="bottomSheet hidden" id="bottomSheet">
         <div class="bottomSheetHandle"></div>
-
         <div class="bottomSheetContent" id="bottomSheetContent"></div>
       </div>
     </div>
-
     <script src="../js/stateManager.js"></script>
     <script src="../js/helpers.js"></script>
     <script src="../js/authManager.js"></script>

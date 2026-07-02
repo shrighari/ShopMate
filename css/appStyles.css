@@ -49,6 +49,7 @@ body {
 .appContainer {
   min-height: 100vh;
   position: relative;
+  padding-top: 0;
   padding-bottom: 100px;
 }
 /* Dashboard Header */
@@ -74,22 +75,28 @@ body {
   width: 56px;
   height: 56px;
   object-fit: contain;
+  flex-shrink: 0;
 }
 /* App Name */
 .appName {
-  color: #001c8f;
+  color: var(--primaryDark);
   flex: 1;
+  margin: 0;
   text-align: center;
-  font-size: 36px;
+  font-size: 42px;
   font-weight: 800;
+  letter-spacing: -1px;
 }
 /* Menu Button */
 .menuButton {
+  width: 48px;
+  height: 48px;
   border: none;
-  background: none;
-  font-size: 28px;
-  color: var(--greenColor);
+  background: transparent;
+  font-size: 32px;
   cursor: pointer;
+  color: var(--textColor);
+  flex-shrink: 0;
 }
 /* Page Content */
 .pageContent {
@@ -1869,6 +1876,72 @@ body {
 }
 .sideDrawer.active {
   transform: translateX(0);
+}
+.sideDrawerOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+  z-index: 998;
+}
+.sideDrawerOverlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.sideDrawer {
+  position: fixed;
+  top: 0;
+  width: 320px;
+  max-width: 85vw;
+  height: 100vh;
+  background: white;
+  z-index: 999;
+  overflow-y: auto;
+  transition: transform 0.25s ease;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+}
+/* Right Mode */
+.sideDrawer.right {
+  right: 0;
+  transform: translateX(100%);
+}
+.sideDrawer.right.active {
+  transform: translateX(0);
+}
+/* Left Mode */
+.sideDrawer.left {
+  left: 0;
+  transform: translateX(-100%);
+}
+.sideDrawer.left.active {
+  transform: translateX(0);
+}
+.drawerHeader {
+  padding: 24px;
+  border-bottom: 1px solid #eef2f7;
+}
+.drawerTitle {
+  font-size: 22px;
+  font-weight: 700;
+}
+.drawerMenu {
+  padding: 12px;
+}
+.drawerItem {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.drawerItem:hover {
+  background: #f7f9fc;
 }
 /* PASTE ABOVE THIS FOR NORMAL CSS ATTRIBUTES */
 /* KEYFRAMES FOR ANIMATION */
