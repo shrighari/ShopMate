@@ -1129,14 +1129,15 @@ body {
   color: #6b7280;
 }
 .authTextButton {
+  width: 100%;
   border: none;
-  background: transparent;
-  margin-top: 16px;
-  margin-left: 60px;
-  color: #118ab2;
+  background: none;
+  color: var(--primaryColor);
   font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
   text-align: center;
+  margin-top: 14px;
 }
 .authInviteText {
   margin-top: 24px;
@@ -1151,6 +1152,19 @@ body {
   gap: 12px;
   margin: 8px 0 18px;
   font-size: 15px;
+}
+.forgotPasswordButton {
+  margin-bottom: 10px;
+}
+.authRegisterButton {
+  width: 100%;
+  margin: 20px 0;
+}
+.authInviteSubText {
+  text-align: center;
+  color: #64748b;
+  font-size: 14px;
+  margin-top: 6px;
 }
 /* Group Management */
 .groupManagementHeader {
@@ -2018,6 +2032,52 @@ body {
   color: var(--primaryColor);
   font-weight: 600;
   cursor: pointer;
+}
+.authDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 22px 0 18px;
+}
+.authDivider::before,
+.authDivider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #d9e2ec;
+}
+.authDivider span {
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+.authRegisterButton {
+  width: 100%;
+  margin-bottom: 18px;
+}
+.authInviteSubText {
+  margin-top: 6px;
+  font-size: 13px;
+  text-align: center;
+  color: #64748b;
+  line-height: 1.5;
+}
+.actionIcon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.smallIcon {
+  width: 18px;
+  height: 18px;
+}
+.largeIcon {
+  width: 28px;
+  height: 28px;
 }
 /* PASTE ABOVE THIS FOR NORMAL CSS ATTRIBUTES */
 /* KEYFRAMES FOR ANIMATION */

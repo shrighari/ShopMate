@@ -1,27 +1,33 @@
 /* Open Bottom Sheet */
+/* Open Bottom Sheet */
 function openBottomSheet() {
   const bottomSheet = document.getElementById("bottomSheet");
   const screenOverlay = document.getElementById("screenOverlay");
   const appFooter = document.querySelector(".appFooter");
-  if (!bottomSheet) {
+  if (!bottomSheet || !screenOverlay) {
     return;
   }
   screenOverlay.classList.remove("hidden");
   bottomSheet.classList.remove("hidden");
-  appFooter.classList.add("hiddenFooter");
+  if (appFooter) {
+    appFooter.classList.add("hiddenFooter");
+  }
   document.body.style.overflow = "hidden";
 }
+/* Close Bottom Sheet */
 /* Close Bottom Sheet */
 function closeBottomSheet() {
   const bottomSheet = document.getElementById("bottomSheet");
   const screenOverlay = document.getElementById("screenOverlay");
   const appFooter = document.querySelector(".appFooter");
-  if (!bottomSheet) {
+  if (!bottomSheet || !screenOverlay) {
     return;
   }
   screenOverlay.classList.add("hidden");
   bottomSheet.classList.add("hidden");
-  appFooter.classList.remove("hiddenFooter");
+  if (appFooter) {
+    appFooter.classList.remove("hiddenFooter");
+  }
   document.body.style.overflow = "";
 }
 /* Close Bottom Sheet On Escape */

@@ -21,7 +21,7 @@
         </div>
         <input
           type="email"
-          placeholder="Username"
+          placeholder="Email Address"
           class="authInput"
           id="loginEmailInput"
         />
@@ -32,18 +32,54 @@
           id="loginPasswordInput"
         />
         <div class="authBiometricRow">
-          <button class="biometricButton">👆</button>
+          <button class="biometricButton">
+            <img
+              src="../assets/icons/fingerprint.svg"
+              class="actionIcon"
+              alt="Edit"
+            />
+          </button>
           <span class="authOrText"> OR </span>
-          <button class="biometricButton">😊</button>
+          <button class="biometricButton">
+            <img
+              src="../assets/icons/faceid.svg"
+              class="actionIcon"
+              alt="Edit"
+            />
+          </button>
         </div>
         <button class="authButton" onclick="loginUser()">LOGIN</button>
-        <button class="authTextButton">Forgot Password?</button>
-        <p class="authInviteText">
-          New user? To join, please use the invite link provided by your Admin.
+        <button
+          class="authTextButton forgotPasswordButton"
+          onclick="renderForgotPasswordForm()"
+        >
+          Forgot Password?
+        </button>
+        <div class="authDivider">
+          <span>OR</span>
+        </div>
+        <button
+          class="secondaryButton authRegisterButton"
+          onclick="window.location.href = './registerPage.html'"
+        >
+          Create Family Account
+        </button>
+        <p class="authInviteSubText">Already invited?</p>
+        <p class="authInviteSubText">Check your invitation email.</p>
+        <p class="authInviteText">Already invited by your Group Admin?</p>
+        <p class="authInviteSubText">
+          Use the invitation email sent to your registered email address.
         </p>
       </div>
     </div>
+    <div class="screenOverlay hidden" id="screenOverlay"></div>
+    <div class="bottomSheet hidden" id="bottomSheet">
+      <div class="bottomSheetHandle"></div>
+      <div class="bottomSheetContent" id="bottomSheetContent"></div>
+    </div>
     <script src="../js/stateManager.js"></script>
+    <script src="../js/helpers.js"></script>
+    <!-- <script src="../js/bottomSheet.js"></script> -->
     <script src="../js/authManager.js"></script>
     <script>
       function loginUser() {

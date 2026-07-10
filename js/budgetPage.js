@@ -1,6 +1,3 @@
-const bottomSheet = document.getElementById("bottomSheet");
-const bottomSheetContent = document.getElementById("bottomSheetContent");
-const screenOverlay = document.getElementById("screenOverlay");
 function goBack() {
   window.location.href = "../pages/dashboardPage.html";
 }
@@ -32,6 +29,9 @@ function initializeBudgetPage() {
 }
 /*Open Bottom Sheet */
 function openBottomSheet() {
+  const bottomSheet = document.getElementById("bottomSheet");
+  const bottomSheetContent = document.getElementById("bottomSheetContent");
+  const screenOverlay = document.getElementById("screenOverlay");
   screenOverlay.classList.remove("hidden");
   bottomSheet.classList.remove("hidden");
   document.body.style.overflow = "hidden";

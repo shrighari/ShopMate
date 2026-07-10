@@ -1,160 +1,120 @@
 <!doctype html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Register</title>
-
     <link rel="stylesheet" href="../css/appStyles.css" />
   </head>
-
   <body>
     <div class="authPage">
       <div class="authCard">
         <h1 class="authTitle">Register</h1>
-
         <input
           type="text"
           placeholder="Full Name"
           class="authInput"
           id="registerNameInput"
         />
-
         <input
           type="email"
           placeholder="Email Address"
           class="authInput"
           id="registerEmailInput"
         />
-
         <input
           type="password"
           placeholder="Password"
           class="authInput"
           id="registerPasswordInput"
         />
-
         <input
           type="password"
           placeholder="Confirm Password"
           class="authInput"
           id="registerConfirmPasswordInput"
         />
-
         <input
           type="text"
           placeholder="Family Name"
           class="authInput"
           id="familyNameInput"
         />
-
         <label class="biometricToggle">
           <input type="checkbox" id="biometricCheckbox" />
-
           Enable Fingerprint / Face ID
         </label>
-
         <button class="authButton" onclick="registerUser()">Register</button>
+        <button
+          class="authTextButton"
+          onclick="window.location.href = './loginPage.html'"
+        >
+          Already have an account? Login
+        </button>
       </div>
     </div>
-
     <script src="../js/stateManager.js"></script>
-
     <script>
       function registerUser() {
         const name = document.getElementById("registerNameInput").value.trim();
-
         const email = document
           .getElementById("registerEmailInput")
           .value.trim();
-
         const password = document
           .getElementById("registerPasswordInput")
           .value.trim();
-
         const confirmPassword = document
           .getElementById("registerConfirmPasswordInput")
           .value.trim();
-
         const familyName = document
           .getElementById("familyNameInput")
           .value.trim();
-
         const biometricEnabled =
           document.getElementById("biometricCheckbox").checked;
-
         if (!name || !email || !password || !confirmPassword || !familyName) {
           showDialog("Please fill all fields");
-
           return;
         }
-
         if (password !== confirmPassword) {
           showDialog("Passwords do not match");
-
           return;
         }
-
         const existingUser = appState.users.find(function (user) {
           return user.email === email;
         });
-
         if (existingUser) {
           showDialog(
             "Account already exists",
             "An account with this email address already exists.",
           );
-
           return;
         }
-
         const userId = "user_" + Date.now();
-
         const newUser = {
           id: userId,
-
           name,
-
           email,
-
           password,
-
           biometricEnabled,
         };
-
         appState.users.push(newUser);
-
         appState.groups[familyName] = [];
-
         appState.groupMembers[familyName] = [
           {
             id: userId,
-
             name,
-
             email,
-
             role: "admin",
           },
         ];
-
         appState.currentUser = {
           id: userId,
-
           name,
-
           email,
         };
-
         appState.loggedIn = true;
-
         appState.activeGroup = familyName;
-
         saveAppState();
-
         window.location.href = "./dashboardPage.html";
       }
     </script>
