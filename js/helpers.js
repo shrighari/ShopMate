@@ -114,6 +114,12 @@ function selectSuggestedProduct(productName) {
   suggestionContainer.classList.remove("showSuggestions");
   document.getElementById("itemQuantityInput").focus();
 }
+/* Icon Path Helper */
+const ICON_BASE_PATH = "../assets/icons";
+/* Returns icon path */
+function getIconPath(folder, iconName) {
+  return `${ICON_BASE_PATH}/${folder}/${iconName}.svg`;
+}
 /* Find Product */
 function findProduct(productName) {
   return productDatabase.find(function (product) {

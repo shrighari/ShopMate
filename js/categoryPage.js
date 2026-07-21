@@ -99,17 +99,37 @@ function renderItems(items) {
             <div class="swipeWrapper">
                 <div class="swipeBackground">
                     <div class="swipePurchased">
-                      ${
-                        appState.activeTab === "favorites"
-                          ? "➕ Add to List"
-                          : appState.activeTab === "purchased"
-                            ? "↺ Re-Add"
-                            : "✓ Purchased"
-                      }
-                    </div>
-                    <div class="swipeDelete">
-                      ${appState.activeTab === "favorites" ? "💔 Remove Favorite" : "🗑 Delete"}
-                    </div>
+  <img
+    src="${
+      appState.activeTab === "favorites"
+        ? getIconPath("actions", "add")
+        : appState.activeTab === "purchased"
+          ? getIconPath("actions", "re-add")
+          : getIconPath("actions", "purchased")
+    }"
+    class="icon actionIcon"
+    alt=""
+  >
+  ${
+    appState.activeTab === "favorites"
+      ? "Add to List"
+      : appState.activeTab === "purchased"
+        ? "Re-Add"
+        : "Purchased"
+  }
+</div>
+<div class="swipeDelete">
+  <img
+    src="${
+      appState.activeTab === "favorites"
+        ? getIconPath("actions", "favorite")
+        : getIconPath("actions", "delete")
+    }"
+    class="icon actionIcon"
+    alt=""
+  >
+  ${appState.activeTab === "favorites" ? "Remove Favorite" : "Delete"}
+</div>
                 </div>
                <div class="itemCard swipeCard ${
                  appState.selectedItems.includes(item.name)
@@ -120,7 +140,9 @@ function renderItems(items) {
                }" onclick=" event.stopPropagation();
     if(appState.selectionMode){
         toggleItemSelection('${item.name}');
-    }" oncontextmenu=" event.preventDefault(); toggleItemSelection('${item.name}');">
+    }" oncontextmenu=" event.preventDefault(); toggleItemSelection('${
+      item.name
+    }');">
                <div class="itemCardTopRow">
                <div class="itemTitleSection">
 <h2
@@ -144,14 +166,30 @@ Qty: ${item.quantity}
 }
 </div>
                <div class="itemActionButtons">
-               <button class="modernActionButton favoriteActionButton ${isFavorite ? "activeFavoriteButton" : ""} " onclick="event.stopPropagation(); toggleFavorite('${item.name}');">
-               <span class="actionButtonIcon">
-               ${isFavorite ? "♥" : "♡"}
-               </span>
-               </button>
+                <button
+  class="modernActionButton favoriteActionButton ${
+    isFavorite ? "activeFavoriteButton" : ""
+  }"
+  onclick="event.stopPropagation(); toggleFavorite('${item.name}');"
+>
+  <img
+    src="${getIconPath("actions", "favorite")}"
+    class="icon actionIcon"
+    alt="Favorite"
+  >
+</button>
                ${
                  appState.activeTab === "favorites"
-                   ? `<button class="modernActionButton addActionButton" onclick="addFavoriteToList('${item.name}')">+</button>
+                   ? `<button
+  class="modernActionButton addActionButton"
+  onclick="addFavoriteToList('${item.name}')"
+>
+  <img
+    src="${getIconPath("actions", "add")}"
+    class="icon actionIcon"
+    alt="Add"
+  >
+</button>
             `
                    : `
             <button
@@ -166,7 +204,15 @@ Qty: ${item.quantity}
     "
 >
     <span class="actionButtonIcon">
-        ${appState.activeTab === "purchased" ? "↺" : "✓"}
+       <img
+  src="${
+    appState.activeTab === "purchased"
+      ? getIconPath("actions", "re-add")
+      : getIconPath("actions", "purchased")
+  }"
+  class="icon actionIcon"
+  alt=""
+>
     </span>
 </button>
             `
@@ -183,7 +229,13 @@ Qty: ${item.quantity}
                     ? `<img src="${getProductImage(item.name)}"
                             class="itemImage"
                             alt="${item.name}">`
-                    : `<div class="itemImagePlaceholder">📦</div>`
+                    : `<div class="itemImagePlaceholder">
+  <img
+    src="${getIconPath("actions", "package")}"
+    class="icon largeIcon"
+    alt="Product"
+  >
+</div>`
                 }
             </div>
           `
@@ -205,7 +257,13 @@ Qty: ${item.quantity}
                     ? `<img src="${getProductImage(item.name)}"
                             class="itemImage"
                             alt="${item.name}">`
-                    : `<div class="itemImagePlaceholder">📦</div>`
+                    : `<div class="itemImagePlaceholder">
+  <img
+    src="${getIconPath("actions", "package")}"
+    class="icon largeIcon"
+    alt="Product"
+  >
+</div>`
                 }
             </div>
           `

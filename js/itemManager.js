@@ -17,10 +17,12 @@ function renderAddItemForm(itemName = "") {
       <button
         class="closeButton"
         onclick="
-          favoriteItemToAdd=null;
-          closeBottomSheet();"
-      >
-        ✕
+          favoriteItemToAdd = null;
+          closeBottomSheet();">
+        <img
+          src="${getIconPath("navigation", "close")}"
+          class="icon actionIcon"
+          alt="Close">
       </button>
     </div>
     <div class="bottomSheetBody">
@@ -140,11 +142,15 @@ function renderEditItemForm(itemName) {
         Edit Item
       </h2>
       <button
-        class="closeButton"
-        onclick="closeBottomSheet()"
-      >
-        ✕
-      </button>
+  class="closeButton"
+  onclick="closeBottomSheet()"
+>
+  <img
+    src="${getIconPath("navigation", "close")}"
+    class="icon actionIcon"
+    alt="Close"
+  >
+</button>
     </div>
     <div class="bottomSheetBody">
       <div class="formField">
@@ -379,11 +385,15 @@ function createItem() {
                     Item Already Exists
                 </h2>
                 <button
-                    class="closeButton"
-                    onclick="closeBottomSheet()"
-                >
-                    ✕
-                </button>
+  class="closeButton"
+  onclick="closeBottomSheet()"
+>
+  <img
+    src="${getIconPath("navigation", "close")}"
+    class="icon actionIcon"
+    alt="Close"
+  >
+</button>
             </div>
             <div class="bottomSheetBody">
                 <p class="duplicateMessage">
@@ -545,13 +555,15 @@ function openPurchaseConfirmation(itemName) {
         Confirm Purchase
       </h2>
       <button
-        class="closeButton"
-        onclick="
-          closeBottomSheet()
-        "
-      >
-        ✕
-      </button>
+  class="closeButton"
+  onclick="closeBottomSheet()"
+>
+  <img
+    src="${getIconPath("navigation", "close")}"
+    class="icon actionIcon"
+    alt="Close"
+  >
+</button>
     </div>
     <div class="bottomSheetBody">
       <div class="purchaseSummaryCard">

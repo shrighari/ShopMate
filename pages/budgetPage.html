@@ -9,25 +9,16 @@
   <body>
     <div class="appContainer">
       <header class="modernHeader">
-        <button class="modernBackButton" onclick="goBack()">←</button>
+        <button class="modernBackButton" onclick="goBack()">
+          <img
+            src="../assets/icons/navigation/back.svg"
+            class="icon navigationIcon"
+            alt="Back"
+          />
+        </button>
         <h1 class="modernPageTitle">Budget</h1>
       </header>
       <main class="pageContent">
-        <!-- <section class="budgetHero" id="budgetHero"></section>
-        <section class="budgetStats" id="budgetStats"></section>
-        <section class="budgetCategorySection">
-          <div class="budgetSectionHeader">
-            <h2 class="settingsSectionTitle">Category Budgets</h2>
-            <button
-              id="createBudgetButton"
-              class="primaryButton"
-              onclick="renderCreateBudgetForm()"
-            >
-              + Budget
-            </button>
-          </div>
-          <div id="budgetCategoryList"></div>
-        </section> -->
         <div id="budgetAnalysisContainer"></div>
       </main>
     </div>

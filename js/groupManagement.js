@@ -43,12 +43,16 @@ function renderGroupAccordion() {
               ${categories.length} Categories
             </p>
           </div>
-          <span
-            id="accordionIcon_${groupName}"
-            class="accordionIcon"
-          >
-            ▶
-          </span>
+         <span
+  id="accordionIcon_${groupName}"
+  class="accordionIcon"
+>
+  <img
+    src="${getIconPath("navigation", "expand")}"
+    class="icon actionIcon"
+    alt=""
+  >
+</span>
         </button>
         <div
           id="accordionBody_${groupName}"
@@ -137,23 +141,6 @@ function renderGroupAccordion() {
 }
 /* Toggle Group Accordion */
 function toggleGroupAccordion(groupName) {
-  document.querySelectorAll(".groupAccordionBody").forEach(function (body) {
-    if (body.id !== `accordionBody_${groupName}`) {
-      body.classList.add("hidden");
-    }
-  });
-  document.querySelectorAll(".accordionIcon").forEach(function (icon) {
-    if (icon.id !== `accordionIcon_${groupName}`) {
-      icon.textContent = "▶";
-    }
-  });
-  const body = document.getElementById(`accordionBody_${groupName}`);
-  const icon = document.getElementById(`accordionIcon_${groupName}`);
-  body.classList.toggle("hidden");
-  icon.textContent = body.classList.contains("hidden") ? "▶" : "▼";
-}
-/* Toggle Group Accordion */
-function toggleGroupAccordion(groupName) {
   const body = document.getElementById(`accordionBody_${groupName}`);
   const icon = document.getElementById(`accordionIcon_${groupName}`);
   const isHidden = body.classList.contains("hidden");
@@ -161,11 +148,23 @@ function toggleGroupAccordion(groupName) {
     item.classList.add("hidden");
   });
   document.querySelectorAll(".accordionIcon").forEach(function (item) {
-    item.textContent = "▶";
+    item.innerHTML = `
+      <img
+        src="${getIconPath("navigation", "expand")}"
+        class="icon actionIcon"
+        alt=""
+      >
+    `;
   });
   if (isHidden) {
     body.classList.remove("hidden");
-    icon.textContent = "▼";
+    icon.innerHTML = `
+      <img
+        src="${getIconPath("navigation", "collapse")}"
+        class="icon actionIcon"
+        alt=""
+      >
+    `;
   }
 }
 /* Switch Group */
@@ -203,7 +202,11 @@ function openInviteActions(email) {
         class="closeButton"
         onclick="closeBottomSheet()"
       >
-        ✕
+        <img
+  src="${getIconPath("navigation", "close")}"
+  class="icon actionIcon"
+  alt="Close"
+>
       </button>
     </div>
     <div class="bottomSheetBody">
@@ -250,7 +253,11 @@ function renderJoinGroupForm() {
         class="closeButton"
         onclick="closeBottomSheet()"
       >
-        ✕
+        <img
+  src="${getIconPath("navigation", "close")}"
+  class="icon actionIcon"
+  alt="Close"
+>
       </button>
     </div>
     <div class="bottomSheetBody">
@@ -330,7 +337,11 @@ function openMemberActions(memberId) {
         class="closeButton"
         onclick="closeBottomSheet()"
       >
-        ✕
+        <img
+  src="${getIconPath("navigation", "close")}"
+  class="icon actionIcon"
+  alt="Close"
+>
       </button>
     </div>
     <div class="bottomSheetBody">
@@ -345,7 +356,12 @@ function openMemberActions(memberId) {
                 )
               "
             >
-              👑 Make Admin
+              <img
+  src="${getIconPath("features", "admin")}"
+  class="icon featureIcon"
+  alt=""
+>
+<span>Make Admin</span>
             </button>
           `
           : ""
@@ -361,7 +377,12 @@ function openMemberActions(memberId) {
                 )
               "
             >
-              👑 Transfer Ownership
+              <img
+  src="${getIconPath("features", "admin")}"
+  class="icon featureIcon"
+  alt=""
+>
+<span>Transfer Ownership</span>
             </button>
           `
           : ""
@@ -377,7 +398,12 @@ function openMemberActions(memberId) {
           )
         "
       >
-        🗑 Remove Member
+        <img
+  src="${getIconPath("actions", "delete")}"
+  class="icon actionIcon"
+  alt=""
+>
+<span>Remove Member</span>
       </button>
     </div>
   `;
@@ -449,7 +475,11 @@ function openRemoveMemberDialog(memberId) {
         class="closeButton"
         onclick="closeBottomSheet()"
       >
-        ✕
+        <img
+  src="${getIconPath("navigation", "close")}"
+  class="icon actionIcon"
+  alt="Close"
+>
       </button>
     </div>
     <div class="bottomSheetBody">
@@ -517,7 +547,11 @@ function renderInviteMemberForm() {
         class="closeButton"
         onclick="closeBottomSheet()"
       >
-        ✕
+        <img
+  src="${getIconPath("navigation", "close")}"
+  class="icon actionIcon"
+  alt="Close"
+>
       </button>
     </div>
     <div class="bottomSheetBody">
@@ -606,7 +640,11 @@ function openLeaveGroupDialog() {
         class="closeButton"
         onclick="closeBottomSheet()"
       >
-        ✕
+        <img
+  src="${getIconPath("navigation", "close")}"
+  class="icon actionIcon"
+  alt="Close"
+>
       </button>
     </div>
     <div class="bottomSheetBody">

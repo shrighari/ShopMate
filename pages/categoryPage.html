@@ -2,124 +2,114 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>ShopMate Category</title>
-
     <link rel="stylesheet" href="../css/appStyles.css" />
   </head>
-
   <body>
     <div class="appContainer">
       <!-- HEADER -->
-
       <header class="modernHeader">
-        <button class="modernBackButton" id="backButton">←</button>
-
+        <button class="modernBackButton" id="backButton">
+          <img
+            src="../assets/icons/navigation/back.svg"
+            class="icon navigationIcon"
+            alt="Back"
+          />
+        </button>
         <h1 class="modernPageTitle" id="categoryPageTitle">Category</h1>
       </header>
-
       <!-- MAIN CONTENT -->
-
       <main class="pageContent">
         <!-- TABS -->
-
         <div class="modernTabContainer">
           <button class="modernTabButton tabButton activeTab" data-tab="lists">
             Lists
           </button>
-
           <button class="modernTabButton tabButton" data-tab="favorites">
             Favorites
           </button>
-
           <button class="modernTabButton tabButton" data-tab="purchased">
             Purchased
           </button>
         </div>
-
         <!-- SEARCH -->
-
         <div class="searchWrapper">
-          <span class="searchIcon">⌕</span>
-
+          <span class="searchIcon">
+            <img
+              src="../assets/icons/actions/search.svg"
+              class="icon actionIcon"
+              alt="Search"
+            />
+          </span>
           <input
             type="text"
             class="modernSearchInput searchInput"
             placeholder="Search Items"
           />
         </div>
-
         <!-- EMPTY STATE -->
-
         <section class="emptyStateSection" id="itemEmptyState"></section>
-
         <!-- ITEM LIST -->
-
         <section class="itemList" id="itemList"></section>
       </main>
-
       <!-- BULK ACTION BAR -->
-
       <div class="bulkActionBar hidden" id="bulkActionBar">
         <div class="bulkSelectionCount" id="bulkSelectionCount">1 Selected</div>
-
-        <button class="bulkActionButton" id="bulkFavoriteButton">♥</button>
-
-        <button class="bulkActionButton" id="bulkPurchasedButton">✓</button>
-
-        <button class="bulkActionButton" id="bulkDeleteButton">🗑</button>
+        <button class="bulkActionButton" id="bulkFavoriteButton">
+          <img
+            src="../assets/icons/actions/favorite.svg"
+            class="icon actionIcon"
+            alt="Favorite"
+          />
+        </button>
+        <button class="bulkActionButton" id="bulkPurchasedButton">
+          <img
+            src="../assets/icons/actions/purchased.svg"
+            class="icon actionIcon"
+            alt="Purchased"
+          />
+        </button>
+        <button class="bulkActionButton" id="bulkDeleteButton">
+          <img
+            src="../assets/icons/actions/delete.svg"
+            class="icon actionIcon"
+            alt="Delete"
+          />
+        </button>
       </div>
-
       <!-- FOOTER -->
-
       <footer class="appFooter">© Wisemen IT Solutions</footer>
-
       <!-- FLOATING ACTION BUTTON -->
-
       <button class="floatingActionButton" id="openItemBottomSheetButton">
-        +
+        <img
+          src="../assets/icons/actions/add.svg"
+          class="icon largeIcon"
+          alt="Add Item"
+        />
       </button>
-
       <!-- SNACKBAR -->
-
       <div class="snackbar hidden" id="snackbar">
         <span class="snackbarText" id="snackbarText"></span>
-
         <button class="snackbarButton" id="snackbarUndoButton">Undo</button>
       </div>
-
       <!-- OVERLAY -->
-
       <div class="screenOverlay hidden" id="screenOverlay"></div>
-
       <!-- BOTTOM SHEET -->
-
       <div class="bottomSheet hidden" id="bottomSheet">
         <div class="bottomSheetHandle"></div>
-
         <div class="bottomSheetContent" id="bottomSheetContent"></div>
       </div>
     </div>
-
     <!-- SCRIPTS -->
-
     <script src="../js/stateManager.js"></script>
-
     <script src="../js/helpers.js"></script>
-
     <script src="../js/favoritesManager.js"></script>
-
     <script src="../js/itemManager.js"></script>
-
     <script src="../js/swipeGestures.js"></script>
-
     <script src="../js/snackbarManager.js"></script>
-
     <script src="../js/selectionManager.js"></script>
     <script src="../js/authManager.js"></script>
-
     <script src="../js/categoryPage.js"></script>
   </body>
 </html>

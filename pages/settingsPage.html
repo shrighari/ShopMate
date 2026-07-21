@@ -1,57 +1,74 @@
 <!doctype html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Settings</title>
-
     <link rel="stylesheet" href="../css/appStyles.css" />
   </head>
-
   <body>
     <div class="appContainer">
       <header class="modernHeader">
-        <button class="modernBackButton" onclick="goBack()">←</button>
-
+        <button class="modernBackButton" onclick="goBack()">
+          <img
+            src="../assets/icons/navigation/back.svg"
+            class="icon navigationIcon"
+            alt="Back"
+          />
+        </button>
         <h1 class="modernPageTitle">Settings</h1>
       </header>
-
       <main class="pageContent">
         <section class="settingsSection">
           <h2 class="settingsSectionTitle">Account</h2>
-
           <button class="settingsCard" onclick="openProfilePage()">
-            👤 Profile
+            <img
+              src="../assets/icons/features/profile.svg"
+              class="icon featureIcon"
+              alt="Profile"
+            />
+            <span>Profile</span>
           </button>
-
           <button class="settingsCard" onclick="toggleBiometric()">
-            🔐 Biometrics
+            <img
+              src="../assets/icons/biometric/fingerprint.svg"
+              class="icon featureIcon"
+              alt="Biometrics"
+            />
+            <span>Biometrics</span>
           </button>
-
-          <button class="settingsCard" onclick="logoutUser()">🚪 Logout</button>
+          <button class="settingsCard" onclick="logoutUser()">
+            <img
+              src="../assets/icons/actions/logout.svg"
+              class="icon actionIcon"
+              alt="Logout"
+            />
+            <span>Logout</span>
+          </button>
         </section>
-
         <section class="settingsSection">
           <h2 class="settingsSectionTitle">Preferences</h2>
-
           <button class="settingsCard" onclick="toggleDarkMode()">
-            🌙 Dark Mode
+            <img
+              src="../assets/icons/features/dark-mode.svg"
+              class="icon featureIcon"
+              alt="Dark Mode"
+            />
+            <span>Dark Mode</span>
           </button>
-
           <button class="settingsCard" onclick="toggleNotifications()">
-            🔔 Notifications
+            <img
+              src="../assets/icons/features/notification.svg"
+              class="icon featureIcon"
+              alt="Notifications"
+            />
+            <span>Notifications</span>
           </button>
         </section>
       </main>
     </div>
-
     <script src="../js/stateManager.js"></script>
-
     <script src="../js/authManager.js"></script>
-
     <script src="../js/settingsPage.js"></script>
   </body>
 </html>

@@ -45,6 +45,45 @@ body {
   text-rendering: optimizeLegibility;
   overscroll-behavior-y: contain;
 }
+/* SVG Icon System */
+.icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+  vertical-align: middle;
+  user-select: none;
+  pointer-events: none;
+}
+.smallIcon {
+  width: 16px;
+  height: 16px;
+}
+.actionIcon {
+  width: 20px;
+  height: 20px;
+}
+.largeIcon {
+  width: 24px;
+  height: 24px;
+}
+.navigationIcon {
+  width: 22px;
+  height: 22px;
+}
+.featureIcon {
+  width: 22px;
+  height: 22px;
+}
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.iconButton img {
+  display: block;
+}
 /* App Container */
 .appContainer {
   min-height: 100vh;

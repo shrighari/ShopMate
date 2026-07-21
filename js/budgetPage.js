@@ -44,13 +44,15 @@ function openBudgetMenu(categoryName) {
         Budget Options
       </h2>
       <button
-        class="closeButton"
-        onclick="
-          closeBottomSheet()
-        "
-      >
-        ✕
-      </button>
+  class="closeButton"
+  onclick="closeBottomSheet()"
+>
+  <img
+    src="${getIconPath("navigation", "close")}"
+    class="icon actionIcon"
+    alt="Close"
+  >
+</button>
     </div>
     <div class="bottomSheetBody">
       <button
@@ -61,7 +63,12 @@ function openBudgetMenu(categoryName) {
           )
         "
       >
-        ✏ Edit Budget
+        <img
+  src="${getIconPath("actions", "edit")}"
+  class="icon actionIcon"
+  alt=""
+>
+<span>Edit Budget</span>
       </button>
       <button
         class="bottomSheetActionButton destructiveAction"
@@ -71,7 +78,12 @@ function openBudgetMenu(categoryName) {
           )
         "
       >
-        🗑 Delete Budget
+        <img
+  src="${getIconPath("actions", "delete")}"
+  class="icon actionIcon"
+  alt=""
+>
+<span>Delete Budget</span>
       </button>
     </div>
   `;
@@ -89,13 +101,15 @@ function editCategoryBudget(categoryName) {
         Edit Budget
       </h2>
       <button
-        class="closeButton"
-        onclick="
-          closeBottomSheet()
-        "
-      >
-        ✕
-      </button>
+  class="closeButton"
+  onclick="closeBottomSheet()"
+>
+  <img
+    src="${getIconPath("navigation", "close")}"
+    class="icon actionIcon"
+    alt="Close"
+  >
+</button>
     </div>
     <div class="bottomSheetBody">
       <input

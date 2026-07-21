@@ -17,13 +17,25 @@
           />
           <h1 class="appName">ShopMate</h1>
         </div>
-        <button class="menuButton">☰</button>
+        <button class="menuButton">
+          <img
+            src="../assets/icons/navigation/menu.svg"
+            class="icon navigationIcon"
+            alt="Menu"
+          />
+        </button>
       </header>
       <main class="pageContent">
         <section class="groupDropdownSection">
           <button class="groupDropdownButton" id="groupDropdownButton">
             <span id="selectedGroupName"> No Group Selected </span>
-            <span class="dropdownArrow"> ▼ </span>
+            <span class="dropdownArrow">
+              <img
+                src="../assets/icons/navigation/collapse.svg"
+                class="icon smallIcon"
+                alt=""
+              />
+            </span>
           </button>
         </section>
         <div id="budgetDashboardWidget" class="budgetDashboardWidget"></div>
@@ -34,7 +46,11 @@
       </main>
       <footer class="appFooter">© Wisemen IT Solutions</footer>
       <button class="floatingActionButton" id="openCategoryBottomSheetButton">
-        +
+        <img
+          src="../assets/icons/actions/add.svg"
+          class="icon largeIcon"
+          alt="Add Category"
+        />
       </button>
       <div
         class="sideDrawerOverlay"

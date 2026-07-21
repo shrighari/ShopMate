@@ -1,51 +1,42 @@
 <!doctype html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Member Profile</title>
-
     <link rel="stylesheet" href="../css/appStyles.css" />
   </head>
-
   <body>
     <div class="appContainer">
       <header class="modernHeader">
-        <button class="modernBackButton" onclick="goBack()">←</button>
-
+        <button class="modernBackButton" onclick="goBack()">
+          <img
+            src="../assets/icons/navigation/back.svg"
+            class="icon navigationIcon"
+            alt="Back"
+          />
+        </button>
         <h1 class="modernPageTitle">Member Profile</h1>
       </header>
-
       <main class="pageContent">
         <section class="profileHero">
           <div class="profileAvatar" id="profileAvatar">H</div>
-
           <h2 class="profileName" id="profileName">Hari</h2>
-
           <p class="profileRole" id="profileRole">Admin</p>
         </section>
-
         <section class="profileInfoCard">
           <div class="profileInfoRow">
             <span>Email</span>
-
             <span id="profileEmail"> hari@shopmate.app </span>
           </div>
-
           <div class="profileInfoRow">
             <span>Status</span>
-
             <span id="profileStatus"> Active </span>
           </div>
         </section>
       </main>
     </div>
-
     <script src="../js/stateManager.js"></script>
-
     <script src="../js/profilePage.js"></script>
   </body>
 </html>
