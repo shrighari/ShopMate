@@ -8,6 +8,129 @@ async function loadProductCatalog() {
     productDatabase = [];
   }
 }
+/* Normalize Search Text */
+function normalizeSearchText(text) {
+  return text.trim().toLowerCase().replace(/\s+/g, " ");
+}
+/* Smart Product Search */
+function searchProducts(searchText, maxResults = 8) {
+  if (!searchText) {
+    return [];
+  }
+  const query = normalizeSearchText(searchText);
+  const startsWithMatches = [];
+  const containsMatches = [];
+  productDatabase.forEach(function (product) {
+    const productName = normalizeSearchText(product.name);
+    if (productName.startsWith(query)) {
+      startsWithMatches.push(product);
+      return;
+    }
+    if (productName.includes(query)) {
+      containsMatches.push(product);
+    }
+  });
+  return [...startsWithMatches, ...containsMatches].slice(0, maxResults);
+}
+/* Render Product Suggestions */
+function renderProductSuggestions(searchText) {
+  const suggestionContainer = document.getElementById("productSuggestions");
+  if (!suggestionContainer) {
+    return;
+  }
+  suggestionContainer.innerHTML = "";
+  let products = [];
+  const search = searchText.trim();
+  if (search === "") {
+    products = getQuickPickProducts();
+  } else {
+    products = searchProducts(search);
+  }
+  if (products.length === 0) {
+    suggestionContainer.classList.remove("showSuggestions");
+    return;
+  }
+  suggestionContainer.classList.add("showSuggestions");
+  const heading =
+    search === ""
+      ? `
+            <div class="quickPickHeading">
+                ⭐ Quick Picks
+            </div>
+        `
+      : "";
+  suggestionContainer.innerHTML =
+    heading +
+    products
+      .map(function (product) {
+        const image = getProductImage(product.name);
+        let displayName = product.name;
+        if (search !== "") {
+          const regex = new RegExp("(" + search + ")", "ig");
+          displayName = product.name.replace(
+            regex,
+            "<span class='matchedText'>$1</span>",
+          );
+        }
+        return `
+<div
+class="productSuggestionItem"
+onclick="selectSuggestedProduct('${product.name}')">
+<div class="productSuggestionImage">
+${image ? `<img src="${image}">` : "📦"}
+</div>
+<div class="productSuggestionName">
+${displayName}
+</div>
+</div>
+`;
+      })
+      .join("");
+}
+/* Select Suggested Product */
+function selectSuggestedProduct(productName) {
+  const product = findProduct(productName);
+  if (!product) {
+    return;
+  }
+  const itemNameInput = document.getElementById("itemNameInput");
+  const itemPriceInput = document.getElementById("itemPriceInput");
+  const itemShopInput = document.getElementById("itemShopInput");
+  const imagePreview = document.getElementById("itemImagePreview");
+  const suggestionContainer = document.getElementById("productSuggestions");
+  itemNameInput.value = product.name;
+  if (!itemPriceInput.value) {
+    itemPriceInput.value = product.defaultPrice || "";
+  }
+  if (!itemShopInput.value) {
+    itemShopInput.value = product.preferredShop || "";
+  }
+  const image = getProductImage(product.name);
+  if (image) {
+    imagePreview.src = image;
+    imagePreview.classList.remove("hidden");
+  }
+  suggestionContainer.innerHTML = "";
+  suggestionContainer.classList.remove("showSuggestions");
+  document.getElementById("itemQuantityInput").focus();
+}
+/* Find Product */
+function findProduct(productName) {
+  return productDatabase.find(function (product) {
+    return (
+      normalizeSearchText(product.name) === normalizeSearchText(productName)
+    );
+  });
+}
+/* Get Quick Pick Products */
+function getQuickPickProducts(maxResults = 5) {
+  const usage = JSON.parse(localStorage.getItem("productUsage")) || {};
+  return [...productDatabase]
+    .sort(function (a, b) {
+      return (usage[b.name] || 0) - (usage[a.name] || 0);
+    })
+    .slice(0, maxResults);
+}
 /* Open Bottom Sheet */
 function openBottomSheet() {
   const bottomSheet = document.getElementById("bottomSheet");
