@@ -41,6 +41,7 @@
             <span data-i18n="settings.security"> Security </span>
           </button>
         </section>
+
         <!-- Preferences -->
         <section class="settingsSection">
           <h2 class="settingsSectionTitle" data-i18n="settings.preferences">
@@ -179,7 +180,11 @@
       </main>
     </div>
     <!-- Screen Overlay -->
-    <div class="screenOverlay hidden" id="screenOverlay"></div>
+    <div
+      class="screenOverlay hidden"
+      id="screenOverlay"
+      onclick="closeBottomSheet()"
+    ></div>
     <!-- Bottom Sheet -->
     <div class="bottomSheet hidden" id="bottomSheet">
       <div class="bottomSheetHandle"></div>

@@ -1196,13 +1196,28 @@ function renderSideDrawer() {
         >
         <span>${t("dashboard.import")}</span>
       </button>
-      <input
+         <input
         type="file"
         id="importBackupInput"
         accept=".json"
         hidden
         onchange="importAppData(event)"
       >
+    </div>
+
+    <div class="drawerLogout">
+      <button
+        type="button"
+        class="drawerItem drawerLogoutItem"
+        onclick="logoutUser()"
+      >
+        <img
+          src="${getIconPath("features", "logout")}"
+          class="icon featureIcon"
+          alt=""
+        >
+        <span>${t("profile.logout")}</span>
+      </button>
     </div>
   `;
 }

@@ -46,12 +46,258 @@ function openProfilePage() {
 function goBack() {
   window.location.href = "../pages/dashboardPage.html";
 }
-/* Open Security Settings - Displays information about upcoming security features. */
+/* Open Security Settings */
 function openSecuritySettings() {
-  showDialog(
-    "Coming Soon",
-    "Security settings including App Lock, PIN Protection and Biometric Unlock will be available in a future update.",
-  );
+  const security = appState.currentUser?.security || {
+    pinEnabled: false,
+    pin: null,
+    appLockEnabled: false,
+  };
+  const biometricEnabled = appState.currentUser?.biometricEnabled === true;
+  bottomSheetContent.innerHTML = `
+    <div class="bottomSheetHeader">
+      <h2>${t("security.title")}</h2>
+      <button
+        class="closeButton"
+        onclick="closeBottomSheet()"
+        aria-label="${t("common.close")}"
+      >
+        ×
+      </button>
+    </div>
+    <div class="bottomSheetBody">
+      <div class="settingsDescription">
+        ${t("security.description")}
+      </div>
+      <!-- App PIN -->
+      <div class="toggleRow">
+        <div class="toggleContent">
+          <div class="toggleTitle">
+            ${t("security.pin")}
+          </div>
+          <div class="toggleDescription">
+            ${
+              security.pinEnabled
+                ? t("security.pinEnabled")
+                : t("security.pinNotSet")
+            }
+          </div>
+        </div>
+        <button
+          type="button"
+          class="secondaryButton securityActionButton"
+          onclick="openPinSetup()"
+        >
+          ${
+            security.pinEnabled ? t("security.changePin") : t("security.setPin")
+          }
+        </button>
+      </div>
+      <!-- App Lock -->
+      <div class="toggleRow">
+        <div class="toggleContent">
+          <div class="toggleTitle">
+            ${t("security.appLock")}
+          </div>
+          <div class="toggleDescription">
+            ${t("security.appLockDescription")}
+          </div>
+        </div>
+        <label class="toggleSwitch">
+          <input
+            type="checkbox"
+            ${security.appLockEnabled ? "checked" : ""}
+            onchange="toggleAppLockFromSettings()"
+          >
+          <span class="toggleSlider"></span>
+        </label>
+      </div>
+      <!-- Biometric Login -->
+      <!-- Biometric Login -->
+      <div class="toggleRow">
+          <div class="toggleContent">
+            <div class="toggleTitle">${t("security.biometricLogin")}</div>
+            <div class="toggleDescription">${t("security.biometricLoginDescription")}</div>
+          </div>
+          <label class="toggleSwitch">
+            <input type="checkbox"
+              ${biometricEnabled ? "checked" : ""}
+              onchange="toggleBiometricFromSettings()"
+            >
+            <span class="toggleSlider"></span>
+          </label>
+      </div>
+    </div>
+  `;
+  openBottomSheet();
+}
+/* Open PIN Setup */
+function openPinSetup() {
+  const currentUser = getCurrentUser();
+  const security = currentUser?.security || {};
+  const pinAlreadyEnabled = security.pinEnabled === true && !!security.pin;
+
+  bottomSheetContent.innerHTML = `
+    <div class="bottomSheetHeader">
+      <h2>
+        ${pinAlreadyEnabled ? t("security.changePin") : t("security.setPin")}
+      </h2>
+      <button
+        class="closeButton"
+        onclick="closeBottomSheet()"
+        aria-label="${t("common.close")}"
+      >
+        <img
+          src="${getIconPath("navigation", "close")}"
+          class="icon actionIcon"
+          alt="${t("common.close")}"
+        >
+      </button>
+    </div>
+
+    <div class="bottomSheetBody">
+
+      ${
+        pinAlreadyEnabled
+          ? `
+        <div class="formField">
+          <label
+            class="formLabel"
+            for="currentSecurityPinInput"
+          >
+            ${t("security.currentPin")}
+          </label>
+
+          <input
+            id="currentSecurityPinInput"
+            class="bottomSheetInput"
+            type="password"
+            inputmode="numeric"
+            maxlength="6"
+            autocomplete="current-password"
+          >
+        </div>
+        `
+          : ""
+      }
+
+      <div class="formField">
+        <label
+          class="formLabel"
+          for="securityPinInput"
+        >
+          ${t("security.enterNewPin")}
+        </label>
+
+        <input
+          id="securityPinInput"
+          class="bottomSheetInput"
+          type="password"
+          inputmode="numeric"
+          maxlength="6"
+          autocomplete="new-password"
+        >
+      </div>
+
+      <div class="formField">
+        <label
+          class="formLabel"
+          for="securityPinConfirmInput"
+        >
+          ${t("security.confirmPin")}
+        </label>
+
+        <input
+          id="securityPinConfirmInput"
+          class="bottomSheetInput"
+          type="password"
+          inputmode="numeric"
+          maxlength="6"
+          autocomplete="new-password"
+        >
+      </div>
+
+      <div class="bottomSheetButtonRow">
+        <button
+          class="secondaryButton"
+          onclick="closeBottomSheet()"
+        >
+          ${t("common.cancel")}
+        </button>
+
+        <button
+          class="primaryButton"
+          onclick="savePinFromSettings()"
+        >
+          ${t("common.save")}
+        </button>
+      </div>
+
+    </div>
+  `;
+
+  openBottomSheet();
+}
+/* Save PIN from Security Settings */
+function savePinFromSettings() {
+  const currentPinInput = document.getElementById("currentSecurityPinInput");
+
+  const pinInput = document.getElementById("securityPinInput");
+
+  const confirmPinInput = document.getElementById("securityPinConfirmInput");
+
+  if (!pinInput || !confirmPinInput) {
+    return;
+  }
+
+  const currentPin = currentPinInput ? currentPinInput.value.trim() : null;
+
+  const pin = pinInput.value.trim();
+  const confirmPin = confirmPinInput.value.trim();
+
+  if (setApplicationPin(pin, confirmPin, currentPin)) {
+    closeBottomSheet();
+    openSecuritySettings();
+  }
+}
+/* Toggle App Lock from Security Settings */
+function toggleAppLockFromSettings() {
+  toggleAppLock();
+  openSecuritySettings();
+}
+/* Toggle Biometric Login from Security Settings */
+async function toggleBiometricFromSettings() {
+  const currentUser = getCurrentUser();
+
+  if (!currentUser) {
+    return;
+  }
+
+  if (currentUser.biometricEnabled === true) {
+    disableBiometricAuthentication();
+    openSecuritySettings();
+    return;
+  }
+
+  const enabled = await enableBiometricAuthentication();
+
+  if (enabled) {
+    openSecuritySettings();
+
+    showDialog(
+      t("security.biometricEnabledTitle"),
+      t("security.biometricEnabledMessage"),
+    );
+
+    return;
+  }
+
+  /*
+   * Registration was cancelled, rejected,
+   * or the device/browser does not support
+   * the required biometric authentication.
+   */
+  openSecuritySettings();
 }
 /* Open Theme Settings - Displays available application themes. */
 function openThemeSettings() {

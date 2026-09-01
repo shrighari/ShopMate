@@ -7,25 +7,47 @@
  * INITIALIZATION ORDER
  * 1. Theme
  * 2. Localization
- * 3. Icons
- * 4. Dashboard
- *
- * This prevents dashboard functions from calling t() before
- * the translation dictionary has been loaded.
+ * 3. Recurring Items
+ * 4. Icons
+ * 5. Application Lock
+ * 6. Dashboard
  ***************************************************************************************************/
-/* Initialize Application */
 async function initializeApplication() {
   try {
     if (typeof applyTheme === "function") {
       applyTheme();
     }
+
     if (typeof initializeLocalization === "function") {
       await initializeLocalization();
     }
-    processRecurringItems();
+
+    if (typeof processRecurringItems === "function") {
+      processRecurringItems();
+    }
+
     if (typeof refreshIcons === "function") {
       refreshIcons();
     }
+
+    const isLoginPage = document.getElementById("loginForm") !== null;
+
+    if (isLoginPage) {
+      if (
+        typeof initializeApplicationEntry === "function" &&
+        initializeApplicationEntry() === true
+      ) {
+        return;
+      }
+    } else {
+      if (
+        typeof initializeApplicationLock === "function" &&
+        initializeApplicationLock() === true
+      ) {
+        return;
+      }
+    }
+
     if (typeof initializeDashboard === "function") {
       initializeDashboard();
     }

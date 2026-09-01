@@ -204,8 +204,37 @@ function loadAppState() {
         budget: true,
         general: true,
       },
+      security: {
+        pinEnabled: false,
+        pin: null,
+        appLockEnabled: false,
+      },
     };
     stateUpdated = true;
+  }
+  /* Upgrade Security Settings */
+  if (!parsedState.settings.security) {
+    parsedState.settings.security = {
+      pinEnabled: false,
+      pin: null,
+      appLockEnabled: false,
+    };
+    stateUpdated = true;
+  } else {
+    if (parsedState.settings.security.pinEnabled === undefined) {
+      parsedState.settings.security.pinEnabled = false;
+      stateUpdated = true;
+    }
+
+    if (parsedState.settings.security.pin === undefined) {
+      parsedState.settings.security.pin = null;
+      stateUpdated = true;
+    }
+
+    if (parsedState.settings.security.appLockEnabled === undefined) {
+      parsedState.settings.security.appLockEnabled = false;
+      stateUpdated = true;
+    }
   }
   /* Upgrade Language Codes */
   if (parsedState.settings.language === "english") {
@@ -232,6 +261,34 @@ function loadAppState() {
       general: true,
     };
     stateUpdated = true;
+  }
+  /* Upgrade User Security Settings */
+  if (Array.isArray(parsedState.users)) {
+    parsedState.users.forEach(function (user) {
+      if (!user.security) {
+        user.security = {
+          pinEnabled: false,
+          pin: null,
+          appLockEnabled: false,
+        };
+        stateUpdated = true;
+      } else {
+        if (user.security.pinEnabled === undefined) {
+          user.security.pinEnabled = false;
+          stateUpdated = true;
+        }
+
+        if (user.security.pin === undefined) {
+          user.security.pin = null;
+          stateUpdated = true;
+        }
+
+        if (user.security.appLockEnabled === undefined) {
+          user.security.appLockEnabled = false;
+          stateUpdated = true;
+        }
+      }
+    });
   }
   if (stateUpdated) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(parsedState));
