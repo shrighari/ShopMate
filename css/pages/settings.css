@@ -49,104 +49,250 @@
   border-radius: 14px;
   font-size: 14px;
 }
-
 /* =========================================================
    APP LOCK
    ========================================================= */
-
 .appLockScreen {
   position: fixed;
   inset: 0;
   z-index: 99999;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   padding: 24px;
-
   background: var(--backgroundColor);
-
   color: var(--textPrimary);
-
   box-sizing: border-box;
 }
-
 .appLockCard {
   width: 100%;
   max-width: 340px;
-
   padding: 32px 24px;
-
   border-radius: 24px;
-
   background: var(--surfaceColor);
-
   box-shadow: var(--cardShadow);
-
   text-align: center;
 }
-
 .appLockIcon {
   font-size: 42px;
   margin-bottom: 16px;
 }
-
 .appLockTitle {
   margin: 0 0 10px;
-
   font-size: 24px;
   font-weight: 700;
-
   color: var(--textPrimary);
 }
-
 .appLockDescription {
   margin: 0 0 24px;
-
   font-size: 14px;
   line-height: 1.5;
-
   color: var(--textSecondary);
 }
-
 .appLockPinInput {
   width: 100%;
   height: 48px;
-
   box-sizing: border-box;
-
   padding: 0 16px;
-
   border: 1px solid var(--borderColor);
   border-radius: 14px;
-
   background: var(--backgroundColor);
   color: var(--textPrimary);
-
   font-size: 20px;
   letter-spacing: 6px;
-
   text-align: center;
-
   outline: none;
 }
-
 .appLockPinInput:focus {
   border-color: var(--primaryColor);
 }
-
 .appLockError {
   min-height: 22px;
-
   margin-top: 8px;
-
   font-size: 13px;
-
   color: var(--dangerColor);
 }
-
 .appLockUnlockButton {
   width: 100%;
   margin-top: 12px;
+}
+.aboutShopMateContent {
+  text-align: center;
+}
+.aboutShopMateLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.aboutShopMateLogo img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+.aboutShopMateContent h3 {
+  margin: 0 0 12px;
+  font-size: 22px;
+}
+.aboutShopMateContent p {
+  margin: 0 auto 20px;
+  max-width: 480px;
+  line-height: 1.6;
+}
+.aboutShopMateVersion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  padding: 14px 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+.aboutShopMateCopyright {
+  font-size: 13px;
+  opacity: 0.7;
+}
+.legalContent {
+  text-align: left;
+  overflow-y: auto;
+}
+.legalIntro {
+  margin: 0 0 20px;
+  font-size: 13px;
+  opacity: 0.7;
+}
+.legalSection {
+  margin-bottom: 22px;
+}
+.legalSection h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+.legalSection p {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 14px;
+}
+.feedbackContent {
+  text-align: left;
+}
+.feedbackDescription {
+  margin: 0 0 20px;
+  line-height: 1.6;
+}
+.feedbackTextarea {
+  width: 100%;
+  min-height: 140px;
+  resize: vertical;
+  box-sizing: border-box;
+  font-family: inherit;
+  line-height: 1.5;
+}
+.feedbackCharacterCount {
+  margin-top: 6px;
+  text-align: right;
+  font-size: 12px;
+  opacity: 0.65;
+}
+.warningMessage {
+  margin: 16px 0 24px;
+  padding: 14px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  line-height: 1.5;
+  font-size: 14px;
+}
+.measurementUnitOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.measurementUnitOption {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.measurementUnitOption.selected {
+  border-width: 2px;
+}
+
+.measurementUnitOptionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.measurementUnitOptionContent strong {
+  font-size: 16px;
+}
+
+.measurementUnitOptionContent span {
+  font-size: 13px;
+  line-height: 1.4;
+  opacity: 0.7;
+}
+
+.measurementUnitCheck {
+  min-width: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+.currencyOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.currencyOption {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.currencyOption.selected {
+  border-width: 2px;
+}
+
+.currencyOptionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.currencyOptionContent strong {
+  font-size: 16px;
+}
+
+.currencyOptionContent span {
+  font-size: 13px;
+  line-height: 1.4;
+  opacity: 0.7;
+}
+
+.currencyOptionSymbol {
+  min-width: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
 }

@@ -1,14 +1,20 @@
 /***************************************************************************************************
- * FILE: en.js
+ * FILE: english.js
  *
  * PURPOSE
  * English Translation Dictionary
  *
  * IMPORTANT
  * This file registers itself with the localization registry.
- * The structure and keys must always match en.js.
+ * The structure and keys must always match english.js.
  ***************************************************************************************************/
 registerLanguage("en", {
+  about: {
+    description:
+      "ShopMate helps you organise and manage your shared shopping needs in one place.",
+    version: "Version",
+    copyright: "© 2026 ShopMate. All rights reserved.",
+  },
   auth: {
     alreadyMember: "Already a Member",
     alreadyMemberMessage: "You are already a member of this group.",
@@ -117,6 +123,13 @@ registerLanguage("en", {
     shop: "Shop",
     title: "ShopMate Category",
   },
+  clearLocalData: {
+    title: "Clear Local Data",
+    description: "Remove ShopMate data stored locally on this device.",
+    warning:
+      "This will remove ShopMate data stored on this device. Your ShopMate account and server data will not be deleted.",
+    clear: "Clear Data",
+  },
   common: {
     add: "Add",
     appName: "ShopMate",
@@ -154,6 +167,18 @@ registerLanguage("en", {
     undo: "Undo",
     update: "Update",
     yes: "Yes",
+  },
+  currency: {
+    title: "Currency",
+    description: "Choose the currency you want ShopMate to use.",
+    aud: "Australian Dollar (AUD)",
+    audDescription: "Australian Dollar — $",
+    lkr: "Sri Lankan Rupee (LKR)",
+    lkrDescription: "Sri Lankan Rupee — Rs",
+    inr: "Indian Rupee (INR)",
+    inrDescription: "Indian Rupee — ₹",
+    savedTitle: "Currency Updated",
+    savedMessage: "Your currency preference has been saved.",
   },
   dashboard: {
     addItem: "Add Item",
@@ -303,6 +328,19 @@ registerLanguage("en", {
     itemAlreadyExists: "Item is already in Favorites",
     noFavorites: "No Favorites",
     removeFromFavorites: "Remove from Favorites",
+  },
+  feedback: {
+    title: "Send Feedback",
+    description:
+      "We'd love to hear your feedback. Tell us what you think about ShopMate or let us know how we can improve.",
+    messageLabel: "Your Feedback",
+    placeholder: "Enter your feedback here...",
+    submit: "Submit",
+    emptyTitle: "Feedback Required",
+    emptyMessage: "Please enter your feedback before submitting.",
+    successTitle: "Thank You",
+    successMessage:
+      "Thank you for your feedback. Your feedback has been recorded for review.",
   },
   forgotPassword: {
     description:
@@ -456,6 +494,18 @@ registerLanguage("en", {
     startDate: "Start Date",
     endDate: "End Date",
   },
+  measurementUnits: {
+    title: "Measurement Units",
+    description: "Choose the measurement system you want ShopMate to use.",
+    metric: "Metric",
+    metricDescription:
+      "Use kilograms, grams, litres, millilitres and centimetres.",
+    imperial: "Imperial",
+    imperialDescription:
+      "Use pounds, ounces, gallons, fluid ounces and inches.",
+    savedTitle: "Measurement Units Updated",
+    savedMessage: "Your measurement unit preference has been saved.",
+  },
   notifications: {
     all: "All",
     allRead: "All notifications marked as read",
@@ -489,6 +539,31 @@ registerLanguage("en", {
     recurringItemAdded: "Recurring item added",
     recurringItemAddedMessage:
       "{{itemName}} has been added to your shopping list again.",
+  },
+  privacy: {
+    title: "Privacy Policy",
+    lastUpdated: "Last updated: 1 September 2026",
+    informationTitle: "Information We Collect",
+    informationMessage:
+      "ShopMate may collect information required to create and manage your account, profile, shopping groups, shopping items and application preferences.",
+    usageTitle: "How We Use Your Information",
+    usageMessage:
+      "Information is used to provide and maintain ShopMate features, manage your account and groups, and provide the functionality you request.",
+    storageTitle: "Data Storage",
+    storageMessage:
+      "ShopMate stores application data required for the application to operate. Data storage and synchronization may be handled by the ShopMate backend services.",
+    sharingTitle: "Sharing of Information",
+    sharingMessage:
+      "ShopMate does not share your personal information with third parties except where required to provide the application services or where required by law.",
+    securityTitle: "Security",
+    securityMessage:
+      "ShopMate provides account and application security features such as password authentication, App PIN and biometric authentication where supported.",
+    rightsTitle: "Your Rights",
+    rightsMessage:
+      "You may have rights regarding the personal information associated with your account. The availability of specific rights may depend on applicable law and how ShopMate is operated.",
+    contactTitle: "Contact Us",
+    contactMessage:
+      "For privacy-related questions or requests, please contact the ShopMate support team.",
   },
   profile: {
     account: "Account",
@@ -614,5 +689,35 @@ registerLanguage("en", {
     termsConditions: "Terms & Conditions",
     theme: "Theme",
     title: "Settings",
+  },
+  terms: {
+    title: "Terms & Conditions",
+    lastUpdated: "Last updated: 1 September 2026",
+    acceptanceTitle: "Acceptance of Terms",
+    acceptanceMessage:
+      "By using ShopMate, you agree to comply with these Terms & Conditions and any applicable laws and regulations.",
+    accountTitle: "User Accounts",
+    accountMessage:
+      "You are responsible for maintaining the security of your account credentials and for the activity carried out through your account.",
+    useTitle: "Acceptable Use",
+    useMessage:
+      "ShopMate should be used only for its intended shopping, group management and related purposes. Users must not misuse, disrupt or attempt to compromise the application or its services.",
+    contentTitle: "User Content",
+    contentMessage:
+      "You are responsible for information and content that you add to ShopMate. You should ensure that the information you provide is accurate and that you have the necessary rights to share it.",
+    availabilityTitle: "Service Availability",
+    availabilityMessage:
+      "ShopMate may be updated, modified, temporarily unavailable or discontinued as required to maintain and improve the application and its services.",
+    liabilityTitle: "Limitation of Liability",
+    liabilityMessage:
+      "To the extent permitted by applicable law, ShopMate and its service providers will not be liable for losses arising from the use of the application or temporary unavailability of its services.",
+    changesTitle: "Changes to These Terms",
+    changesMessage:
+      "These Terms & Conditions may be updated from time to time. Continued use of ShopMate after changes are published constitutes acceptance of the updated terms.",
+    contactTitle: "Contact Us",
+    contactMessage:
+      "If you have questions about these Terms & Conditions, please contact the ShopMate support team.",
+    temporaryNotice:
+      "This is temporary application content and will be replaced with the official ShopMate Terms & Conditions when they are finalized.",
   },
 });
