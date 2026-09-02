@@ -48,6 +48,11 @@ async function initializeApplication() {
       }
     }
 
+    if (typeof initializeBudgetPage === "function") {
+      initializeBudgetPage();
+      return;
+    }
+
     if (typeof initializeDashboard === "function") {
       initializeDashboard();
     }
