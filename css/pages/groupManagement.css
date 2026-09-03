@@ -135,6 +135,7 @@
 .groupMemberRow .groupMoreButton {
   flex-shrink: 0;
   margin-left: auto;
+  background: var(--surfaceColor);
 }
 .memberRoleAdmin {
   display: inline-flex;

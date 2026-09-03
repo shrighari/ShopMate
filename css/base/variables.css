@@ -10,53 +10,88 @@
  * • Typography colors
  * • Shadows
  * • Border radius
+ * • Spacing
+ * • Layout dimensions
+ * • Safe-area support
  * • Animation timing
  * • Global HTML and Body styles
  *
  * PAGES
  * • Shared Across All Pages
  ***************************************************************************************************/
-/* Color Palette */
+
+/* Global Design Tokens */
 :root {
   --primaryColor: #118ab2;
   --primaryDark: #0f6d8d;
   --successColor: #16a34a;
   --dangerColor: #dc2626;
   --warningColor: #f59e0b;
+
   --backgroundColor: #f4f7fb;
   --cardColor: #ffffff;
-  --surfaceColor: #ffffff;
+  --surfaceColor: #f1f5f9;
   --headerBackground: #ffffff;
   --drawerBackground: #ffffff;
+
+  --textColor: #111827;
   --textPrimary: #111827;
   --textSecondary: #475569;
+  --mutedTextColor: #6b7280;
   --iconColor: #111827;
-  --mutedTextColor: #64748b;
+
   --borderColor: #e5e7eb;
   --dividerColor: #e5e7eb;
+
   --appBackground: #f7f9fc;
   --budgetBackground: #f0f9ff;
   --groupBackground: #f5f3ff;
   --productBackground: #f0fdf4;
   --notificationBackground: #fff7ed;
+
   --overlayColor: rgba(0, 0, 0, 0.45);
+
   --shadowSmall: 0 4px 12px rgba(0, 0, 0, 0.04);
   --shadowMedium: 0 8px 24px rgba(0, 0, 0, 0.06);
   --shadowLarge: 0 12px 36px rgba(0, 0, 0, 0.14);
+
   --radiusSmall: 14px;
   --radiusMedium: 20px;
   --radiusLarge: 28px;
+
+  --spacingSmall: 8px;
+  --spacingMedium: 16px;
+  --spacingLarge: 24px;
+
+  --headerHeight: 72px;
+  --footerHeight: 50px;
+
+  --safeAreaTop: env(safe-area-inset-top, 0px);
+  --safeAreaBottom: env(safe-area-inset-bottom, 0px);
+  --safeAreaLeft: env(safe-area-inset-left, 0px);
+  --safeAreaRight: env(safe-area-inset-right, 0px);
+
+  --pageHorizontalPadding: clamp(16px, 4vw, 24px);
+  --pageTopPadding: 16px;
+  --pageBottomPadding: 120px;
+
+  --touchTargetMinimum: 44px;
+
   --animationSpeed: 0.24s;
 }
+
 /* HTML Defaults */
 html {
   scroll-behavior: smooth;
   overscroll-behavior-y: contain;
+  min-height: 100%;
 }
+
 /* Body Defaults */
 body {
+  min-height: 100%;
   background: var(--appBackground);
-  color: var(--textPrimary);
+  color: var(--textColor);
   font-family: Arial, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;

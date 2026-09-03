@@ -590,7 +590,6 @@ function processRecurringItems() {
         );
         if (!duplicatePendingItem) {
           category.items.unshift(newItem);
-
           createNotification(
             "item",
             t("notifications.recurringItemAdded"),
@@ -610,7 +609,6 @@ function processRecurringItems() {
               },
             },
           );
-
           stateUpdated = true;
         }
       });
@@ -740,6 +738,9 @@ function applyTheme() {
     }
   }
   refreshIcons();
+  if (typeof renderFilteredItems === "function") {
+    renderFilteredItems();
+  }
 }
 /* Initialize Theme Listener - Updates the application theme when the operating system theme changes. */
 function initializeThemeListener() {

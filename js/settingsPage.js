@@ -341,7 +341,24 @@ function saveThemePreference() {
   if (!selectedTheme) {
     return;
   }
+
+  const savedState = localStorage.getItem("shopMateData");
+  let currentState = null;
+
+  if (savedState) {
+    try {
+      currentState = JSON.parse(savedState);
+    } catch (error) {
+      currentState = null;
+    }
+  }
+
   appState.settings.theme = selectedTheme.value;
+
+  if (currentState && Array.isArray(currentState.favoriteItems)) {
+    appState.favoriteItems = currentState.favoriteItems;
+  }
+
   saveAppState();
   applyTheme();
   closeBottomSheet();

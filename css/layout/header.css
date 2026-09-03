@@ -2,84 +2,189 @@
  * FILE: header.css
  *
  * PURPOSE
- * Defines reusable header components used throughout the ShopMate application.
+ * Defines ShopMate header layouts and navigation controls.
  *
  * RESPONSIBILITIES
  * • Dashboard header
- * • Header sections
- * • Application branding
- * • Category header
- * • Modern page header
+ * • Inner-page headers
+ * • Header branding
+ * • Header navigation controls
+ * • Mobile and tablet responsive sizing
  *
  * PAGES
  * • Shared Across Multiple Pages
  ***************************************************************************************************/
+
 /* Dashboard Header */
 .dashboardHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 84px;
-  padding: 12px 20px;
-  background: var(--cardColor);
+  min-height: var(--headerHeight);
+  padding: 10px var(--pageHorizontalPadding);
+  background: var(--headerBackground);
   border-bottom: 1px solid var(--borderColor);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
-/* Header Left Section */
+
+/* Dashboard Header Left Section */
 .headerLeftSection {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  min-width: 0;
   flex: 1;
 }
+
 /* Application Logo */
 .appLogo {
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
   flex-shrink: 0;
 }
+
 /* Application Name */
 .appName {
-  flex: 1;
+  min-width: 0;
   margin: 0;
+  overflow: hidden;
   color: var(--primaryDark);
   text-align: center;
-  font-size: 42px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: clamp(28px, 7vw, 38px);
   font-weight: 800;
-  letter-spacing: -1px;
+  letter-spacing: -0.8px;
 }
-/* Category Header */
+
+/* Dashboard Menu Button */
+.menuButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--touchTargetMinimum);
+  height: var(--touchTargetMinimum);
+  margin-left: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--primaryDark);
+  font-size: 27px;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--animationSpeed) ease,
+    transform var(--animationSpeed) ease;
+}
+
+.menuButton:active {
+  background: rgba(17, 138, 178, 0.1);
+  transform: scale(0.94);
+}
+
+/* Inner Page Header */
 .categoryHeader {
   display: flex;
   align-items: center;
-  gap: 16px;
-  height: var(--headerHeight);
-  padding: 0 var(--spacingMedium);
-  background: var(--cardColor);
+  gap: 12px;
+  min-height: var(--headerHeight);
+  padding: 10px var(--pageHorizontalPadding);
+  background: var(--headerBackground);
   border-bottom: 1px solid var(--borderColor);
 }
-/* Category Header Title */
+
+/* Category Header Title Container */
 .categoryHeaderTitle {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-width: 0;
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
-/* Modern Header */
+
+/* Modern Inner Page Header */
 .modernHeader {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 22px 20px 10px;
-  background: var(--cardColor);
+  gap: 12px;
+  min-height: var(--headerHeight);
+  padding: 10px var(--pageHorizontalPadding);
+  background: var(--headerBackground);
   border-bottom: 1px solid var(--borderColor);
 }
+
 /* Modern Page Title */
 .modernPageTitle {
+  min-width: 0;
   margin: 0;
+  overflow: hidden;
   color: var(--textPrimary);
-  font-size: 24px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: clamp(21px, 5vw, 26px);
   font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Header Navigation Buttons */
+.modernBackButton,
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--touchTargetMinimum);
+  height: var(--touchTargetMinimum);
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--textPrimary);
+  font-size: 27px;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--animationSpeed) ease,
+    transform var(--animationSpeed) ease;
+}
+
+.modernBackButton:active,
+.backButton:active {
+  background: rgba(17, 138, 178, 0.1);
+  transform: scale(0.94);
+}
+
+/* Tablet Header */
+@media (min-width: 768px) {
+  .dashboardHeader,
+  .categoryHeader,
+  .modernHeader {
+    padding-right: 28px;
+    padding-left: 28px;
+  }
+
+  .appLogo {
+    width: 52px;
+    height: 52px;
+  }
+
+  .appName {
+    font-size: 38px;
+  }
+}
+
+/* Large Tablet Header */
+@media (min-width: 1024px) {
+  .dashboardHeader,
+  .categoryHeader,
+  .modernHeader {
+    padding-right: 32px;
+    padding-left: 32px;
+  }
 }

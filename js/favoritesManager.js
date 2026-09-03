@@ -39,17 +39,22 @@ function toggleFavorite(itemName) {
   if (!item) {
     return;
   }
-  item.isFavorite = !item.isFavorite;
-  if (item.isFavorite) {
-    addFavorite(item.name);
+  const normalizedItemName = item.name.trim().toLowerCase();
+  const favoriteIndex = appState.favoriteItems.findIndex(
+    function (favoriteItem) {
+      return favoriteItem.name.trim().toLowerCase() === normalizedItemName;
+    },
+  );
+  if (favoriteIndex === -1) {
+    item.isFavorite = true;
+    appState.favoriteItems.unshift({
+      name: item.name,
+    });
   } else {
-    appState.favoriteItems = appState.favoriteItems.filter(
-      function (favoriteItem) {
-        return favoriteItem.name !== item.name;
-      },
-    );
-    saveAppState();
+    item.isFavorite = false;
+    appState.favoriteItems.splice(favoriteIndex, 1);
   }
+  saveAppState();
   renderFilteredItems();
   updateNotificationBadge();
 }

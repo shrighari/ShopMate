@@ -10,6 +10,7 @@
  * • Navigation buttons
  * • Action buttons
  * • Bulk action buttons
+ * • Member action buttons
  *
  * PAGES
  * • Shared Across Multiple Pages
@@ -19,65 +20,72 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 1;
   min-height: 54px;
   padding: 0 20px;
-  flex: 1;
-  height: 46px;
-  /* max-width: 140px; */
   border: none;
   border-radius: var(--radiusMedium);
   background: linear-gradient(135deg, var(--primaryColor), var(--primaryDark));
-  color: var(--textPrimary);
+  color: #ffffff;
   font-size: 16px;
   font-weight: 700;
+  line-height: 1.2;
   cursor: pointer;
   box-shadow: 0 10px 24px rgba(17, 138, 178, 0.22);
+  -webkit-tap-highlight-color: transparent;
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    transform var(--animationSpeed) ease,
+    box-shadow var(--animationSpeed) ease,
+    opacity var(--animationSpeed) ease;
 }
 .primaryButton:active {
   transform: scale(0.98);
+  box-shadow: 0 6px 16px rgba(17, 138, 178, 0.18);
 }
 /* Secondary Button */
 .secondaryButton {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 1;
   min-height: 54px;
   padding: 0 20px;
-  flex: 1;
-  height: 46px;
-  /* max-width: 140px; */
-  border: none;
+  border: 1px solid var(--borderColor);
   border-radius: var(--radiusMedium);
   background: var(--surfaceColor);
   color: var(--textPrimary);
   font-size: 16px;
   font-weight: 700;
+  line-height: 1.2;
   cursor: pointer;
-  box-shadow: 0 10px 24px var(--shadowMedium);
+  box-shadow: var(--shadowSmall);
+  -webkit-tap-highlight-color: transparent;
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-.secondaryButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+    transform var(--animationSpeed) ease,
+    box-shadow var(--animationSpeed) ease,
+    background-color var(--animationSpeed) ease;
 }
 .secondaryButton:active {
-  transform: translateY(0);
+  transform: scale(0.98);
+  box-shadow: none;
 }
 /* Menu Button */
 .menuButton {
-  width: 48px;
-  height: 48px;
-  border: none;
-  background: none;
-  color: var(--textPrimary);
-  font-size: 32px;
-  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  width: var(--touchTargetMinimum);
+  height: var(--touchTargetMinimum);
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--textPrimary);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 /* Bottom Sheet Delete Button */
 .bottomSheetDeleteButton {
@@ -87,19 +95,23 @@
   gap: 12px;
   width: 100%;
   min-height: 54px;
+  padding: 0 18px;
   border: none;
   border-radius: var(--radiusMedium);
   background: var(--dangerColor);
-  color: var(--textPrimary);
+  color: #ffffff;
   font-size: 16px;
   font-weight: 700;
+  line-height: 1.2;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
+    transform var(--animationSpeed) ease,
+    opacity var(--animationSpeed) ease;
 }
 .bottomSheetDeleteButton:active {
   transform: scale(0.98);
+  opacity: 0.9;
 }
 /* Bottom Sheet Action Button */
 .bottomSheetActionButton {
@@ -110,241 +122,56 @@
   width: 100%;
   min-height: 56px;
   padding: 0 18px;
-  margin-bottom: 14px;
-  border: none;
-  border-radius: 16px;
+  border: 1px solid #dbe4ec;
+  border-radius: var(--radiusMedium);
   background: var(--surfaceColor);
-  text-align: left;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-}
-/* Back Button */
-.backButton {
-  border: none;
-  background: none;
-  font-size: 28px;
-  cursor: pointer;
-}
-/* Modern Back Button */
-.modernBackButton {
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: none;
-  color: var(--iconColor);
-  font-size: 30px;
-  cursor: pointer;
-}
-/* Snackbar Button */
-.snackbarButton {
-  border: none;
-  background: none;
-  color: #38bdf8;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-}
-/* Modern Action Button */
-.modernActionButton {
-  width: 48px;
-  height: 48px;
-  border: none;
-  border-radius: 18px;
-  font-size: 20px;
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
-}
-.modernActionButton:active {
-  transform: scale(0.94);
-}
-/* Active Favorite Button */
-.activeFavoriteButton {
-  background: #e11d48;
   color: var(--textPrimary);
-  box-shadow: 0 8px 20px rgba(225, 29, 72, 0.28);
-}
-/* Active Purchased Button */
-.activePurchasedButton {
-  background: linear-gradient(145deg, #10b981, #059669);
-  color: white !important;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 700;
-  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.28);
-}
-/* Add Action Button */
-.addActionButton {
-  background: rgba(37, 99, 235, 0.12);
-  color: #2563eb;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-}
-.addActionButton:hover {
-  background: rgba(37, 99, 235, 0.18);
-}
-/* Favorite Action Button */
-/* Favorite Action Button */
-.favoriteActionButton {
-  background: rgba(225, 29, 72, 0.12);
-  color: #e11d48;
-  transition: all 0.2s ease;
-}
-.favoriteActionButton:hover {
-  background: rgba(225, 29, 72, 0.18);
-}
-/* Purchased Action Button */
-.purchasedActionButton {
-  background: rgba(16, 185, 129, 0.12);
-  color: #10b981;
-  opacity: 1;
-}
-/* Bulk Action Button */
-.bulkActionButton {
-  width: 42px;
-  height: 42px;
-  border: none;
-  border-radius: 14px;
-  background: var(--surfaceColor);
-  font-size: 18px;
+  text-align: left;
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--animationSpeed) ease,
+    background-color var(--animationSpeed) ease,
+    box-shadow var(--animationSpeed) ease;
 }
-.bulkActionButton:active {
-  transform: scale(0.95);
+.bottomSheetActionButton:active {
+  transform: scale(0.99);
+  background: #e7eef5;
+  box-shadow: none;
 }
-/* Category More Button */
-.categoryMoreButton {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  display: flex;
+.bottomSheetActionButton .actionIcon {
+  width: 22px;
+  height: 22px;
+}
+/* Action Button */
+.actionButton {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  gap: 8px;
+  min-height: var(--touchTargetMinimum);
+  padding: 0 16px;
   border: none;
-  border-radius: 25px;
-  background: var(--surfaceColor);
-  font-size: 18px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  z-index: 10;
-}
-.categoryMoreButton:active {
-  transform: scale(0.94);
-}
-/* Group More Button */
-.groupMoreButton {
-  width: 36px;
-  height: 36px;
-  border: none;
-  border-radius: 50%;
-  background: none;
-  color: var(--textPrimary);
-  font-size: 22px;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-.groupMoreButton:hover {
-  background: rgba(0, 0, 0, 0.05);
-}
-.groupMoreButton:active {
-  transform: scale(0.94);
-}
-/* Create Group Button */
-.createGroupButtonWrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: 24px;
-}
-.createGroupButton {
-  width: 240px;
-}
-/* Authentication Button */
-.authButton {
-  width: 100%;
-  height: 56px;
-  margin-top: 8px;
-  border: none;
-  border-radius: 18px;
-  background: #118ab2;
-  color: var(--textPrimary);
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-}
-/* Authentication Secondary Button */
-.authSecondaryButton {
-  width: 100%;
-  height: 56px;
-  margin-top: 14px;
-  border: none;
-  border-radius: 18px;
-  background: var(--surfaceColor);
-  color: var(--textPrimary);
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-}
-/* Biometric Button */
-.biometricButton {
-  width: 62px;
-  height: 62px;
-  border: none;
-  border-radius: 20px;
-  background: var(--surfaceColor);
-  font-size: 28px;
-  cursor: pointer;
-}
-/* Member Action Button */
-.memberActionButton {
-  min-width: 120px;
-  height: 42px;
-  border: none;
-  border-radius: 14px;
-  background: #118ab2;
-  color: var(--textPrimary);
+  border-radius: var(--radiusSmall);
+  background: var(--primaryColor);
+  color: #ffffff;
   font-size: 14px;
   font-weight: 600;
+  line-height: 1.2;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--animationSpeed) ease,
+    opacity var(--animationSpeed) ease;
 }
-/* Remove Member Button */
-.removeMemberButton {
-  min-width: 120px;
-  height: 42px;
-  border: none;
-  border-radius: 14px;
-  background: #ef4444;
-  color: var(--textPrimary);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-}
-/* Leave Group Button */
-.leaveGroupButton {
-  width: 100%;
-  height: 56px;
-  border: none;
-  border-radius: 18px;
-  background: #ef4444;
-  color: var(--textPrimary);
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-}
-/* Member More Button */
-.memberMoreButton {
-  width: 42px;
-  height: 42px;
-  border: none;
-  border-radius: 14px;
-  background: var(--surfaceColor);
-  font-size: 22px;
-  cursor: pointer;
+.actionButton:active {
+  transform: scale(0.97);
+  opacity: 0.9;
 }
 /* Danger Button */
 .dangerButton {
@@ -356,72 +183,291 @@
   border: none;
   border-radius: var(--radiusMedium);
   background: linear-gradient(135deg, #dc2626, #b91c1c);
-  color: var(--textPrimary);
+  color: #ffffff;
   font-size: 16px;
   font-weight: 700;
+  line-height: 1.2;
   cursor: pointer;
   box-shadow: 0 10px 24px rgba(220, 38, 38, 0.22);
+  -webkit-tap-highlight-color: transparent;
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-.dangerButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 28px rgba(220, 38, 38, 0.28);
+    transform var(--animationSpeed) ease,
+    box-shadow var(--animationSpeed) ease,
+    opacity var(--animationSpeed) ease;
 }
 .dangerButton:active {
-  transform: translateY(0);
-}
-/* Budget Menu Button */
-.budgetMenuButton {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 36px;
-  height: 36px;
-  border: none;
-  border-radius: 12px;
-  background: rgba(17, 138, 178, 0.08);
-  cursor: pointer;
-}
-/* Bottom Action Bar */
-.bottomActionBar button {
-  flex: 1;
-}
-/* Budget Edit Button */
-.budgetEditButton {
-  width: 100%;
-  margin-top: 18px;
-  border: none;
-  background: none;
-  color: var(--textPrimary);
-  font-size: 22px;
-  cursor: pointer;
-}
-/* Budget Analysis Button */
-.budgetAnalysisButton {
-  width: 100%;
-  margin-top: 18px;
-  padding: 12px;
-  border: none;
-  border-radius: 25px;
-  background: #118ab2;
-  color: var(--textPrimary);
-  font-size: 20px;
-  font-weight: 600;
-}
-/* Budget Expand Button */
-.budgetExpandButton {
-  width: 100%;
-  margin-top: 16px;
-  border: none;
-  background: none;
-  color: var(--primaryColor);
-  font-weight: 600;
-  cursor: pointer;
+  transform: scale(0.98);
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.18);
 }
 /* Destructive Action Button */
 .destructiveActionButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--touchTargetMinimum);
+  padding: 0 16px;
+  border: 1px solid rgba(220, 38, 38, 0.15);
+  border-radius: var(--radiusSmall);
   background: #fef2f2;
-  color: #dc2626;
+  color: var(--dangerColor);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Bottom Action Bar Buttons */
+.bottomActionBar button {
+  flex: 1;
+  min-height: var(--touchTargetMinimum);
+}
+/* Member Action Button */
+.memberActionButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  min-height: var(--touchTargetMinimum);
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--radiusSmall);
+  background: var(--primaryColor);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Remove Member Button */
+.removeMemberButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  min-height: var(--touchTargetMinimum);
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--radiusSmall);
+  background: var(--dangerColor);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Leave Group Button */
+.leaveGroupButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 56px;
+  padding: 0 18px;
+  border: none;
+  border-radius: var(--radiusMedium);
+  background: var(--dangerColor);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Member More Button */
+.memberMoreButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--touchTargetMinimum);
+  height: var(--touchTargetMinimum);
+  padding: 0;
+  border: 1px solid var(--borderColor);
+  border-radius: var(--radiusSmall);
+  background: var(--surfaceColor);
+  color: var(--textPrimary);
+  font-size: 22px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Tablet Button Sizing */
+@media (min-width: 768px) {
+  .primaryButton,
+  .secondaryButton,
+  .dangerButton {
+    min-height: 56px;
+  }
+  .bottomSheetActionButton {
+    min-height: 58px;
+  }
+}
+/* Budget Button Preservation */
+.budgetEditButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 124px;
+  min-height: 52px;
+  padding: 0 18px;
+  margin-top: 14px;
+  border: none;
+  border-radius: var(--radiusMedium);
+  background: linear-gradient(135deg, var(--primaryColor), var(--primaryDark));
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(17, 138, 178, 0.22);
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--animationSpeed) ease,
+    box-shadow var(--animationSpeed) ease;
+}
+.budgetEditButton:active {
+  transform: scale(0.98);
+  box-shadow: 0 6px 16px rgba(17, 138, 178, 0.18);
+}
+.budgetAnalysisButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 160px;
+  min-height: 52px;
+  padding: 0 18px;
+  margin-top: 14px;
+  border: 1px solid var(--borderColor);
+  border-radius: var(--radiusMedium);
+  background: var(--surfaceColor);
+  color: var(--textPrimary);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  box-shadow: var(--shadowSmall);
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--animationSpeed) ease,
+    box-shadow var(--animationSpeed) ease;
+}
+.budgetAnalysisButton:active {
+  transform: scale(0.98);
+  box-shadow: none;
+}
+/* Category Menu Button */
+.categoryMoreButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touchTargetMinimum);
+  height: var(--touchTargetMinimum);
+  padding: 0;
+  border: 1px solid rgba(17, 138, 178, 0.12);
+  border-radius: 50%;
+  background: rgba(17, 138, 178, 0.08);
+  color: var(--textPrimary);
+  cursor: pointer;
+  z-index: 10;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--animationSpeed) ease,
+    background-color var(--animationSpeed) ease,
+    box-shadow var(--animationSpeed) ease;
+}
+.categoryMoreButton .actionIcon {
+  width: 22px;
+  height: 22px;
+}
+.categoryMoreButton:active {
+  transform: scale(0.94);
+  background: rgba(17, 138, 178, 0.14);
+  box-shadow: var(--shadowSmall);
+}
+/* Item Card Action Buttons */
+.itemActionButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  z-index: 20;
+}
+
+.modernActionButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: none;
+  border-radius: 18px;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--animationSpeed) ease,
+    background var(--animationSpeed) ease,
+    box-shadow var(--animationSpeed) ease;
+}
+
+.modernActionButton:active {
+  transform: scale(0.94);
+}
+
+.modernActionButton .actionIcon {
+  width: 23px;
+  height: 23px;
+}
+
+.favoriteActionButton {
+  background: rgba(225, 29, 72, 0.12);
+  color: #e11d48;
+}
+.favoriteActionButton:hover {
+  background: rgba(225, 29, 72, 0.18);
+}
+.activeFavoriteButton {
+  background: #e11d48;
+  color: var(--textPrimary);
+  box-shadow: 0 8px 20px rgba(225, 29, 72, 0.28);
+}
+.activeFavoriteButton .actionIcon {
+  filter: brightness(0) invert(1);
+}
+.purchasedActionButton {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  opacity: 1;
+}
+
+.activePurchasedButton {
+  background: linear-gradient(145deg, #10b981, #059669);
+  color: white !important;
+  font-size: 22px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.28);
+}
+
+.addActionButton {
+  background: rgba(37, 99, 235, 0.12);
+  color: #2563eb;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.addActionButton:hover {
+  background: rgba(37, 99, 235, 0.18);
+}
+
+.addActionButton:active {
+  transform: scale(0.91);
+  filter: brightness(0.96);
 }
