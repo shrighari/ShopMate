@@ -110,27 +110,36 @@ function renderAddItemForm(itemName = "") {
         >
       </div>
       <div class="formField">
-        <label class="formLabel">
-          ${t("item.repeat")}
-        </label>
-        <select
-          id="itemRecurrenceFrequency"
-          class="bottomSheetInput"
-        >
-          <option value="none">
-            ${t("item.doesNotRepeat")}
-          </option>
-          <option value="daily">
-            ${t("item.daily")}
-          </option>
-          <option value="weekly">
-            ${t("item.weekly")}
-          </option>
-          <option value="monthly">
-            ${t("item.monthly")}
-          </option>
-        </select>
-      </div>
+  <label class="formLabel">
+    ${t("item.repeat")}
+  </label>
+  <div class="dropdownInputWrapper">
+    <select
+      id="itemRecurrenceFrequency"
+      class="bottomSheetInput"
+    >
+      <option value="none">
+        ${t("item.doesNotRepeat")}
+      </option>
+      <option value="daily">
+        ${t("item.daily")}
+      </option>
+      <option value="weekly">
+        ${t("item.weekly")}
+      </option>
+      <option value="monthly">
+        ${t("item.monthly")}
+      </option>
+    </select>
+    <span class="dropdownArrow">
+      <img
+        src="${getIconPath("navigation", "collapse")}"
+        class="icon smallIcon"
+        alt=""
+      >
+    </span>
+  </div>
+</div>
       <div
         id="itemRecurrenceDates"
         style="display: none;"
@@ -284,39 +293,48 @@ function renderEditItemForm(itemName) {
         >
       </div>
       <div class="formField">
-        <label class="formLabel">
-          ${t("item.repeat")}
-        </label>
-        <select
-          id="editItemRecurrenceFrequency"
-          class="bottomSheetInput"
-        >
-          <option
-            value="none"
-            ${(item.recurrence?.frequency || "none") === "none" ? "selected" : ""}
-          >
-            ${t("item.doesNotRepeat")}
-          </option>
-          <option
-            value="daily"
-            ${item.recurrence?.frequency === "daily" ? "selected" : ""}
-          >
-            ${t("item.daily")}
-          </option>
-          <option
-            value="weekly"
-            ${item.recurrence?.frequency === "weekly" ? "selected" : ""}
-          >
-            ${t("item.weekly")}
-          </option>
-          <option
-            value="monthly"
-            ${item.recurrence?.frequency === "monthly" ? "selected" : ""}
-          >
-            ${t("item.monthly")}
-          </option>
-        </select>
-      </div>
+  <label class="formLabel">
+    ${t("item.repeat")}
+  </label>
+  <div class="dropdownInputWrapper">
+    <select
+      id="editItemRecurrenceFrequency"
+      class="bottomSheetInput"
+    >
+      <option
+        value="none"
+        ${(item.recurrence?.frequency || "none") === "none" ? "selected" : ""}
+      >
+        ${t("item.doesNotRepeat")}
+      </option>
+      <option
+        value="daily"
+        ${item.recurrence?.frequency === "daily" ? "selected" : ""}
+      >
+        ${t("item.daily")}
+      </option>
+      <option
+        value="weekly"
+        ${item.recurrence?.frequency === "weekly" ? "selected" : ""}
+      >
+        ${t("item.weekly")}
+      </option>
+      <option
+        value="monthly"
+        ${item.recurrence?.frequency === "monthly" ? "selected" : ""}
+      >
+        ${t("item.monthly")}
+      </option>
+    </select>
+    <span class="dropdownArrow">
+      <img
+        src="${getIconPath("navigation", "collapse")}"
+        class="icon smallIcon"
+        alt=""
+      >
+    </span>
+  </div>
+</div>
       <div
         id="editItemRecurrenceDates"
         style="${

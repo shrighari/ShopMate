@@ -137,6 +137,24 @@
   margin-left: auto;
   background: var(--surfaceColor);
 }
+
+.groupMemberRow,
+.groupInviteRow {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+}
+
+.groupMemberInformation,
+.groupInviteInformation {
+  flex: 1;
+  min-width: 0;
+}
+
+.groupMoreButton {
+  margin-left: auto;
+}
 .memberRoleAdmin {
   display: inline-flex;
   align-items: center;

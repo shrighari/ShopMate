@@ -44,17 +44,7 @@
 .authInput:focus {
   border-color: #118ab2;
 }
-/* Bottom Sheet Input */
-.bottomSheetInput {
-  width: 90%;
-  min-height: 40px;
-  padding: 12px 14px;
-  margin-bottom: 20px;
-  border: 1px solid var(--borderColor);
-  border-radius: 25px;
-  font-size: 16px;
-  outline: none;
-}
+
 /* Search Input */
 .searchInput {
   width: 100%;
@@ -229,7 +219,7 @@
   border: 1px solid #d7e0e8;
   border-radius: var(--radiusSmall);
   outline: none;
-  background: #f8fafc;
+  background: var(--surfaceColor);
   color: var(--textPrimary);
   font-family: inherit;
   font-size: 16px;
@@ -243,6 +233,7 @@
     background-color var(--animationSpeed) ease,
     box-shadow var(--animationSpeed) ease;
   -webkit-appearance: none;
+  appearance: none;
 }
 
 .bottomSheetInput::placeholder {
@@ -298,7 +289,7 @@ select.bottomSheetInput {
 /* Currency Symbol */
 .currencySymbol {
   position: absolute;
-  top: 50%;
+  top: 35%;
   left: 16px;
   z-index: 2;
   color: var(--textSecondary);
@@ -327,7 +318,34 @@ select.bottomSheetInput {
   background: var(--backgroundColor);
   box-shadow: var(--shadowSmall);
 }
+.dropdownInputWrapper {
+  position: relative;
+  width: 100%;
+}
 
+.dropdownInputWrapper .bottomSheetInput {
+  width: 100%;
+  padding-right: 44px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.dropdownInputWrapper .dropdownArrow {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.dropdownInputWrapper .dropdownArrow .smallIcon {
+  width: 18px;
+  height: 18px;
+}
 /* Tablet Form Layout */
 @media (min-width: 768px) {
   .formField {

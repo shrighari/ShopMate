@@ -100,7 +100,6 @@ function getLocalizedNotificationContent(notification) {
       ),
     };
   }
-
   return {
     title: notification.title,
     message: notification.message || "",
@@ -234,7 +233,13 @@ function openNotification(notificationId) {
       window.location.href = "../pages/dashboardPage.html";
       break;
     case "budget":
-      window.location.href = "../pages/budgetPage.html";
+      if (notification.actionData && notification.actionData.group) {
+        window.location.href =
+          "../pages/budgetPage.html?group=" +
+          encodeURIComponent(notification.actionData.group);
+      } else {
+        window.location.href = "../pages/budgetPage.html";
+      }
       break;
     case "notifications":
       window.location.href = "../pages/notificationsPage.html";

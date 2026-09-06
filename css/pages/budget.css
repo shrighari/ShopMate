@@ -5,170 +5,61 @@
  * Defines budget and financial analysis components used throughout the ShopMate application.
  *
  * RESPONSIBILITIES
- * • Budget hero section
- * • Budget summaries
- * • Budget statistics
+ * • Budget analysis
  * • Budget insights
  * • Budget recommendations
  * • Category budget summaries
- * • Analysis components
- * • Quick pick heading
+ * • Budget progress indicators
+ * • Budget status indicators
  *
  * PAGES
  * • Budget Page
  ***************************************************************************************************/
-/* Budget Hero */
-.budgetHero {
-  padding: 32px 24px;
-  margin-bottom: 24px;
-  background: linear-gradient(135deg, #118ab2, #0f6d8d);
-  color: var(--textPrimary);
-  border-radius: 28px;
+/* Budget Summary Body */
+.budgetSummaryBody {
+  padding: 0 20px 20px;
 }
-/* Budget Amount */
-.budgetAmount {
+/* Budget Healthy Text */
+.budgetHealthyText {
+  margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 30px;
-  font-weight: 700;
-}
-/* Budget Subtitle */
-.budgetSubtitle {
-  margin-top: 6px;
-  margin-bottom: 18px;
-  color: var(--mutedTextColor);
-  font-size: 14px;
-}
-/* Budget Statistics */
-.budgetStats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-/* Budget Helper Text */
-.budgetHelperText {
-  margin-top: 14px;
-  color: #2563eb;
-  font-size: 14px;
-  font-weight: 600;
-}
-/* Budget Helper Label */
-.budgetHelperLabel {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 12px;
-  color: var(--textSecondary);
-  font-size: 14px;
-  font-weight: 600;
-}
-/* Budget Category Section */
-.budgetCategorySection {
-  margin-top: 24px;
-}
-/* Budget Status Text */
-.budgetStatusText {
-  margin-top: 10px;
-  opacity: 0.95;
-  font-size: 13px;
-  font-weight: 600;
-}
-/* Budget Progress Text */
-.budgetProgressText {
-  margin-top: 12px;
-  opacity: 0.9;
-  font-size: 14px;
-}
-/* Budget Section Header */
-.budgetSectionHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-/* Budget Insight Text */
-.budgetInsightText {
-  margin-top: 8px;
-  font-size: 14px;
-  line-height: 1.5;
-}
-/* Overspend Text */
-.overspendText {
-  margin-top: 10px;
-  color: #ef4444;
-  font-size: 13px;
-  font-weight: 700;
-}
-/* Budget Percent Text */
-.budgetPercentText {
-  margin-top: 12px;
   text-align: center;
-  font-weight: 600;
+  color: #16a34a;
+  font-weight: 700;
 }
-/* Budget Insight */
+/* Budget Warning Text */
+.budgetWarningText {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #ca8a04;
+  font-weight: 700;
+}
+/* Budget Critical Text */
+.budgetCriticalText {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #dc2626;
+  font-weight: 700;
+}
 .budgetInsight {
-  margin-top: 8px;
-  color: var(--mutedTextColor);
-  text-align: center;
-  font-size: 14px;
-}
-/* Budget Recommendation */
-.budgetRecommendation {
-  margin-top: 12px;
-  color: var(--textSecondary);
-  font-size: 14px;
-  line-height: 1.6;
-}
-/* Analysis Value */
-.analysisValue {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 14px;
-  font-weight: 600;
-}
-/* Analysis Card Header */
-.analysisCardHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-/* Category Budget Summary */
-.categoryBudgetSummary {
-  margin-top: 8px;
+  margin-top: 10px;
   margin-bottom: 10px;
-  color: var(--mutedTextColor);
-  font-size: 13px;
-  line-height: 1.6;
-}
-.categoryBudgetSummary div {
-  display: flex;
-  justify-content: space-between;
-}
-.categoryBudgetSummary strong {
-  color: var(--textPrimary);
-  font-weight: 700;
-}
-/* Quick Pick Heading */
-.quickPickHeading {
-  position: sticky;
-  top: 0;
-  padding: 14px 16px 10px;
-  background: var(--cardColor);
-  color: var(--mutedTextColor);
-  border-bottom: 1px solid var(--borderColor);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  font-size: 13px;
-  font-weight: 700;
-  z-index: 2;
-}
-/* Top Category Name */
-.topCategoryName {
-  margin-top: 6px;
-  margin-bottom: 6px;
-  color: var(--secondaryTextColor);
-  font-size: 14px;
+  text-align: center;
+  color: var(--textSecondary);
   font-weight: 600;
+}
+.budgetEditButton {
+  margin-left: 10px;
+}
+.budgetAnalysisButton {
+  margin-top: 14px;
+  border: 1px solid var(--borderColor);
+  border-radius: var(--radiusMedium);
+  color: var(--textPrimary);
+  font-size: 16px;
+  font-weight: 700;
 }
 /* Budget Summary Header */
 .budgetSummaryHeader {
@@ -180,6 +71,8 @@
   background: var(--cardColor);
   border: none;
   cursor: pointer;
+  border-radius: 16px;
+  overflow: hidden;
 }
 .budgetSummaryHeader h3 {
   margin: 0;
@@ -191,25 +84,247 @@
   color: var(--mutedTextColor);
   font-size: 13px;
 }
-/* Budget Summary Body */
-.budgetSummaryBody {
-  padding: 0 20px 20px;
+
+#budgetAnalysisContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
 }
-/* Budget Healthy Text */
-.budgetHealthyText {
-  margin-top: 10px;
-  color: #16a34a;
+
+.budgetAnalysisCard,
+.budgetInsightCard,
+.categoryBudgetCard {
+  width: 100%;
+  padding: 22px;
+  box-sizing: border-box;
+  background: var(--cardColor);
+  border: 1px solid var(--borderColor);
+  border-radius: var(--radiusLarge);
+  box-shadow: var(--shadowSmall);
+}
+
+.budgetAnalysisCard h2,
+.budgetInsightCard h3,
+.categoryBudgetCard h3 {
+  margin: 0;
+  color: var(--textPrimary);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.budgetSubtitle {
+  margin: 6px 0 18px;
+  color: var(--textSecondary);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.analysisValue {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 42px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--dividerColor);
+  color: var(--textSecondary);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.analysisValue:last-child {
+  border-bottom: none;
+}
+
+.analysisValue > span:first-child {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.analysisValue > span:last-child {
+  flex: 0 1 auto;
+  min-width: 0;
+  color: var(--textPrimary);
+  font-weight: 700;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.analysisProgressSection {
+  margin: 18px 0 8px;
+  padding: 14px 0 4px;
+  border-top: 1px solid var(--dividerColor);
+}
+
+.analysisProgressHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 9px;
+}
+
+.analysisProgressHeader span {
+  color: var(--textSecondary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.analysisProgressHeader strong {
+  color: var(--textPrimary);
+  font-size: 14px;
   font-weight: 700;
 }
-/* Budget Warning Text */
-.budgetWarningText {
-  margin-top: 10px;
-  color: #ca8a04;
-  font-weight: 700;
+
+.analysisProgressBar {
+  width: 100%;
+  height: 10px;
+  overflow: hidden;
+  background: var(--dividerColor);
+  border-radius: 999px;
 }
-/* Budget Critical Text */
-.budgetCriticalText {
-  margin-top: 10px;
-  color: #dc2626;
+
+.analysisProgressFill {
+  height: 100%;
+  min-width: 0;
+  background: linear-gradient(90deg, var(--primaryColor), var(--primaryDark));
+  border-radius: inherit;
+  transition: width 0.3s ease;
+}
+
+.budgetInsightCard {
+  padding-top: 22px;
+}
+
+.budgetInsightCard h3 {
+  margin-bottom: 8px;
+}
+
+.budgetRecommendation {
+  margin: 14px 0 0;
+  padding: 14px 16px;
+  background: var(--surfaceColor);
+  border: 1px solid var(--borderColor);
+  border-left: 3px solid var(--primaryColor);
+  border-radius: var(--radiusMedium);
+  color: var(--textSecondary);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+#categoryBudgetContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.budgetCategorySectionHeader {
+  width: 100%;
+  margin: 6px 0 -2px;
+}
+
+.budgetCategorySectionHeader h3 {
+  margin: 0;
+  color: var(--textPrimary);
+  font-size: 18px;
   font-weight: 700;
+  line-height: 1.3;
+}
+
+.budgetCategorySectionHeader p {
+  margin: 5px 0 0;
+  color: var(--textSecondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.categoryBudgetCard {
+  padding: 20px;
+}
+
+.analysisCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.analysisCardHeader h3 {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.budgetStatusBadge {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--borderColor);
+  border-radius: 999px;
+  background: var(--surfaceColor);
+  color: var(--textSecondary);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.categoryBudgetCard .analysisProgressSection {
+  margin-top: 16px;
+}
+
+.categoryBudgetCard .analysisValue:last-child {
+  margin-top: 4px;
+}
+
+.emptyStateCard {
+  width: 100%;
+  padding: 28px 20px;
+  box-sizing: border-box;
+  background: var(--cardColor);
+  border: 1px solid var(--borderColor);
+  border-radius: var(--radiusLarge);
+  color: var(--textSecondary);
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  #budgetAnalysisContainer {
+    gap: 20px;
+  }
+
+  .budgetAnalysisCard,
+  .budgetInsightCard {
+    padding: 24px;
+  }
+
+  .categoryBudgetCard {
+    padding: 22px;
+  }
+
+  .budgetAnalysisCard h2,
+  .budgetInsightCard h3,
+  .categoryBudgetCard h3 {
+    font-size: 21px;
+  }
+
+  .analysisValue {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .analysisProgressBar {
+    height: 11px;
+  }
 }

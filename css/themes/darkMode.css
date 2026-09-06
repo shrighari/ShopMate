@@ -10,12 +10,11 @@ body.darkMode {
   --backgroundColor: #1f2937;
   --appBackground: #1b2230;
   --cardColor: #2a364a;
-  --surfaceColor: #2f3c52;
+
   --overlayColor: rgba(0, 0, 0, 0.7);
   /* Text */
   --textPrimary: #f8fafc;
   --textSecondary: #cbd5e1;
-  --textPrimary: #f8fafc;
   --mutedTextColor: #94a3b8;
   /* Borders */
   --borderColor: #3e4c61;
@@ -29,12 +28,9 @@ body.darkMode {
   --shadowSmall: 0 4px 12px rgba(0, 0, 0, 0.2);
   --shadowMedium: 0 8px 20px rgba(0, 0, 0, 0.28);
   --shadowLarge: 0 14px 34px rgba(0, 0, 0, 0.38);
-
   --surfaceColor: #334155;
   --headerBackground: #243244;
   --drawerBackground: #243244;
-
   --iconColor: #f8fafc;
-
   --dividerColor: #3e4c61;
 }

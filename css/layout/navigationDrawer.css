@@ -192,7 +192,7 @@
 .drawerLogout {
   margin-top: auto;
   padding: 12px 14px 16px;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--borderColor);
 }
 
 .drawerLogoutItem {

@@ -62,6 +62,7 @@ const budgetCategoryList = document.getElementById("budgetCategoryList");
 const bottomSheet = document.getElementById("bottomSheet");
 const bottomSheetContent = document.getElementById("bottomSheetContent");
 const screenOverlay = document.getElementById("screenOverlay");
+let budgetDisplayGroup = null;
 /* Navigate Back - Returns the user to the dashboard page. */
 function goBack() {
   window.location.href = "../pages/dashboardPage.html";
@@ -147,11 +148,34 @@ function openBudgetMenu(categoryName) {
 }
 /* Edit Category Budget - Opens the form to update the monthly budget limit. */
 function editCategoryBudget(categoryName) {
-  if (!canManageBudget()) {
+  const activeGroup = budgetDisplayGroup || appState.activeGroup;
+  if (!activeGroup) {
     showDialog(t("budget.onlyAdminCanEdit"));
     return;
   }
-  const categoryBudget = appState.budgets.categoryBudgets[categoryName];
+  /*
+   * Permission is checked against the Budget display group,
+   * not against the global appState.activeGroup.
+   */
+  const members = appState.groupMembers?.[activeGroup] || [];
+  const currentUser = appState.currentUser;
+  const currentMember = currentUser
+    ? members.find(function (member) {
+        return member.email === currentUser.email;
+      })
+    : null;
+  const canManageDisplayedGroup =
+    currentMember &&
+    (currentMember.role === "admin" || currentMember.role === "owner");
+  if (!canManageDisplayedGroup) {
+    showDialog(t("budget.onlyAdminCanEdit"));
+    return;
+  }
+  const categoryBudget =
+    appState.budgets.categoryBudgets?.[activeGroup]?.[categoryName];
+  if (!categoryBudget) {
+    return;
+  }
   bottomSheetContent.innerHTML = `
     <div class="bottomSheetHeader">
       <h2>
@@ -173,7 +197,7 @@ function editCategoryBudget(categoryName) {
         id="editBudgetLimit"
         class="bottomSheetInput"
         type="number"
-        value="${categoryBudget.monthlyLimit}"
+        value="${categoryBudget.monthlyLimit ?? ""}"
       >
       <button
         class="primaryButton"
@@ -191,11 +215,24 @@ function editCategoryBudget(categoryName) {
 }
 /* Save Edited Budget - Updates the monthly budget limit for the selected category. */
 function saveEditedBudget(categoryName) {
-  const newLimit = Number(document.getElementById("editBudgetLimit").value);
-  appState.budgets.categoryBudgets[categoryName].monthlyLimit = newLimit;
+  const activeGroup = budgetDisplayGroup || appState.activeGroup;
+  const input = document.getElementById("editBudgetLimit");
+  if (!activeGroup || !input) {
+    return;
+  }
+  const newLimit = Number(input.value);
+  if (Number.isNaN(newLimit) || newLimit < 0) {
+    return;
+  }
+  if (!appState.budgets.categoryBudgets?.[activeGroup]?.[categoryName]) {
+    return;
+  }
+  appState.budgets.categoryBudgets[activeGroup][categoryName].monthlyLimit =
+    newLimit;
   saveAppState();
   showToast(t("budget.budgetUpdated"));
   closeBottomSheet();
+  renderBudgetAnalysis();
 }
 /* Open Bottom Sheet - Displays the bottom sheet and locks page scrolling. */
 function openBottomSheet() {
@@ -274,12 +311,18 @@ function getBudgetInsights(percent) {
     recommendation,
   };
 }
-/* Render Budget Analysis - Displays the budget summary and insights for the active group. */
+/* Render Budget Analysis - Displays the budget summary for the selected Budget display group. */
+/* Render Budget Analysis - Displays the budget summary and insights for the selected display group. */
 function renderBudgetAnalysis() {
   const container = document.getElementById("budgetAnalysisContainer");
-  const activeGroup =
-    localStorage.getItem("activeGroup") || appState.activeGroup;
-  appState.activeGroup = activeGroup;
+  /*
+   * Use the temporary display group when one was supplied through
+   * the URL. Otherwise use the application's normal active group.
+   *
+   * IMPORTANT:
+   * Do NOT assign this value back to appState.activeGroup.
+   */
+  const activeGroup = budgetDisplayGroup || appState.activeGroup;
   if (!activeGroup) {
     container.innerHTML = `
       <div class="emptyState">
@@ -322,11 +365,17 @@ function renderBudgetAnalysis() {
           ${budgetInsights.health}
         </span>
       </div>
-      <div class="analysisProgressBar">
-        <div
-          class="analysisProgressFill"
-          style="width:${budgetSummary.progressWidth}%"
-        ></div>
+      <div class="analysisProgressSection">
+        <div class="analysisProgressHeader">
+          <span>Budget Used</span>
+          <strong>${budgetSummary.percent}%</strong>
+        </div>
+        <div class="analysisProgressBar">
+          <div
+            class="analysisProgressFill"
+            style="width:${budgetSummary.progressWidth}%"
+          ></div>
+        </div>
       </div>
       <div class="analysisValue">
         <span>Highest Spending</span>
@@ -364,15 +413,29 @@ function renderBudgetAnalysis() {
         ${budgetInsights.recommendation}
       </p>
     </div>
+    <div class="budgetCategorySectionHeader">
+      <h3>Monthly Category Budgets</h3>
+      <p>Track spending and limits for each category.</p>
+    </div>
     <div id="categoryBudgetContainer"></div>
   `;
   renderCategoryBudgetCards();
 }
-/* Render Category Budget Cards - Displays budget details for every category in the active group. */
-function renderCategoryBudgetCards() {
+/* Render Category Budget Cards - Displays budget details for the selected Budget display group. */
+
+  function renderCategoryBudgetCards() {
   const container = document.getElementById("categoryBudgetContainer");
   container.innerHTML = "";
-  const categories = appState.groups?.[appState.activeGroup] || [];
+
+  const activeGroup = budgetDisplayGroup || appState.activeGroup;
+
+  const categories = appState.groups?.[activeGroup] || [];
+  if (!container) {
+    return;
+  }
+  container.innerHTML = "";
+
+
   if (categories.length === 0) {
     container.innerHTML = `
       <div class="emptyStateCard">
@@ -383,10 +446,9 @@ function renderCategoryBudgetCards() {
   }
   const categorySummary = [];
   categories.forEach(function (category) {
-    const budget =
-      appState.budgets.categoryBudgets?.[appState.activeGroup]?.[
-        category.name
-      ] || {};
+    const budget = appState.budgets.categoryBudgets?.[activeGroup]?.[
+    category.name
+  ] || {};
     const limit = budget.monthlyLimit ?? 0;
     let spent = 0;
     let highestItem = "";
@@ -454,11 +516,17 @@ function renderCategoryBudgetCards() {
             }
           </span>
         </div>
-        <div class="analysisProgressBar">
-          <div
-            class="analysisProgressFill"
-            style="width:${percent}%"
-          ></div>
+        <div class="analysisProgressSection">
+          <div class="analysisProgressHeader">
+            <span>Budget Used</span>
+            <strong>${percent}%</strong>
+          </div>
+          <div class="analysisProgressBar">
+            <div
+              class="analysisProgressFill"
+              style="width:${percent}%"
+            ></div>
+          </div>
         </div>
         <div class="analysisValue">
           <span>Highest Item</span>
@@ -470,7 +538,14 @@ function renderCategoryBudgetCards() {
     `;
   });
 }
-/* Initialize Budget Page - Loads the budget analysis when the page opens. */
+/* Initialize Budget Page - Loads the Budget page using an optional temporary group. */
 function initializeBudgetPage() {
+  const params = new URLSearchParams(window.location.search);
+  const requestedGroup = params.get("group");
+  if (requestedGroup && appState.groups && appState.groups[requestedGroup]) {
+    budgetDisplayGroup = requestedGroup;
+  } else {
+    budgetDisplayGroup = null;
+  }
   renderBudgetAnalysis();
 }

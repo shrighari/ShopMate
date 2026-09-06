@@ -205,9 +205,11 @@ function renderEditProfileForm() {
     </div>
     <div class="formRow">
   <div class="halfWidthField">
-    <label class="formLabel">
-      Gender
-    </label>
+  <label class="formLabel">
+    Gender
+  </label>
+
+  <div class="dropdownInputWrapper">
     <select
       id="profileGenderInput"
       class="bottomSheetInput"
@@ -234,7 +236,16 @@ function renderEditProfileForm() {
         Other
       </option>
     </select>
+
+    <span class="dropdownArrow">
+      <img
+        src="${getIconPath("navigation", "collapse")}"
+        class="icon smallIcon"
+        alt=""
+      >
+    </span>
   </div>
+</div>
   <div class="halfWidthField">
     <label class="formLabel">
       Date of Birth

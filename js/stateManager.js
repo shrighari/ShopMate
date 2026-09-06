@@ -169,7 +169,24 @@ function loadAppState() {
     parsedState.pendingInvitations = [];
     stateUpdated = true;
   }
+  parsedState.pendingInvitations.forEach(function (invitation) {
+    if (!invitation.id) {
+      invitation.id = `invite_${Date.now()}_${Math.random()
+        .toString(36)
+        .slice(2, 10)}`;
+      stateUpdated = true;
+    }
 
+    if (!invitation.invitedAt) {
+      invitation.invitedAt = invitation.createdAt || Date.now();
+      stateUpdated = true;
+    }
+
+    if (!invitation.expiresAt) {
+      invitation.expiresAt = invitation.invitedAt + 7 * 24 * 60 * 60 * 1000;
+      stateUpdated = true;
+    }
+  });
   if (!parsedState.budgets || typeof parsedState.budgets !== "object") {
     parsedState.budgets = {
       groupBudgets: {},

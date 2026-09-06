@@ -94,8 +94,16 @@
           </button>
         </section>
       </main>
+      <!-- Screen Overlay -->
+      <div
+        id="screenOverlay"
+        class="screenOverlay hidden"
+        onclick="closeBottomSheet()"
+      ></div>
+
       <!-- Bottom Sheet -->
       <div id="bottomSheet" class="bottomSheet hidden">
+        <div class="bottomSheetHandle"></div>
         <div id="bottomSheetContent" class="bottomSheetContent"></div>
       </div>
       <!-- Snackbar -->

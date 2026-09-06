@@ -61,9 +61,11 @@ function openSecuritySettings() {
         class="closeButton"
         onclick="closeBottomSheet()"
         aria-label="${t("common.close")}"
-      >
-        ×
-      </button>
+      > <img
+          src="${getIconPath("navigation", "close")}"
+          class="icon actionIcon"
+          alt="${t("common.close")}"
+        ></button>
     </div>
     <div class="bottomSheetBody">
       <div class="settingsDescription">
@@ -279,52 +281,84 @@ function openThemeSettings() {
   const selectedTheme = appState.settings.theme;
   bottomSheetContent.innerHTML = `
     <div class="bottomSheetHeader">
-      <h2>
-        Theme
-      </h2>
+      <h2>Theme</h2>
       <button
         class="closeButton"
+        type="button"
         onclick="closeBottomSheet()"
+        aria-label="Close"
       >
-        ✕
+        <img
+          src="${getIconPath("navigation", "close")}"
+          class="icon actionIcon"
+          alt=""
+        >
       </button>
     </div>
     <div class="bottomSheetBody">
-      <label class="radioOption">
-        <input
-          type="radio"
-          name="theme"
-          value="system"
-          ${selectedTheme === "system" ? "checked" : ""}
-        >
-        System Default
-      </label>
-      <label class="radioOption">
-        <input
-          type="radio"
-          name="theme"
-          value="light"
-          ${selectedTheme === "light" ? "checked" : ""}
-        >
-        Light
-      </label>
-      <label class="radioOption">
-        <input
-          type="radio"
-          name="theme"
-          value="dark"
-          ${selectedTheme === "dark" ? "checked" : ""}
-        >
-        Dark
-      </label>
+      <div class="themeOptions">
+        <label class="themeOption ${
+          selectedTheme === "system" ? "selected" : ""
+        }">
+          <input
+            type="radio"
+            name="theme"
+            value="system"
+            ${selectedTheme === "system" ? "checked" : ""}
+          >
+          <span class="themeOptionContent">
+            <strong>System Default</strong>
+            <span>Follow your device appearance settings</span>
+          </span>
+          <span class="themeOptionCheck">
+            ${selectedTheme === "system" ? "✓" : ""}
+          </span>
+        </label>
+        <label class="themeOption ${
+          selectedTheme === "light" ? "selected" : ""
+        }">
+          <input
+            type="radio"
+            name="theme"
+            value="light"
+            ${selectedTheme === "light" ? "checked" : ""}
+          >
+          <span class="themeOptionContent">
+            <strong>Light</strong>
+            <span>Use the light appearance</span>
+          </span>
+          <span class="themeOptionCheck">
+            ${selectedTheme === "light" ? "✓" : ""}
+          </span>
+        </label>
+        <label class="themeOption ${
+          selectedTheme === "dark" ? "selected" : ""
+        }">
+          <input
+            type="radio"
+            name="theme"
+            value="dark"
+            ${selectedTheme === "dark" ? "checked" : ""}
+          >
+          <span class="themeOptionContent">
+            <strong>Dark</strong>
+            <span>Use the dark appearance</span>
+          </span>
+          <span class="themeOptionCheck">
+            ${selectedTheme === "dark" ? "✓" : ""}
+          </span>
+        </label>
+      </div>
       <div class="bottomSheetButtonRow">
         <button
+          type="button"
           class="secondaryButton"
           onclick="closeBottomSheet()"
         >
           Cancel
         </button>
         <button
+          type="button"
           class="primaryButton"
           onclick="saveThemePreference()"
         >
@@ -334,6 +368,7 @@ function openThemeSettings() {
     </div>
   `;
   openBottomSheet();
+  initializeRadioOptionSelection("theme", ".themeOption", ".themeOptionCheck");
 }
 /* Save Theme Preference - Saves and immediately applies the selected application theme. */
 function saveThemePreference() {
@@ -341,25 +376,20 @@ function saveThemePreference() {
   if (!selectedTheme) {
     return;
   }
-
   const savedState = localStorage.getItem("shopMateData");
-  let currentState = null;
-
   if (savedState) {
     try {
-      currentState = JSON.parse(savedState);
+      const currentState = JSON.parse(savedState);
+      if (!currentState.settings) {
+        currentState.settings = {};
+      }
+      currentState.settings.theme = selectedTheme.value;
+      localStorage.setItem("shopMateData", JSON.stringify(currentState));
     } catch (error) {
-      currentState = null;
+      return;
     }
   }
-
   appState.settings.theme = selectedTheme.value;
-
-  if (currentState && Array.isArray(currentState.favoriteItems)) {
-    appState.favoriteItems = currentState.favoriteItems;
-  }
-
-  saveAppState();
   applyTheme();
   closeBottomSheet();
   showDialog(
@@ -466,65 +496,134 @@ function saveNotificationSettings() {
     "Your notification preferences have been updated successfully.",
   );
 }
+/* Initialize Radio Option Selection - Sets up event listeners for radio button options. */
+function initializeRadioOptionSelection(
+  inputName,
+  optionSelector,
+  checkSelector,
+) {
+  const inputs = document.querySelectorAll(`input[name="${inputName}"]`);
+
+  inputs.forEach((input) => {
+    input.addEventListener("change", function () {
+      document.querySelectorAll(optionSelector).forEach((option) => {
+        const optionInput = option.querySelector(`input[name="${inputName}"]`);
+        const check = option.querySelector(checkSelector);
+
+        const isSelected = optionInput === input;
+
+        option.classList.toggle("selected", isSelected);
+
+        if (check) {
+          check.textContent = isSelected ? "✓" : "";
+        }
+      });
+    });
+  });
+}
 /* Open Language Settings - Displays available application languages. */
 function openLanguageSettings() {
   const selectedLanguage = appState.settings.language;
+
   bottomSheetContent.innerHTML = `
     <div class="bottomSheetHeader">
       <h2>Language</h2>
+
       <button
         class="closeButton"
+        type="button"
         onclick="closeBottomSheet()"
+        aria-label="Close"
       >
         <img
           src="${getIconPath("navigation", "close")}"
           class="icon actionIcon"
-          alt="Close"
+          alt=""
         >
       </button>
     </div>
+
     <div class="bottomSheetBody">
       <div class="settingsDescription">
         Select your preferred application language.
       </div>
-      <label class="radioOption">
-        <input
-          type="radio"
-          name="language"
-          value="en"
-          ${selectedLanguage === "en" ? "checked" : ""}
-        >
-        🇺🇸 English
-      </label>
-      <label class="radioOption">
-        <input
-          type="radio"
-          name="language"
-          value="fr"
-          ${selectedLanguage === "fr" ? "checked" : ""}
-        >
-        🇫🇷 French
-      </label>
-      <label class="radioOption">
-        <input
-          type="radio"
-          name="language"
-          value="ta"
-          ${selectedLanguage === "ta" ? "checked" : ""}
-        >
-        🇮🇳 Tamil
-      </label>
+
+      <div class="languageOptions">
+
+        <label class="languageOption ${
+          selectedLanguage === "en" ? "selected" : ""
+        }">
+          <input
+            type="radio"
+            name="language"
+            value="en"
+            ${selectedLanguage === "en" ? "checked" : ""}
+          >
+
+          <span class="languageOptionContent">
+            <strong>🇺🇸 English</strong>
+          </span>
+
+          <span class="languageOptionCheck">
+            ${selectedLanguage === "en" ? "✓" : ""}
+          </span>
+        </label>
+
+        <label class="languageOption ${
+          selectedLanguage === "fr" ? "selected" : ""
+        }">
+          <input
+            type="radio"
+            name="language"
+            value="fr"
+            ${selectedLanguage === "fr" ? "checked" : ""}
+          >
+
+          <span class="languageOptionContent">
+            <strong>🇫🇷 French</strong>
+          </span>
+
+          <span class="languageOptionCheck">
+            ${selectedLanguage === "fr" ? "✓" : ""}
+          </span>
+        </label>
+
+        <label class="languageOption ${
+          selectedLanguage === "ta" ? "selected" : ""
+        }">
+          <input
+            type="radio"
+            name="language"
+            value="ta"
+            ${selectedLanguage === "ta" ? "checked" : ""}
+          >
+
+          <span class="languageOptionContent">
+            <strong>🇮🇳 Tamil</strong>
+          </span>
+
+          <span class="languageOptionCheck">
+            ${selectedLanguage === "ta" ? "✓" : ""}
+          </span>
+        </label>
+
+      </div>
+
       <div class="settingsDescription">
         More languages will be available in future updates.
       </div>
+
       <div class="bottomSheetButtonRow">
         <button
+          type="button"
           class="secondaryButton"
           onclick="closeBottomSheet()"
         >
           Cancel
         </button>
+
         <button
+          type="button"
           class="primaryButton"
           onclick="saveLanguagePreference()"
         >
@@ -533,10 +632,15 @@ function openLanguageSettings() {
       </div>
     </div>
   `;
+
   openBottomSheet();
+  initializeRadioOptionSelection(
+    "language",
+    ".languageOption",
+    ".languageOptionCheck",
+  );
 }
 /* Save Language Preference - Saves the user's preferred application language. */
-
 async function saveLanguagePreference() {
   const selectedLanguage = document.querySelector(
     'input[name="language"]:checked',
@@ -554,17 +658,13 @@ async function saveLanguagePreference() {
 /* Open Currency Settings */
 function setCurrency() {
   const bottomSheetContent = document.getElementById("bottomSheetContent");
-
   if (!bottomSheetContent) {
     return;
   }
-
   const currentCurrency = appState.settings.currency || "AUD";
-
   bottomSheetContent.innerHTML = `
     <div class="bottomSheetHeader">
       <h2>${t("currency.title")}</h2>
-
       <button
         class="closeButton"
         type="button"
@@ -574,14 +674,11 @@ function setCurrency() {
         ✕
       </button>
     </div>
-
     <div class="bottomSheetBody">
       <p class="bottomSheetDescription">
         ${t("currency.description")}
       </p>
-
       <div class="currencyOptions">
-
         <button
           type="button"
           class="currencyOption ${currentCurrency === "AUD" ? "selected" : ""}"
@@ -591,12 +688,10 @@ function setCurrency() {
             <strong>${t("currency.aud")}</strong>
             <span>${t("currency.audDescription")}</span>
           </span>
-
           <span class="currencyOptionSymbol">${
             currentCurrency === "AUD" ? "✓" : ""
           }</span>
         </button>
-
         <button
           type="button"
           class="currencyOption ${currentCurrency === "LKR" ? "selected" : ""}"
@@ -606,12 +701,10 @@ function setCurrency() {
             <strong>${t("currency.lkr")}</strong>
             <span>${t("currency.lkrDescription")}</span>
           </span>
-
           <span class="currencyOptionSymbol">${
             currentCurrency === "LKR" ? "✓" : ""
           }</span>
         </button>
-
         <button
           type="button"
           class="currencyOption ${currentCurrency === "INR" ? "selected" : ""}"
@@ -621,48 +714,36 @@ function setCurrency() {
             <strong>${t("currency.inr")}</strong>
             <span>${t("currency.inrDescription")}</span>
           </span>
-
           <span class="currencyOptionSymbol">${
             currentCurrency === "INR" ? "✓" : ""
           }</span>
         </button>
-
       </div>
     </div>
   `;
-
   openBottomSheet();
 }
 /* Select Currency */
 function selectCurrency(currency) {
   const supportedCurrencies = ["AUD", "LKR", "INR"];
-
   if (!supportedCurrencies.includes(currency)) {
     return;
   }
-
   appState.settings.currency = currency;
-
   saveAppState();
-
   closeBottomSheet();
-
   showDialog(t("currency.savedTitle"), t("currency.savedMessage"));
 }
 /* Open Measurement Settings */
 function setMeasurementUnit() {
   const bottomSheetContent = document.getElementById("bottomSheetContent");
-
   if (!bottomSheetContent) {
     return;
   }
-
   const currentUnit = appState.settings.measurementUnit || "metric";
-
   bottomSheetContent.innerHTML = `
     <div class="bottomSheetHeader">
       <h2>${t("measurementUnits.title")}</h2>
-
       <button
         class="closeButton"
         type="button"
@@ -672,12 +753,10 @@ function setMeasurementUnit() {
         ✕
       </button>
     </div>
-
     <div class="bottomSheetBody">
       <p class="bottomSheetDescription">
         ${t("measurementUnits.description")}
       </p>
-
       <div class="measurementUnitOptions">
         <button
           type="button"
@@ -690,12 +769,10 @@ function setMeasurementUnit() {
             <strong>${t("measurementUnits.metric")}</strong>
             <span>${t("measurementUnits.metricDescription")}</span>
           </span>
-
           <span class="measurementUnitCheck">
             ${currentUnit === "metric" ? "✓" : ""}
           </span>
         </button>
-
         <button
           type="button"
           class="measurementUnitOption ${
@@ -707,7 +784,6 @@ function setMeasurementUnit() {
             <strong>${t("measurementUnits.imperial")}</strong>
             <span>${t("measurementUnits.imperialDescription")}</span>
           </span>
-
           <span class="measurementUnitCheck">
             ${currentUnit === "imperial" ? "✓" : ""}
           </span>
@@ -715,7 +791,6 @@ function setMeasurementUnit() {
       </div>
     </div>
   `;
-
   openBottomSheet();
 }
 /* Select Measurement Unit */
@@ -723,13 +798,9 @@ function selectMeasurementUnit(unit) {
   if (unit !== "metric" && unit !== "imperial") {
     return;
   }
-
   appState.settings.measurementUnit = unit;
-
   saveAppState();
-
   closeBottomSheet();
-
   showDialog(
     t("measurementUnits.savedTitle"),
     t("measurementUnits.savedMessage"),
@@ -738,11 +809,9 @@ function selectMeasurementUnit(unit) {
 /* Clear Local Data */
 function clearLocalData() {
   const bottomSheetContent = document.getElementById("bottomSheetContent");
-
   if (!bottomSheetContent) {
     return;
   }
-
   bottomSheetContent.innerHTML = `
     <div class="bottomSheetHeader">
       <h2>${t("clearLocalData.title")}</h2>
@@ -755,16 +824,13 @@ function clearLocalData() {
         ✕
       </button>
     </div>
-
     <div class="bottomSheetBody">
       <p class="bottomSheetDescription">
         ${t("clearLocalData.description")}
       </p>
-
       <div class="warningMessage">
         ${t("clearLocalData.warning")}
       </div>
-
       <div class="bottomSheetButtonRow">
         <button
           type="button"
@@ -773,7 +839,6 @@ function clearLocalData() {
         >
           ${t("common.cancel")}
         </button>
-
         <button
           type="button"
           class="primaryButton"
@@ -784,14 +849,12 @@ function clearLocalData() {
       </div>
     </div>
   `;
-
   openBottomSheet();
 }
 function confirmClearLocalData() {
   localStorage.removeItem(STORAGE_KEY);
   sessionStorage.removeItem("shopMateAppUnlocked");
   sessionStorage.removeItem("shopMateSecurityLoginFallback");
-
   window.location.href = "../pages/loginPage.html";
 }
 /* About ShopMate */
@@ -1025,19 +1088,14 @@ function sendFeedback() {
 /* Submit Feedback */
 function submitFeedback() {
   const feedbackMessage = document.getElementById("feedbackMessage");
-
   if (!feedbackMessage) {
     return;
   }
-
   const message = feedbackMessage.value.trim();
-
   if (!message) {
     showDialog(t("feedback.emptyTitle"), t("feedback.emptyMessage"));
     return;
   }
-
   closeBottomSheet();
-
   showDialog(t("feedback.successTitle"), t("feedback.successMessage"));
 }

@@ -64,21 +64,27 @@
 /* Budget Widget Text */
 .budgetWidgetText {
   margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
   font-size: 14px;
 }
 /* Budget Allocation Text */
 .budgetAllocationText {
   margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
   color: var(--mutedTextColor);
   font-size: 13px;
   font-weight: 600;
 }
 /* Budget Allocation Status */
 .budgetAllocationStatus {
-  margin-top: 6px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   color: #2563eb;
   font-size: 14px;
   font-weight: 700;
+  text-align: center;
 }
 /* Budget Warning Banner */
 .budgetWarningBanner {

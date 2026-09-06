@@ -55,22 +55,7 @@
   padding: 18px 20px;
 }
 /* Group Members */
-.groupMemberRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--borderColor);
-}
-.groupMemberName {
-  font-weight: 600;
-}
-.groupMemberRole {
-  margin-top: 2px;
-  color: var(--mutedTextColor);
-  font-size: 13px;
-  text-transform: capitalize;
-}
+
 /* Badges */
 .activeGroupBadge {
   margin-left: 8px;

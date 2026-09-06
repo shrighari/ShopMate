@@ -326,21 +326,20 @@ function canManageBudget() {
 }
 /* Can Manage Group - Determines whether the current user can manage the active group. */
 function canManageGroup() {
-  return isAdmin();
+  const member = getCurrentMember();
+  return member ? member.role === "admin" || member.role === "owner" : false;
 }
-/* Calculate Group Budget - Calculates the total amount spent for the active shopping group. */
-function calculateGroupBudget() {
-  if (!appState.budgets.groupBudgets) {
-    appState.budgets.groupBudgets = {};
-  }
-  if (!appState.budgets.groupBudgets[appState.activeGroup]) {
-    appState.budgets.groupBudgets[appState.activeGroup] = {
-      monthlyLimit: null,
-    };
+/* Calculate Group Budget - Calculates the total amount spent for the specified shopping group. */
+function calculateGroupBudget(groupName) {
+  if (!groupName) {
+    return 0;
   }
   let spent = 0;
-  const categories = appState.groups[appState.activeGroup] || [];
+  const categories = appState.groups?.[groupName] || [];
   categories.forEach(function (category) {
+    if (!Array.isArray(category.items)) {
+      return;
+    }
     category.items.forEach(function (item) {
       if (item.purchased && item.estimatedPrice) {
         spent += Number(item.estimatedPrice);

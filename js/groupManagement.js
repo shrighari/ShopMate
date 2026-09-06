@@ -106,7 +106,8 @@ function renderGroupAccordion() {
                                 onclick="
                                   event.stopPropagation();
                                   openMemberActions(
-                                    '${member.id}'
+                                    '${member.id}',
+                                    '${groupName}'
                                   );
                                 "
                               >
@@ -509,24 +510,33 @@ function openMemberProfile(memberId) {
   window.location.href = "../pages/profilePage.html";
 }
 /* Member Actions */
-function openMemberActions(memberId) {
+function openMemberActions(memberId, groupName) {
   if (!canManageGroup()) {
     return;
   }
-  const members = getCurrentGroupMembers();
+
+  const members =
+    appState.groupMembers && appState.groupMembers[groupName]
+      ? appState.groupMembers[groupName]
+      : [];
+
   const member = members.find(function (member) {
     return member.id === memberId;
   });
+
   if (!member) {
     return;
   }
+
   bottomSheetContent.innerHTML = `
     <div class="bottomSheetHeader">
       <h2>
         ${member.name}
       </h2>
+
       <button
         class="closeButton"
+        type="button"
         onclick="closeBottomSheet()"
       >
         <img
@@ -536,15 +546,18 @@ function openMemberActions(memberId) {
         >
       </button>
     </div>
+
     <div class="bottomSheetBody">
       ${
         member.role !== "admin" && member.role !== "owner"
           ? `
             <button
               class="bottomSheetActionButton"
+              type="button"
               onclick="
                 makeAdmin(
-                  '${member.id}'
+                  '${member.id}',
+                  '${groupName}'
                 )
               "
             >
@@ -560,14 +573,17 @@ function openMemberActions(memberId) {
           `
           : ""
       }
+
       ${
         member.role !== "owner"
           ? `
             <button
               class="bottomSheetActionButton"
+              type="button"
               onclick="
                 transferOwnership(
-                  '${member.id}'
+                  '${member.id}',
+                  '${groupName}'
                 )
               "
             >
@@ -583,14 +599,17 @@ function openMemberActions(memberId) {
           `
           : ""
       }
+
       <button
         class="
           bottomSheetActionButton
           destructiveActionButton
         "
+        type="button"
         onclick="
           openRemoveMemberDialog(
-            '${member.id}'
+            '${member.id}',
+            '${groupName}'
           )
         "
       >
@@ -605,10 +624,11 @@ function openMemberActions(memberId) {
       </button>
     </div>
   `;
+
   openBottomSheet();
 }
 /* Make Admin */
-async function makeAdmin(memberId) {
+async function makeAdmin(memberId, groupName) {
   if (!canManageGroup()) {
     showDialog(
       t("common.permissionDenied"),
@@ -616,23 +636,34 @@ async function makeAdmin(memberId) {
     );
     return;
   }
-  const members = getCurrentGroupMembers();
+
+  const members =
+    appState.groupMembers && appState.groupMembers[groupName]
+      ? appState.groupMembers[groupName]
+      : [];
+
   const member = members.find(function (member) {
     return member.id === memberId;
   });
+
   if (!member) {
     return;
   }
+
   member.role = "admin";
+
   /*
     Backend
     PATCH
     /group/member/role
   */
+
   saveAppState();
   renderGroupAccordion();
   closeBottomSheet();
+
   showToast(t("groupManagement.memberPromoted"));
+
   createNotification(
     "group",
     t("groupManagement.memberPromotedTitle"),
@@ -852,11 +883,14 @@ function sendInvitation() {
     );
     return;
   }
+
   const email = document
     .getElementById("inviteMemberEmail")
     .value.trim()
     .toLowerCase();
+
   const role = document.getElementById("inviteMemberRole").value;
+
   if (!email) {
     showDialog(
       t("groupManagement.missingEmail"),
@@ -864,6 +898,7 @@ function sendInvitation() {
     );
     return;
   }
+
   if (!isValidEmail(email)) {
     showDialog(
       t("groupManagement.invalidEmail"),
@@ -871,26 +906,36 @@ function sendInvitation() {
     );
     return;
   }
-  appState.pendingInvitations.push({
+
+  const currentUser = getCurrentUser();
+
+  if (!currentUser) {
+    showToast(t("common.currentUserUnavailable"));
+    return;
+  }
+
+  const groupName = appState.activeGroup;
+
+  const invitation = {
+    id: crypto.randomUUID(),
+    groupId: groupName,
+    groupName: groupName,
     email: email,
     role: role,
-    groupName: appState.activeGroup,
+    invitedBy: currentUser.email,
+    invitedAt: new Date().toISOString(),
+    expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
     status: "pending",
-    createdAt: Date.now(),
-  });
-  /*
-    Backend
-    POST /group/invite
-    {
-      email,
-      role,
-      groupName
-    }
-  */
+  };
+
+  appState.pendingInvitations.push(invitation);
+
   saveAppState();
   renderGroupAccordion();
   closeBottomSheet();
+
   showToast(t("groupManagement.invitationSent"));
+
   createNotification(
     "group",
     t("groupManagement.invitationSent"),

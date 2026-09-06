@@ -1152,17 +1152,7 @@ function renderSideDrawer() {
         >
         <span>${t("dashboard.notifications")}</span>
       </button>
-      <button
-        class="drawerItem"
-        onclick="window.location.href='../pages/budgetPage.html'"
-      >
-        <img
-          src="${getIconPath("features", "budget")}"
-          class="icon featureIcon"
-          alt=""
-        >
-        <span>${t("dashboard.budget")}</span>
-      </button>
+
       <button
         class="drawerItem"
         onclick="window.location.href='../pages/settingsPage.html'"
@@ -1385,24 +1375,32 @@ function renderBudgetDashboardWidget() {
               </p>
             `
         }
-        ${
-          canManageBudget()
-            ? `
-              <button
-                class="primaryButton budgetEditButton"
-                onclick="renderEditGroupBudgetForm()"
-              >
-                ${t("dashboard.editBudget")}
-              </button>
-            `
-            : ""
-        }
+        <div class="budgetActionButtons">
+  ${
+    canManageBudget()
+      ? `
         <button
-          class="secondaryButton budgetAnalysisButton"
-          onclick="window.location.href='../pages/budgetPage.html'"
+          class="primaryButton budgetEditButton"
+          onclick="renderEditGroupBudgetForm()"
         >
-          ${t("dashboard.budgetAnalysis")}
+          Edit Budget
         </button>
+      `
+      : ""
+  }
+
+  <button
+    class="secondaryButton budgetAnalysisButton"
+    onclick="
+      window.location.href =
+        '../pages/budgetPage.html?group=' +
+        encodeURIComponent(appState.activeGroup)
+    "
+  >
+    Budget Analysis
+  </button>
+</div>
+
       </div>
     </div>
   `;
@@ -1679,7 +1677,9 @@ function saveGroupBudget() {
       )
       .replace("${amount}", amount),
     "budget",
-    null,
+    {
+      group: appState.activeGroup,
+    },
     {
       titleKey: "dashboard.budgetUpdated",
       messageKey: "dashboard.groupBudgetUpdatedMessage",
