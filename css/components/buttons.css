@@ -521,7 +521,7 @@
   width: 40px;
   height: 40px;
   padding: 0;
-  border: 2px solid var(--borderColor);
+  border: 1px solid var(--borderColor);
   border-radius: 25px;
   background: var(--surfaceColor);
   color: var(--textPrimary);
