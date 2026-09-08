@@ -167,6 +167,7 @@ registerLanguage("en", {
     undo: "Undo",
     update: "Update",
     yes: "Yes",
+    itemDeleted: "{{itemName}} deleted",
   },
   currency: {
     title: "Currency",

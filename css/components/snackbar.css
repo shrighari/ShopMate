@@ -25,7 +25,7 @@
   width: calc(100% - 40px);
   max-width: 80%;
   padding: 18px 20px;
-  background: var(--textPrimary);
+  background: var(--cardColor);
   color: var(--textPrimary);
   border-radius: 22px;
   box-shadow: var(--shadowLarge);
@@ -45,27 +45,170 @@
   font-size: 15px;
   font-weight: 600;
 }
+
+/* Hidden State */
+.snackbar.hidden {
+  display: none;
+}
+
+/* Snackbar UNDO Button */
+.snackbarButton {
+  min-width: fit-content;
+  padding: 6px 4px;
+  margin: 0;
+  background: transparent;
+  color: var(--undoButtonBackground);
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Dark Mode Selected Item */
+.darkMode .selectedItem {
+  background: #eff6ff;
+  border-color: #2563eb;
+}
+
+.darkMode .selectedItem .itemName {
+  color: #111827 !important;
+}
+
+.darkMode .selectedItem .itemQuantityBadge {
+  color: #2563eb;
+}
+
 /* Bulk Action Bar */
 .bulkActionBar {
   position: fixed;
+  bottom: 180px;
   left: 50%;
-  bottom: 150px;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 380px;
+  background: white;
+  border-radius: 22px;
+  padding: 10px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: calc(100% - 32px);
-  max-width: 80%;
-  padding: 14px 18px;
-  background: var(--cardColor);
-  border-radius: 22px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  transform: translateX(-50%);
   z-index: 9999;
 }
-/* Bulk Selection Count */
+
+.bulkActionBar.hidden {
+  display: none !important;
+}
+
 .bulkSelectionCount {
-  padding-right: 8px;
-  color: var(--textPrimary);
   font-size: 15px;
   font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+}
+
+/* Bulk Action Buttons */
+.bulkActionButton {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none !important;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: none !important;
+  outline: none;
+  transition:
+    transform 0.15s ease,
+    background-color 0.2s ease;
+}
+
+.bulkActionButton:focus,
+.bulkActionButton:focus-visible {
+  outline: none;
+  box-shadow: none !important;
+}
+
+.bulkActionButton:active {
+  transform: scale(0.92);
+}
+
+/* Remove SVG filter artifacts */
+.bulkActionButton .actionIcon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  filter: none !important;
+}
+
+/* Favorite */
+.bulkActionButtonFavorite {
+  background: #fce7ef !important;
+}
+
+.bulkActionButtonFavorite .actionIcon {
+  filter: invert(24%) sepia(71%) saturate(2031%) hue-rotate(324deg)
+    brightness(83%) contrast(94%) !important;
+}
+
+/* Purchased */
+.bulkActionButtonPurchased {
+  background: #dff5ef !important;
+}
+
+.bulkActionButtonPurchased .actionIcon {
+  filter: invert(35%) sepia(39%) saturate(1093%) hue-rotate(122deg)
+    brightness(76%) contrast(96%) !important;
+}
+
+/* Delete */
+.bulkActionButtonDelete {
+  background: #fee2e2 !important;
+}
+
+.bulkActionButtonDelete .actionIcon {
+  filter: invert(29%) sepia(73%) saturate(1668%) hue-rotate(339deg)
+    brightness(79%) contrast(95%) !important;
+}
+
+/* Dark Mode Bulk Action Bar */
+.darkMode .bulkActionBar {
+  background: #243244;
+}
+
+.darkMode .bulkSelectionCount {
+  color: #f8fafc;
+}
+
+/* Dark Mode - Favorite */
+.darkMode .bulkActionButtonFavorite {
+  background: #f16f9c !important;
+}
+
+.darkMode .bulkActionButtonFavorite .actionIcon {
+  filter: invert(75%) sepia(42%) saturate(1062%) hue-rotate(302deg)
+    brightness(101%) contrast(98%) !important;
+}
+
+/* Dark Mode - Purchased */
+.darkMode .bulkActionButtonPurchased {
+  background: #5ee6d3 !important;
+}
+
+.darkMode .bulkActionButtonPurchased .actionIcon {
+  filter: invert(81%) sepia(39%) saturate(617%) hue-rotate(103deg)
+    brightness(99%) contrast(91%) !important;
+}
+
+/* Dark Mode - Delete */
+.darkMode .bulkActionButtonDelete {
+  background: #fc5a5a !important;
+}
+
+.darkMode .bulkActionButtonDelete .actionIcon {
+  filter: invert(76%) sepia(35%) saturate(1231%) hue-rotate(313deg)
+    brightness(104%) contrast(96%) !important;
 }

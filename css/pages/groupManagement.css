@@ -137,21 +137,25 @@
   margin-left: auto;
   background: var(--surfaceColor);
 }
-
 .groupMemberRow,
 .groupInviteRow {
   display: flex;
   align-items: center;
   width: 100%;
   gap: 12px;
+  padding: 8px 0;
 }
-
 .groupMemberInformation,
 .groupInviteInformation {
-  flex: 1;
-  min-width: 0;
+  padding: 4px 0;
+  line-height: 1.5;
 }
-
+.groupInviteRow {
+  padding: 10px 0;
+}
+.groupInviteInformation {
+  line-height: 1.6;
+}
 .groupMoreButton {
   margin-left: auto;
 }
@@ -183,9 +187,77 @@
 }
 .emptyStateTitle {
   font-weight: 600;
+  color: #999999;
 }
 .emptyStateSubtitle {
   margin-top: 6px;
   font-size: 13px;
   color: #777;
+}
+/* =========================================
+   GROUP ACCORDION - DARK MODE
+   ========================================= */
+.darkMode .groupAccordionCard {
+  background: #27364a;
+  color: #f8fafc;
+}
+/* Group Name */
+.darkMode .groupAccordionTitle {
+  color: #f8fafc !important;
+}
+/* Members / Categories count */
+.darkMode .groupAccordionSubtitle {
+  color: #cbd5e1 !important;
+}
+/* Section headings */
+.darkMode .groupSectionTitle {
+  color: #f8fafc !important;
+}
+/* Member names */
+.darkMode .groupMemberName {
+  color: #f8fafc !important;
+}
+/* Member role */
+.darkMode .groupMemberRole {
+  color: #cbd5e1 !important;
+}
+/* Admin / Member role badges */
+.darkMode .memberRoleAdmin {
+  color: #2563eb !important;
+  background: #dbeafe;
+}
+.darkMode .memberRoleMember {
+  color: #0f766e !important;
+  background: #ccfbf1;
+}
+/* Pending invitation email */
+.darkMode .groupInviteInformation .groupMemberName {
+  color: #f8fafc !important;
+}
+/* Pending invitation date / status */
+.darkMode .groupInviteInformation .groupMemberRole {
+  color: #cbd5e1 !important;
+}
+/* Divider */
+.darkMode .groupDivider {
+  border-color: #94a3b8 !important;
+  opacity: 0.8;
+}
+/* Empty invitation text */
+.darkMode .emptyStateTitle {
+  color: #f8fafc !important;
+}
+.darkMode .emptyStateSubtitle {
+  color: #cbd5e1 !important;
+}
+/* More buttons */
+.darkMode .groupMoreButton {
+  background: #31445b;
+}
+.darkMode .groupMoreButton .actionIcon {
+  filter: brightness(0) invert(1);
+}
+/* Accordion expand icon */
+.darkMode .accordionIcon .actionIcon {
+  filter: brightness(0) invert(1);
 }

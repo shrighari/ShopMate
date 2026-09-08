@@ -171,6 +171,7 @@ registerLanguage("ta", {
     undo: "செயல்தவிர்",
     update: "புதுப்பி",
     yes: "ஆம்",
+    itemDeleted: "{{itemName}} நீக்கப்பட்டது",
   },
   currency: {
     title: "நாணயம்",

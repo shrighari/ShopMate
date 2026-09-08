@@ -556,3 +556,93 @@
   min-width: 200px;
   flex: 0 0 auto;
 }
+.appLockPinButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 54px;
+  margin-top: 16px;
+  padding: 0 20px;
+  border: none;
+  border-radius: var(--radiusMedium);
+  background: linear-gradient(135deg, var(--primaryColor), var(--primaryDark));
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(17, 138, 178, 0.22);
+}
+
+/* Selected Item Card */
+.darkMode .itemCard .selected {
+  background: var(--cardColor);
+}
+
+.darkMode .itemCard .selected .itemName {
+  color: #111827;
+}
+
+/* Bulk Action Buttons */
+.bulkActionButton {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 0 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.bulkActionButton:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.bulkActionButton:active {
+  transform: scale(0.92);
+}
+
+/* Favorite - Light Mode */
+.bulkActionButtonFavorite .actionIcon {
+  filter: invert(30%) sepia(94%) saturate(3010%) hue-rotate(327deg)
+    brightness(93%) contrast(91%);
+}
+
+/* Purchased - Light Mode */
+.bulkActionButtonPurchased .actionIcon {
+  filter: invert(57%) sepia(32%) saturate(1094%) hue-rotate(131deg)
+    brightness(87%) contrast(86%);
+}
+
+/* Delete - Light Mode */
+.bulkActionButtonDelete .actionIcon {
+  filter: invert(35%) sepia(94%) saturate(2198%) hue-rotate(344deg)
+    brightness(100%) contrast(91%);
+}
+
+/* Favorite - Dark Mode */
+.darkMode .bulkActionButtonFavorite .actionIcon {
+  filter: invert(22%) sepia(72%) saturate(2200%) hue-rotate(325deg)
+    brightness(78%) contrast(95%);
+}
+
+/* Purchased - Dark Mode */
+.darkMode .bulkActionButtonPurchased .actionIcon {
+  filter: invert(34%) sepia(55%) saturate(1200%) hue-rotate(135deg)
+    brightness(72%) contrast(95%);
+}
+
+/* Delete - Dark Mode */
+.darkMode .bulkActionButtonDelete .actionIcon {
+  filter: invert(27%) sepia(75%) saturate(1900%) hue-rotate(345deg)
+    brightness(80%) contrast(100%);
+}

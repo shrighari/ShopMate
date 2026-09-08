@@ -33,7 +33,11 @@
   --surfaceColor: #f1f5f9;
   --headerBackground: #ffffff;
   --drawerBackground: #ffffff;
-  --closeButtonBackground: #83baf1;
+  --closeButtonBackground: #b8dbfd;
+  --favoriteButtonBackground: #f795cb;
+  --purchasedButtonBackground: #d1fae5;
+  --deleteButtonBackground: #fee2e2;
+  --undoButtonBackground: #4fc3f7;
 
   --textColor: #111827;
   --textPrimary: #111827;

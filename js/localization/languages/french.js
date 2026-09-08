@@ -173,6 +173,7 @@ registerLanguage("fr", {
     undo: "Annuler",
     update: "Mettre à jour",
     yes: "Oui",
+    itemDeleted: "{{itemName}} supprimé",
   },
   currency: {
     title: "Devise",

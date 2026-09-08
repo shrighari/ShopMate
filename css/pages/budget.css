@@ -328,3 +328,24 @@
     height: 11px;
   }
 }
+
+/* Category Budget Summary */
+.categoryBudgetSummary {
+  color: var(--textSecondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.categoryBudgetSummary strong {
+  color: var(--textPrimary);
+  font-weight: 700;
+}
+
+/* Dark Mode */
+.darkMode .categoryBudgetSummary {
+  color: #cbd5e1;
+}
+
+.darkMode .categoryBudgetSummary strong {
+  color: #f8fafc;
+}
