@@ -344,19 +344,19 @@ function renderBudgetAnalysis() {
       <div class="analysisValue">
         <span>Budget</span>
         <span>
-          ${budgetSummary.limit > 0 ? "$" + budgetSummary.limit : "Not Set"}
+          ${budgetSummary.limit > 0 ? getCurrencySymbol() + budgetSummary.limit : "Not Set"}
         </span>
       </div>
       <div class="analysisValue">
         <span>Spent</span>
         <span>
-          $${budgetSummary.spent}
+          ${getCurrencySymbol()}${budgetSummary.spent}
         </span>
       </div>
       <div class="analysisValue">
         <span>Remaining</span>
         <span>
-          ${budgetSummary.limit > 0 ? "$" + budgetSummary.remaining : "-"}
+          ${budgetSummary.limit > 0 ? getCurrencySymbol() + budgetSummary.remaining : "-"}
         </span>
       </div>
       <div class="analysisValue">
@@ -391,7 +391,7 @@ function renderBudgetAnalysis() {
       <div class="analysisValue">
         <span>Savings</span>
         <span>
-          $${budgetSummary.savings}
+          ${getCurrencySymbol()}${budgetSummary.savings}
         </span>
       </div>
       <div class="analysisValue">
@@ -423,7 +423,7 @@ function renderBudgetAnalysis() {
 }
 /* Render Category Budget Cards - Displays budget details for the selected Budget display group. */
 
-  function renderCategoryBudgetCards() {
+function renderCategoryBudgetCards() {
   const container = document.getElementById("categoryBudgetContainer");
   container.innerHTML = "";
 
@@ -435,7 +435,6 @@ function renderBudgetAnalysis() {
   }
   container.innerHTML = "";
 
-
   if (categories.length === 0) {
     container.innerHTML = `
       <div class="emptyStateCard">
@@ -446,9 +445,8 @@ function renderBudgetAnalysis() {
   }
   const categorySummary = [];
   categories.forEach(function (category) {
-    const budget = appState.budgets.categoryBudgets?.[activeGroup]?.[
-    category.name
-  ] || {};
+    const budget =
+      appState.budgets.categoryBudgets?.[activeGroup]?.[category.name] || {};
     const limit = budget.monthlyLimit ?? 0;
     let spent = 0;
     let highestItem = "";
@@ -497,13 +495,13 @@ function renderBudgetAnalysis() {
         <div class="analysisValue">
           <span>Budget</span>
           <span>
-            ${category.limit > 0 ? "$" + category.limit : "Not Set"}
+           ${category.limit > 0 ? getCurrencySymbol() + category.limit : "Not Set"}
           </span>
         </div>
         <div class="analysisValue">
           <span>Spent</span>
           <span>
-            $${category.spent}
+           ${getCurrencySymbol()}${category.spent}
           </span>
         </div>
         <div class="analysisValue">
@@ -511,7 +509,8 @@ function renderBudgetAnalysis() {
           <span>
             ${
               category.limit > 0
-                ? "$" + Math.max(category.limit - category.spent, 0)
+                ? getCurrencySymbol() +
+                  Math.max(category.limit - category.spent, 0)
                 : "-"
             }
           </span>

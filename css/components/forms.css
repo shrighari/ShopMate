@@ -26,9 +26,47 @@
 /* Form Row */
 .formRow {
   display: flex;
-  gap: 10px;
-  width: 90%;
-  margin-bottom: 12px;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 18px;
+}
+.quantityInputWrapper {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+.quantityInputWrapper .quantityInput {
+  flex: 1;
+  min-width: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.quantityUnitInput {
+  width: 72px;
+  min-width: 72px;
+  padding: 0 8px;
+  border: 1px solid var(--borderColor);
+  border-left: 0;
+  border-radius: 0 18px 18px 0;
+  background: var(--cardColor);
+  color: var(--textPrimary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+}
+.quantityUnitInput:focus {
+  border-color: var(--primaryColor);
+}
+.quantityInputWrapper:focus-within .quantityInput,
+.quantityInputWrapper:focus-within .quantityUnitInput {
+  border-color: var(--primaryColor);
+}
+.darkMode .quantityUnitInput {
+  background: var(--cardColor);
+  color: var(--textPrimary);
+  border-color: var(--borderColor);
 }
 /* Authentication Input */
 .authInput {
@@ -44,7 +82,6 @@
 .authInput:focus {
   border-color: #118ab2;
 }
-
 /* Search Input */
 .searchInput {
   width: 100%;
@@ -82,7 +119,6 @@
 .currencyInput {
   padding-left: 30px;
 }
-
 /* Form Label */
 .formLabel {
   display: block;
@@ -201,7 +237,6 @@
   width: 100%;
   margin-bottom: 18px;
 }
-
 /* Form Label */
 .formLabel {
   display: block;
@@ -210,7 +245,6 @@
   font-weight: 700;
   line-height: 1.3;
 }
-
 /* Bottom Sheet Input */
 .bottomSheetInput {
   width: 100%;
@@ -235,12 +269,10 @@
   -webkit-appearance: none;
   appearance: none;
 }
-
 .bottomSheetInput::placeholder {
   color: #94a3b8;
   font-weight: 400;
 }
-
 .bottomSheetInput:focus {
   border-color: var(--primaryColor);
   background: var(--surfaceColor);
@@ -248,42 +280,23 @@
     0 0 0 3px rgba(17, 138, 178, 0.12),
     0 2px 8px rgba(17, 138, 178, 0.06);
 }
-
 /* Number Input */
 .bottomSheetInput[type="number"] {
   text-align: left;
 }
-
 /* Date Input */
 .bottomSheetInput[type="date"] {
   color: var(--textPrimary);
 }
-
 /* Select Input */
 select.bottomSheetInput {
   padding-right: 42px;
   cursor: pointer;
 }
-
-/* Form Row */
-.formRow {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  width: 100%;
-  margin-bottom: 18px;
-}
-
 /* Half Width Field */
 .halfWidthField {
   min-width: 0;
   flex: 1;
-}
-
-/* Currency Input Wrapper */
-.currencyInputWrapper {
-  position: relative;
-  width: 100%;
 }
 
 /* Currency Symbol */
@@ -293,18 +306,23 @@ select.bottomSheetInput {
   left: 16px;
   z-index: 2;
   color: var(--textSecondary);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 1;
   transform: translateY(-50%);
   pointer-events: none;
 }
-
+.currencyInputWrapper input {
+  padding-left: 40px !important;
+}
 /* Currency Input */
 .currencyInputWrapper .currencyInput {
   padding-left: 34px;
 }
-
+/* Keep currency symbol visually separated from the amount */
+.currencyInputWrapper .currencySymbol {
+  left: 10px;
+}
 /* Image Preview */
 .itemImagePreview {
   display: block;
@@ -322,7 +340,6 @@ select.bottomSheetInput {
   position: relative;
   width: 100%;
 }
-
 .dropdownInputWrapper .bottomSheetInput {
   width: 100%;
   padding-right: 44px;
@@ -330,7 +347,6 @@ select.bottomSheetInput {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
-
 .dropdownInputWrapper .dropdownArrow {
   position: absolute;
   top: 50%;
@@ -341,7 +357,6 @@ select.bottomSheetInput {
   transform: translateY(-50%);
   pointer-events: none;
 }
-
 .dropdownInputWrapper .dropdownArrow .smallIcon {
   width: 18px;
   height: 18px;
@@ -351,11 +366,9 @@ select.bottomSheetInput {
   .formField {
     margin-bottom: 20px;
   }
-
   .bottomSheetInput {
     min-height: 54px;
   }
-
   .formRow {
     gap: 16px;
   }

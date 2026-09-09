@@ -51,25 +51,35 @@ function renderAddItemForm(itemName = "") {
       </div>
       <div class="formRow">
         <div class="halfWidthField">
-          <label class="formLabel">
-            ${t("item.quantity")}
-          </label>
+        <label class="formLabel">
+          ${t("item.quantity")}
+        </label>
+          <div class="quantityInputWrapper">
           <input
             type="number"
             id="itemQuantityInput"
-            class="bottomSheetInput"
+            class="bottomSheetInput quantityInput"
             placeholder="${t("item.enterQuantity")}"
             value="1"
+            min="0"
+            step="any"
           >
+          <select
+            id="itemQuantityUnitInput"
+            class="quantityUnitInput"
+            aria-label="${t("item.quantityUnit")}"
+          >${getQuantityUnitOptions("pcs")}
+          </select>
+          </div>
         </div>
         <div class="halfWidthField">
           <label class="formLabel">
             ${t("item.estimatedPrice")}
           </label>
           <div class="currencyInputWrapper">
-            <span class="currencySymbol">
-              $
-            </span>
+  <span class="currencySymbol">
+    ${getCurrencySymbol()}
+  </span>
             <input
               type="number"
               id="itemPriceInput"
@@ -225,25 +235,36 @@ function renderEditItemForm(itemName) {
         >
       </div>
       <div class="formRow">
-        <div class="halfWidthField">
-          <label class="formLabel">
-            ${t("item.quantity")}
-          </label>
-          <input
-            type="number"
-            id="editItemQuantityInput"
-            class="bottomSheetInput"
-            value="${item.quantity}"
-          >
-        </div>
+  <div class="halfWidthField">
+    <label class="formLabel">
+      ${t("item.quantity")}
+    </label>
+    <div class="quantityInputWrapper">
+      <input
+        type="number"
+        id="editItemQuantityInput"
+        class="bottomSheetInput quantityInput"
+        value="${item.quantity}"
+        min="0"
+        step="any"
+      >
+      <select
+        id="editItemQuantityUnitInput"
+        class="quantityUnitInput"
+        aria-label="${t("item.quantityUnit")}"
+      >
+        ${getQuantityUnitOptions(item.quantityUnit || "pcs")}
+      </select>
+    </div>
+  </div>
         <div class="halfWidthField">
           <label class="formLabel">
             ${t("item.estimatedPrice")}
           </label>
           <div class="currencyInputWrapper">
-            <span class="currencySymbol">
-              $
-            </span>
+  <span class="currencySymbol">
+    ${getCurrencySymbol()}
+  </span>
             <input
               type="number"
               id="editItemPriceInput"
@@ -520,6 +541,8 @@ function createItem() {
   const itemShopInput = document.getElementById("itemShopInput");
   const itemName = itemNameInput.value.trim();
   const itemQuantity = itemQuantityInput.value.trim();
+  const itemQuantityUnit =
+    document.getElementById("itemQuantityUnitInput")?.value || "pcs";
   const itemNotes = itemNotesInput.value.trim();
   const itemShop = itemShopInput.value.trim();
   const itemPrice =
@@ -597,6 +620,7 @@ function createItem() {
   const newItem = {
     name: itemName,
     quantity: itemQuantity,
+    quantityUnit: itemQuantityUnit,
     notes: itemNotes,
     preferredShop: itemShop,
     estimatedPrice: itemPrice,
@@ -690,6 +714,10 @@ function updateItem(originalItemName) {
   const newQuantity = document
     .getElementById("editItemQuantityInput")
     .value.trim();
+
+  const newQuantityUnit =
+    document.getElementById("editItemQuantityUnitInput")?.value || "pcs";
+
   const newPrice =
     Number(document.getElementById("editItemPriceInput").value) || 0;
   const newNotes = document.getElementById("editItemNotesInput").value.trim();
@@ -717,6 +745,8 @@ function updateItem(originalItemName) {
     document.getElementById("editItemRecurrenceEndDate")?.value || null;
   item.name = newName;
   item.quantity = newQuantity;
+  item.quantityUnit = newQuantityUnit;
+  item.estimatedPrice = newPrice;
   item.estimatedPrice = newPrice;
   item.notes = newNotes;
   item.preferredShop = newShop;
@@ -781,9 +811,9 @@ function openPurchaseConfirmation(itemName) {
           ${t("item.estimatedPrice")}
         </label>
         <div class="currencyInputWrapper">
-          <span class="currencySymbol">
-            $
-          </span>
+  <span class="currencySymbol">
+    ${getCurrencySymbol()}
+  </span>
           <input
             type="number"
             class="bottomSheetInput currencyInput"
@@ -798,7 +828,7 @@ function openPurchaseConfirmation(itemName) {
         </label>
         <div class="currencyInputWrapper">
           <span class="currencySymbol">
-            $
+            ${getCurrencySymbol()}
           </span>
           <input
             type="number"

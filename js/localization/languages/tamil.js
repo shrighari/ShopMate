@@ -172,6 +172,7 @@ registerLanguage("ta", {
     update: "புதுப்பி",
     yes: "ஆம்",
     itemDeleted: "{{itemName}} நீக்கப்பட்டது",
+    quantityUnit: "அளவு அலகு",
   },
   currency: {
     title: "நாணயம்",

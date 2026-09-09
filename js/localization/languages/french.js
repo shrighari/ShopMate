@@ -174,6 +174,7 @@ registerLanguage("fr", {
     update: "Mettre à jour",
     yes: "Oui",
     itemDeleted: "{{itemName}} supprimé",
+    quantityUnit: "Unité de quantité",
   },
   currency: {
     title: "Devise",

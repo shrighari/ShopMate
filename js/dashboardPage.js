@@ -110,17 +110,17 @@ function renderCategories() {
         <div class="categoryBudgetSummary">
           ${t("dashboard.budget")}
           <strong>
-            ${categoryBudget > 0 ? "$" + categoryBudget : t("dashboard.notSet")}
+           ${categoryBudget > 0 ? getCurrencySymbol() + categoryBudget : t("dashboard.notSet")}
           </strong>
           &nbsp; • &nbsp;
           ${t("dashboard.spent")}
           <strong>
-            $${categorySpent}
+            ${getCurrencySymbol()}${categorySpent}
           </strong>
           &nbsp; • &nbsp;
           ${t("dashboard.left")}
           <strong>
-            ${categoryBudget > 0 ? "$" + categoryRemaining : "-"}
+            ${categoryBudget > 0 ? getCurrencySymbol() + categoryRemaining : "-"}
           </strong>
         </div>
         <p class="categoryInfo">
@@ -1297,14 +1297,14 @@ function renderBudgetDashboardWidget() {
         class="budgetSummaryBody"
       >
         <h2>
-          ${limit === 0 ? t("dashboard.unlimited") : "$" + limit}
+          ${limit === 0 ? t("dashboard.unlimited") : getCurrencySymbol() + " " + limit}
         </h2>
         <div class="analysisValue">
           <span>
             ${t("dashboard.allocated")}
           </span>
           <span>
-            $${allocated}
+            ${getCurrencySymbol()} ${allocated}
           </span>
         </div>
         <div class="analysisValue">
@@ -1312,7 +1312,7 @@ function renderBudgetDashboardWidget() {
             ${t("dashboard.spent")}
           </span>
           <span>
-            $${spent}
+            ${getCurrencySymbol()} ${spent}
           </span>
         </div>
         <div class="analysisValue">
@@ -1320,7 +1320,7 @@ function renderBudgetDashboardWidget() {
             ${t("dashboard.remaining")}
           </span>
           <span>
-            ${limit === 0 ? t("dashboard.unlimited") : "$" + remaining}
+            ${limit === 0 ? t("dashboard.unlimited") : getCurrencySymbol() + " " + remaining}
           </span>
         </div>
         <div class="budgetProgressBar">
@@ -1369,7 +1369,11 @@ function renderBudgetDashboardWidget() {
               <p class="budgetInsight">
                 ${
                   remaining > 0
-                    ? "$" + remaining + " " + t("dashboard.remainingThisMonth")
+                    ? getCurrencySymbol() +
+                      " " +
+                      remaining +
+                      " " +
+                      t("dashboard.remainingThisMonth")
                     : t("dashboard.budgetExceeded")
                 }
               </p>
@@ -1466,7 +1470,7 @@ function renderEditGroupBudgetForm() {
           ${t("dashboard.monthlyBudgetLimit")}
         </label>
         <div class="currencyInputWrapper">
-          <span class="currencySymbol">$</span>
+          <span class="currencySymbol"> ${getCurrencySymbol()}</span>
           <input
             id="groupBudgetInput"
             type="number"

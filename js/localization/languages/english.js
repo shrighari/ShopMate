@@ -168,6 +168,7 @@ registerLanguage("en", {
     update: "Update",
     yes: "Yes",
     itemDeleted: "{{itemName}} deleted",
+    quantityUnit: "Quantity unit",
   },
   currency: {
     title: "Currency",

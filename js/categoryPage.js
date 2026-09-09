@@ -173,7 +173,7 @@ function renderItems(items) {
                   ? ""
                   : `
                     <p class="itemQuantityBadge">
-                      ${t("category.quantity")}: ${item.quantity}
+                      ${t("category.quantity")}: ${item.quantity} ${getQuantityUnitLabel(item.quantityUnit)}
                     </p>
                   `
               }
@@ -274,7 +274,7 @@ function renderItems(items) {
                       ${t("category.shop")}: ${item.preferredShop || "-"}
                     </p>
                     <p class="itemDetails">
-                      ${t("category.estimatedPrice")}: $${item.estimatedPrice || 0}
+                      ${t("category.estimatedPrice")}: ${getCurrencySymbol()}${item.estimatedPrice || 0}
                     </p>
                   </div>
                   <div class="itemImageContainer">
