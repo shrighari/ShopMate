@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- Accepts a group invitation code and routes the user to join or registration. -->
+<!-- Accepts a group invitation link and routes existing or new users through authentication. -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/app.css" />
   </head>
   <body>
-    <!-- Invitation entry screen accepts a group code before routing to join or registration. -->
+    <!-- Invitation screen supports a backend email link or a manually entered invitation code. -->
     <div class="authPage">
       <div class="authCard">
         <h1 class="authTitle" data-i18n="invite.groupInvitation">
@@ -35,26 +35,50 @@
     </div>
     <!-- Load account and invitation dependencies before page initialization. -->
     <script src="../js/stateManager.js"></script>
+    <script src="../js/helpers.js"></script>
     <script src="../js/authManager.js"></script>
+    <script src="../js/groupService.js"></script>
     <script src="../js/localization/languageManager.js"></script>
-    <script src="../js/bootstrap.js"></script>
-    <!-- Define invite submission behavior and start shared application initialization. -->
+    <!-- Route invitation codes to account creation, sign-in, or direct acceptance. -->
     <script>
-      // Route a submitted invite code to registration or group joining based on session state.
-      function processInvite() {
+      // Keep the invite code through authentication so the account email can be checked before joining.
+      async function processInvite(inviteCodeFromLink) {
         const inviteCode = document
           .getElementById("inviteCodeInput")
-          .value.trim();
-        if (!appState.loggedIn) {
-          localStorage.setItem("pendingInvite", inviteCode);
-          window.location.href = "./registerPage.html";
+          .value.trim() || (inviteCodeFromLink || "").trim();
+        if (!inviteCode) {
+          showDialog(t("auth.invalidInvite"), t("auth.invalidInviteMessage"));
           return;
         }
-        joinGroupFromInvite(inviteCode);
+        localStorage.setItem("pendingInvite", inviteCode);
+        if (!isUserLoggedIn()) {
+          const invite = validateInvite(inviteCode);
+          const nextPage =
+            invite && isEmailRegistered(invite.email)
+              ? "./loginPage.html"
+              : "./registerPage.html";
+          window.location.href = nextPage;
+          return;
+        }
+        const currentUser = getCurrentUser();
+        const security = currentUser?.security || {};
+        const needsUnlock =
+          security.appLockEnabled === true &&
+          sessionStorage.getItem("shopMateAppUnlocked") !== "true";
+        if (needsUnlock) {
+          window.location.href = "./loginPage.html";
+          return;
+        }
+        await joinGroupFromInvite(inviteCode);
       }
-      // Start shared application initialization after the page markup is ready.
-      document.addEventListener("DOMContentLoaded", function () {
-        initializeApplication();
+      // Load translations and automatically process invitation links supplied by the backend email.
+      document.addEventListener("DOMContentLoaded", async function () {
+        await initializeLocalization();
+        const inviteCode = new URLSearchParams(window.location.search).get("code");
+        if (inviteCode) {
+          document.getElementById("inviteCodeInput").value = inviteCode;
+          await processInvite(inviteCode);
+        }
       });
     </script>
   </body>

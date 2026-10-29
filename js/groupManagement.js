@@ -1,4 +1,4 @@
-/* Renders group membership and handles invitations, roles, switching, and leaving. */
+/* Renders group membership and handles invitations, roles, and leaving. */
 redirectIfLoggedOut();
 const pendingInviteList = document.getElementById("pendingInviteList");
 const readOnlyBanner = document.getElementById("readOnlyBanner");
@@ -274,13 +274,6 @@ function toggleGroupAccordion(header) {
     `;
   }
 }
-/* Switch Group */
-function switchGroup(groupName) {
-  if (!getGroupMember(groupName)) return;
-  appState.activeGroup = groupName;
-  saveAppState();
-  window.location.reload();
-}
 /* Permissions */
 function setupPermissions() {
   const currentUser = getCurrentUser();
@@ -453,104 +446,6 @@ function revokeInvite(invitationId) {
       },
     },
   );
-}
-/* Render Join Group Form */
-function renderJoinGroupForm() {
-  bottomSheetContent.innerHTML = `
-    <div class="bottomSheetHeader">
-      <h2>
-        ${t("groupManagement.acceptInvitation")}
-      </h2>
-      <button
-        class="closeButton"
-        onclick="closeBottomSheet()"
-      >
-        <img
-          src="${getIconPath("navigation", "close")}"
-          class="icon actionIcon"
-          alt="${t("common.close")}"
-        >
-      </button>
-    </div>
-    <div class="bottomSheetBody">
-      <div class="formField">
-        <label class="formLabel">
-          ${t("groupManagement.invitationEmail")}
-        </label>
-        <input
-          id="joinInvitationEmail"
-          class="bottomSheetInput"
-          type="email"
-          placeholder="${t("groupManagement.enterInvitationEmail")}"
-        >
-      </div>
-      <button
-        class="primaryButton"
-        onclick="joinGroup()"
-      >
-        ${t("groupManagement.acceptInvitation")}
-      </button>
-    </div>
-  `;
-  openBottomSheet();
-}
-/* Join Group */
-async function joinGroup() {
-  const email = document
-    .getElementById("joinInvitationEmail")
-    .value.trim()
-    .toLowerCase();
-  if (!email) {
-    showDialog(
-      t("groupManagement.missingEmail"),
-      t("groupManagement.enterInvitationEmail"),
-    );
-    return;
-  }
-  if (!isValidEmail(email)) {
-    showDialog(
-      t("groupManagement.invalidEmail"),
-      t("groupManagement.enterValidEmail"),
-    );
-    return;
-  }
-  /*
-    Backend
-    POST /group/join
-    {
-      email
-    }
-  */
-  showToast(t("groupManagement.joinRequestSubmitted"));
-  createNotification(
-    "group",
-    t("groupManagement.joinRequest"),
-    t("groupManagement.joinRequestSentFor", {
-      email: email,
-    }),
-    null,
-    null,
-    {
-      titleKey: "groupManagement.joinRequest",
-      messageKey: "groupManagement.joinRequestSentFor",
-      params: {
-        email: email,
-      },
-    },
-  );
-  closeBottomSheet();
-}
-/* Open Member Profile */
-function openMemberProfile(memberId) {
-  const members = getCurrentGroupMembers();
-  const member = members.find(function (member) {
-    return member.id === memberId;
-  });
-  if (!member) {
-    return;
-  }
-  localStorage.setItem("selectedMember", JSON.stringify(member));
-  window.location.href = "../pages/profilePage.html";
 }
 /* Member Actions */
 function openMemberActions(memberId, groupName) {
@@ -850,7 +745,7 @@ function renderInviteMemberForm() {
   openBottomSheet();
 }
 /* Send Invitation */
-function sendInvitation() {
+async function sendInvitation() {
   if (!canManageGroup()) {
     showDialog(
       t("common.permissionDenied"),
@@ -893,6 +788,7 @@ function sendInvitation() {
 
   const invitation = {
     id: crypto.randomUUID(),
+    code: crypto.randomUUID(),
     groupId: groupName,
     groupName: groupName,
     email: email,
@@ -902,6 +798,13 @@ function sendInvitation() {
     expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
     status: "pending",
   };
+  invitation.inviteUrl = createGroupInvitationUrl(invitation.code);
+
+  const inviteResult = await inviteMemberToGroup(invitation);
+  if (!inviteResult?.success) {
+    showToast(t("groupManagement.invitationDeliveryPending"));
+    return;
+  }
 
   appState.pendingInvitations.push(invitation);
 
@@ -909,24 +812,8 @@ function sendInvitation() {
   renderGroupAccordion();
   closeBottomSheet();
 
-  showToast(t("groupManagement.invitationSent"));
+  showToast(t("groupManagement.invitationDeliveryPending"));
 
-  createNotification(
-    "group",
-    t("groupManagement.invitationSent"),
-    t("groupManagement.memberInvited", {
-      email: email,
-    }),
-    null,
-    null,
-    {
-      titleKey: "groupManagement.invitationSent",
-      messageKey: "groupManagement.memberInvited",
-      params: {
-        email: email,
-      },
-    },
-  );
 }
 /* Leave Group Dialog */
 function openLeaveGroupDialog() {

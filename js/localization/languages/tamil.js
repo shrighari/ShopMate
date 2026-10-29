@@ -33,6 +33,9 @@ registerLanguage("ta", {
     invalidCredentials: "தவறான மின்னஞ்சல் அல்லது கடவுச்சொல்",
     invalidInvite: "தவறான அழைப்பு",
     invalidInviteMessage: "நீங்கள் உள்ளிட்ட அழைப்புக் குறியீடு தவறானது.",
+    invitationEmailMismatch: "மின்னஞ்சல் முகவரி பொருந்தவில்லை",
+    invitationEmailMismatchMessage:
+      "இந்த அழைப்பு வேறு மின்னஞ்சல் முகவரிக்கு அனுப்பப்பட்டது. தொடர அழைக்கப்பட்ட மின்னஞ்சல் முகவரியைப் பயன்படுத்தவும்.",
     invalidLogin: "தவறான உள்நுழைவு",
     invalidLoginMessage:
       "உங்கள் மின்னஞ்சல் முகவரி மற்றும் கடவுச்சொல்லை சரிபார்க்கவும்.",
@@ -307,6 +310,8 @@ registerLanguage("ta", {
     invalidEmail: "சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்.",
     invalidGroupBudget: "தவறான குழு பாதீடு",
     invitationSent: "அழைப்பு வெற்றிகரமாக அனுப்பப்பட்டது.",
+    invitationDeliveryPending:
+      "அழைப்பு உள்ளூரில் சேமிக்கப்பட்டது. மின்னஞ்சல் அனுப்ப backend இணைப்பு தேவை.",
     inviteMember: "உறுப்பினரை அழைக்கவும்",
     invitingMemberTo: "உறுப்பினரை அழைக்கும் குழு",
     items: "பொருட்கள்",
@@ -433,6 +438,8 @@ registerLanguage("ta", {
     invitationResent: "அழைப்பு மீண்டும் அனுப்பப்பட்டது",
     invitationResentTo: "{{email}} க்கு அழைப்பு மீண்டும் அனுப்பப்பட்டது",
     invitationSent: "அழைப்பு அனுப்பப்பட்டது",
+    invitationDeliveryPending:
+      "அழைப்பு உள்ளூரில் சேமிக்கப்பட்டது. மின்னஞ்சல் அனுப்ப backend இணைப்பு தேவை.",
     invited: "அழைக்கப்பட்டது",
     invitedOn: "அழைக்கப்பட்ட தேதி",
     inviteMember: "உறுப்பினரை அழைக்கவும்",
@@ -654,6 +661,11 @@ registerLanguage("ta", {
     emailAddress: "மின்னஞ்சல் முகவரி",
     firstName: "முதல் பெயர்",
     groupName: "குழுவின் பெயர்",
+    invitationNotice:
+      "{{groupName}} குழுவில் சேர உங்களுக்கு அழைப்பு வந்துள்ளது. தொடர அழைக்கப்பட்ட மின்னஞ்சல் முகவரியுடன் பதிவு செய்யவும்.",
+    inviteSuccessMessage:
+      "அழைக்கப்பட்ட குழுவில் வெற்றிகரமாக இணைந்துள்ளீர்கள். உங்கள் தனிப்பட்ட சுயவிவரத்தை பின்னர் சுயவிவர மேலாண்மையில் பூர்த்தி செய்யலாம்.",
+    joinInvitedGroup: "அழைக்கப்பட்ட குழுவில் சேரவும்",
     lastName: "கடைசி பெயர்",
     password: "கடவுச்சொல்",
     register: "பதிவு செய்",

@@ -163,8 +163,29 @@ async function loginUser(event) {
     showDialog(t("auth.invalidLogin"), t("auth.invalidLoginMessage"));
     return;
   }
+  const pendingInviteCode = localStorage.getItem("pendingInvite");
+  const pendingInvite = pendingInviteCode
+    ? validateInvite(pendingInviteCode)
+    : null;
+  if (
+    pendingInvite &&
+    pendingInvite.email.toLowerCase() !== user.email.toLowerCase()
+  ) {
+    showDialog(
+      t("auth.invitationEmailMismatch"),
+      t("auth.invitationEmailMismatchMessage"),
+    );
+    return;
+  }
   resetAuthenticationAttempts();
   createUserSession(user);
+  if (pendingInviteCode && pendingInvite) {
+    const inviteAccepted = await joinGroupFromInvite(pendingInviteCode, false);
+    if (!inviteAccepted) {
+      clearUserSession();
+      return;
+    }
+  }
   sessionStorage.removeItem("shopMateSecurityLoginFallback");
   sessionStorage.setItem("shopMateAppUnlocked", "true");
   window.location.href = "../pages/dashboardPage.html";
@@ -216,8 +237,27 @@ async function registerUser(event) {
   const confirmPassword = document
     .getElementById("registerConfirmPasswordInput")
     .value.trim();
-  const groupName = document.getElementById("groupNameInput").value.trim();
+  const groupNameInput = document.getElementById("groupNameInput");
+  const groupName = groupNameInput ? groupNameInput.value.trim() : "";
   const biometricEnabled = document.getElementById("biometricCheckbox").checked;
+  const pendingInviteCode = localStorage.getItem("pendingInvite");
+  const pendingInvite = pendingInviteCode
+    ? validateInvite(pendingInviteCode)
+    : null;
+  if (pendingInviteCode && !pendingInvite) {
+    showDialog(t("auth.invalidInvite"), t("auth.invalidInviteMessage"));
+    return;
+  }
+  if (
+    pendingInvite &&
+    pendingInvite.email.toLowerCase() !== email.toLowerCase()
+  ) {
+    showDialog(
+      t("auth.invitationEmailMismatch"),
+      t("auth.invitationEmailMismatchMessage"),
+    );
+    return;
+  }
   /* Validate Registration Details */
   if (
     !validateRegistrationDetails(
@@ -227,6 +267,7 @@ async function registerUser(event) {
       password,
       confirmPassword,
       groupName,
+      !pendingInvite,
     )
   ) {
     return;
@@ -251,14 +292,22 @@ async function registerUser(event) {
     "",
     "",
   );
-  /* Create Shopping Group */
-  createRegistrationGroup(groupName, user);
-  /* Start User Session */
-  createUserSession(user);
+  if (pendingInvite) {
+    /* Invitation registration joins the inviter's group instead of creating a separate group. */
+    createUserSession(user);
+    if (!(await joinGroupFromInvite(pendingInviteCode, false))) {
+      clearUserSession();
+      return;
+    }
+  } else {
+    /* Standard registration creates a new group administered by its creator. */
+    createRegistrationGroup(groupName, user);
+    createUserSession(user);
+  }
   /* Welcome New User */
   showDialog(
     t("register.successTitle"),
-    t("register.successMessage"),
+    t(pendingInvite ? "register.inviteSuccessMessage" : "register.successMessage"),
     function () {
       window.location.href = "./dashboardPage.html";
     },
@@ -284,6 +333,33 @@ async function registerUser(event) {
       }
     */
 }
+/* Hide the new-group field when registration continues from a valid invitation. */
+function initializeRegistrationForm() {
+  const inviteCode = localStorage.getItem("pendingInvite");
+  if (!inviteCode) return;
+  const invite = validateInvite(inviteCode);
+  if (!invite) {
+    localStorage.removeItem("pendingInvite");
+    showDialog(t("auth.invalidInvite"), t("auth.invalidInviteMessage"));
+    return;
+  }
+  const groupField = document.getElementById("registrationGroupField");
+  const inviteNotice = document.getElementById("registerInvitationNotice");
+  const emailInput = document.getElementById("registerEmailInput");
+  const submitButton = document.getElementById("registerSubmitButton");
+  if (groupField) groupField.classList.add("hidden");
+  if (inviteNotice) {
+    inviteNotice.textContent = t("register.invitationNotice", {
+      groupName: invite.groupName || invite.groupId,
+    });
+    inviteNotice.classList.remove("hidden");
+  }
+  if (emailInput && invite.email) {
+    emailInput.value = invite.email;
+    emailInput.readOnly = true;
+  }
+  if (submitButton) submitButton.textContent = t("register.joinInvitedGroup");
+}
 /* Validate Registration Details - Validates all information required to register a new account. */
 function validateRegistrationDetails(
   firstName,
@@ -292,6 +368,7 @@ function validateRegistrationDetails(
   password,
   confirmPassword,
   groupName,
+  requiresGroupName = true,
 ) {
   if (
     !firstName ||
@@ -299,7 +376,7 @@ function validateRegistrationDetails(
     !email ||
     !password ||
     !confirmPassword ||
-    !groupName
+    (requiresGroupName && !groupName)
   ) {
     showDialog(
       t("auth.registrationMissingInformation"),
@@ -498,68 +575,95 @@ function isGroupMember(userId) {
     return member.id === userId;
   });
 }
-/* Validate Invite - Returns the invite matching the supplied invite code. */
+/* Find a pending, unexpired invitation by its secure code in the current local state. */
 function validateInvite(inviteCode) {
-  return appState.pendingInvites.find(function (invite) {
-    return invite.code === inviteCode;
-  });
+  if (!inviteCode) return null;
+  return (appState.pendingInvitations || []).find(function (invite) {
+    if (
+      invite.code !== inviteCode ||
+      invite.status !== "pending" ||
+      !invite.email
+    ) {
+      return false;
+    }
+    if (!invite.expiresAt) return true;
+    const expiresAt =
+      typeof invite.expiresAt === "number"
+        ? invite.expiresAt
+        : Date.parse(invite.expiresAt);
+    return Number.isFinite(expiresAt) && expiresAt > Date.now();
+  }) || null;
 }
-/* Join Group From Invite - Adds the current user to the invited group. */
-function joinGroupFromInvite(inviteCode) {
+/* Build the email deep link that the backend should include in the invitation message. */
+function createGroupInvitationUrl(inviteCode) {
+  const inviteUrl = new URL("inviteLandingPage.html", window.location.href);
+  inviteUrl.searchParams.set("code", inviteCode);
+  return inviteUrl.href;
+}
+/* Validate and accept an email-bound invitation, then add the authenticated user to its group. */
+async function joinGroupFromInvite(inviteCode, redirectToDashboard = true) {
   const invite = validateInvite(inviteCode);
   if (!invite) {
+    localStorage.removeItem("pendingInvite");
     showDialog(t("auth.invalidInvite"), t("auth.invalidInviteMessage"));
-    return;
+    return false;
   }
   const currentUser = getCurrentUser();
   if (!currentUser) {
+    localStorage.setItem("pendingInvite", inviteCode);
     showDialog(
       t("auth.authenticationRequired"),
       t("auth.authenticationRequiredMessage"),
     );
-    return;
-  }
-  const groupMembers = appState.groupMembers[invite.groupName];
-  if (!groupMembers) {
-    showDialog(t("auth.groupNotFound"), t("auth.groupNotFoundMessage"));
-    return;
+    return false;
   }
   if (
-    groupMembers.some(function (member) {
-      return (
-        member.id === currentUser.id ||
-        (member.email &&
-          currentUser.email &&
-          member.email.toLowerCase() === currentUser.email.toLowerCase())
-      );
-    })
+    !currentUser.email ||
+    currentUser.email.toLowerCase() !== invite.email.toLowerCase()
   ) {
-    showDialog(t("auth.alreadyMember"), t("auth.alreadyMemberMessage"));
-    return;
+    showDialog(
+      t("auth.invitationEmailMismatch"),
+      t("auth.invitationEmailMismatchMessage"),
+    );
+    return false;
   }
-  groupMembers.push({
-    id: currentUser.id,
-    name: currentUser.name,
-    email: currentUser.email,
-    role: invite.role === "admin" ? "admin" : "member",
+  const groupName = invite.groupName || invite.groupId;
+  if (!groupName || !appState.groups[groupName]) {
+    showDialog(t("auth.groupNotFound"), t("auth.groupNotFoundMessage"));
+    return false;
+  }
+  const backendAcceptance = await joinGroupByInvite(inviteCode);
+  if (!backendAcceptance?.success) {
+    showDialog(t("auth.invalidInvite"), t("auth.invalidInviteMessage"));
+    return false;
+  }
+  const groupMembers = appState.groupMembers[groupName] || [];
+  appState.groupMembers[groupName] = groupMembers;
+  const alreadyMember = groupMembers.some(function (member) {
+    return (
+      member.id === currentUser.id ||
+      (member.email && member.email.toLowerCase() === currentUser.email.toLowerCase())
+    );
   });
-  appState.activeGroup = invite.groupName;
+  if (!alreadyMember) {
+    groupMembers.push({
+      id: currentUser.id,
+      name: currentUser.name,
+      email: currentUser.email,
+      role: invite.role === "admin" ? "admin" : "member",
+    });
+  }
+  invite.status = "accepted";
+  invite.acceptedAt = new Date().toISOString();
+  invite.acceptedByUserId = currentUser.id;
+  appState.activeGroup = groupName;
   saveAppState();
-  window.location.href = "../pages/dashboardPage.html";
-  /*
-      Backend
-      POST /groups/join
-      Request
-      {
-        inviteCode,
-        userId
-      }
-      Response
-      {
-        group,
-        members
-      }
-    */
+  localStorage.setItem("activeGroup", groupName);
+  localStorage.removeItem("pendingInvite");
+  if (redirectToDashboard) {
+    window.location.href = "../pages/dashboardPage.html";
+  }
+  return true;
 }
 /* Render Forgot Password Form - Displays the password recovery form in the bottom sheet. */
 function renderForgotPasswordForm() {

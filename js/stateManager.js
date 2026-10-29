@@ -247,6 +247,16 @@ function loadAppState() {
     stateUpdated = true;
   }
   parsedState.pendingInvitations.forEach(function (invitation) {
+    if (invitation.status === "pending" && !invitation.code) {
+      invitation.code = `invite_${Date.now()}_${Math.random()
+        .toString(36)
+        .slice(2, 12)}`;
+      stateUpdated = true;
+    }
+    if (!invitation.role) {
+      invitation.role = "member";
+      stateUpdated = true;
+    }
     if (invitation.role === "owner") {
       invitation.role = "admin";
       stateUpdated = true;

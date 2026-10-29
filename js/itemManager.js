@@ -405,7 +405,6 @@ function renderEditItemForm(itemId) {
     </div>
   `;
   openBottomSheet();
-  initializeEditImagePreview();
   initializeEditRecurrenceForm();
 }
 /* Initialize Item Form */
@@ -492,46 +491,6 @@ function initializeEditRecurrenceForm() {
   recurrenceFrequency.addEventListener("change", function () {
     recurrenceDates.style.display =
       recurrenceFrequency.value === "none" ? "none" : "";
-  });
-}
-/*Image Preview */
-function initializeImagePreview() {
-  const imageInput = document.getElementById("itemImageInput");
-  const preview = document.getElementById("itemImagePreview");
-  if (!imageInput || !preview) {
-    return;
-  }
-  imageInput.addEventListener("change", function (event) {
-    const file = event.target.files[0];
-    if (!file) {
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      preview.src = e.target.result;
-      preview.classList.remove("hidden");
-    };
-    reader.readAsDataURL(file);
-  });
-}
-/* Image Preview for Edit Form */
-function initializeEditImagePreview() {
-  const imageInput = document.getElementById("editItemImageInput");
-  const preview = document.getElementById("editItemImagePreview");
-  if (!imageInput || !preview) {
-    return;
-  }
-  imageInput.addEventListener("change", function (event) {
-    const file = event.target.files[0];
-    if (!file) {
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      preview.src = e.target.result;
-      preview.classList.remove("hidden");
-    };
-    reader.readAsDataURL(file);
   });
 }
 /* Identify recurring entries so one-off additions never alter a recurrence series. */

@@ -55,14 +55,19 @@
             data-i18n-placeholder="register.confirmPassword"
             autocomplete="new-password"
           />
-          <input
-            type="text"
-            class="authInput"
-            id="groupNameInput"
-            placeholder="Group Name"
-            data-i18n-placeholder="register.groupName"
-            autocomplete="off"
-          />
+          <p class="authInviteText hidden" id="registerInvitationNotice" data-i18n="register.invitationNotice">
+            You were invited to join a group. Use the invited email address to create your account.
+          </p>
+          <div id="registrationGroupField">
+            <input
+              type="text"
+              class="authInput"
+              id="groupNameInput"
+              placeholder="Group Name"
+              data-i18n-placeholder="register.groupName"
+              autocomplete="off"
+            />
+          </div>
           <label class="biometricToggle">
             <input type="checkbox" id="biometricCheckbox" />
             <span data-i18n="register.biometric">
@@ -72,6 +77,7 @@
           <button
             type="submit"
             class="authButton"
+            id="registerSubmitButton"
             data-i18n="register.createGroup"
           >
             Create Shopping Group
@@ -92,14 +98,16 @@
     <script src="../js/stateManager.js"></script>
     <script src="../js/helpers.js"></script>
     <script src="../js/authManager.js"></script>
+    <script src="../js/groupService.js"></script>
     <!-- Localization -->
     <script src="../js/localization/languageManager.js"></script>
     <!-- Application Bootstrap -->
     <script src="../js/bootstrap.js"></script>
     <!-- Start localization, security, and registration-page initialization after markup loads. -->
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        initializeApplication();
+      document.addEventListener("DOMContentLoaded", async function () {
+        await initializeApplication();
+        initializeRegistrationForm();
       });
     </script>
   </body>

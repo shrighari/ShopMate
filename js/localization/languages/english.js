@@ -32,6 +32,9 @@ registerLanguage("en", {
     invalidCredentials: "Invalid Credentials",
     invalidInvite: "Invalid Invite",
     invalidInviteMessage: "The invite code you entered is invalid.",
+    invitationEmailMismatch: "Email Address Does Not Match",
+    invitationEmailMismatchMessage:
+      "This invitation was sent to a different email address. Use the invited address to continue.",
     invalidLogin: "Invalid Login",
     invalidLoginMessage: "Please check your email address and password.",
     invitedSubText:
@@ -299,6 +302,8 @@ registerLanguage("en", {
     invalidEmail: "Please enter a valid email address.",
     invalidGroupBudget: "Invalid Group Budget",
     invitationSent: "Invitation sent successfully.",
+    invitationDeliveryPending:
+      "Invitation saved locally. Email delivery needs the backend connection.",
     inviteMember: "Invite Member",
     invitingMemberTo: "Inviting Member To",
     items: "Items",
@@ -422,6 +427,8 @@ registerLanguage("en", {
     invitationResent: "Invitation resent",
     invitationResentTo: "Invitation resent to {{email}}",
     invitationSent: "Invitation sent",
+    invitationDeliveryPending:
+      "Invitation saved locally. Email delivery needs the backend connection.",
     invited: "Invited",
     invitedOn: "Invited On",
     inviteMember: "Invite Member",
@@ -637,6 +644,11 @@ registerLanguage("en", {
     emailAddress: "Email Address",
     firstName: "First Name",
     groupName: "Group Name",
+    invitationNotice:
+      "You were invited to join {{groupName}}. Register with the invited email address to continue.",
+    inviteSuccessMessage:
+      "You have joined the invited group successfully. You can complete your personal profile later from Profile Management.",
+    joinInvitedGroup: "Join Invited Group",
     lastName: "Last Name",
     password: "Password",
     register: "Register",

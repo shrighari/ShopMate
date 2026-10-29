@@ -1,36 +1,24 @@
-/* Group Service Layer */
-/* Backend Team Integration Point */
+/* Group Service Layer - Keeps frontend group operations behind backend-ready service functions. */
+/*
+ * BACKEND TODO: Replace this local-only stub with the invitation API.
+ * Persist the invitation, email inviteUrl to email, and return delivery status.
+ * The current UI saves the invitation in local app state after success.
+ */
 async function inviteMemberToGroup(payload) {
-  console.log("TODO Backend Invite:", payload);
   return {
     success: true,
+    localOnly: true,
   };
 }
-/* Backend integration point for updating a member's role; this is currently a success stub. */
-async function updateMemberRole(memberId, role) {
-  console.log("TODO Backend Role:", memberId, role);
-  return {
-    success: true,
-  };
-}
-/* Backend integration point for removing a member; this is currently a success stub. */
-async function removeGroupMember(memberId) {
-  console.log("TODO Backend Remove:", memberId);
-  return {
-    success: true,
-  };
-}
-/* Backend integration point for leaving a group; this is currently a success stub. */
-async function leaveGroup(groupName) {
-  console.log("TODO Backend Leave:", groupName);
-  return {
-    success: true,
-  };
-}
-/* Backend integration point for joining by invite code; this is currently a success stub. */
+/*
+ * BACKEND TODO: Replace this local-only stub with invitation acceptance API.
+ * Validate code, expiry, pending status, authenticated recipient email, and
+ * membership server-side; return the canonical group ID and assigned role.
+ * The current UI applies the accepted membership to local app state.
+ */
 async function joinGroupByInvite(inviteCode) {
-  console.log("TODO Backend Join:", inviteCode);
   return {
     success: true,
+    localOnly: true,
   };
 }

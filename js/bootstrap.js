@@ -58,7 +58,7 @@ async function initializeApplication() {
     }
 
     if (typeof initializeDashboard === "function") {
-      initializeDashboard();
+      await initializeDashboard();
     }
   } catch (error) {
     console.error("ShopMate application initialization failed.", error);

@@ -35,6 +35,9 @@ registerLanguage("fr", {
     invalidInvite: "Invitation invalide",
     invalidInviteMessage:
       "Le code d'invitation que vous avez saisi est invalide.",
+    invitationEmailMismatch: "L’adresse e-mail ne correspond pas",
+    invitationEmailMismatchMessage:
+      "Cette invitation a été envoyée à une autre adresse e-mail. Utilisez l’adresse invitée pour continuer.",
     invalidLogin: "Connexion invalide",
     invalidLoginMessage:
       "Veuillez vérifier votre adresse e-mail et votre mot de passe.",
@@ -308,6 +311,8 @@ registerLanguage("fr", {
     invalidEmail: "Veuillez saisir une adresse e-mail valide.",
     invalidGroupBudget: "Budget du groupe invalide",
     invitationSent: "Invitation envoyée avec succès.",
+    invitationDeliveryPending:
+      "Invitation enregistrée localement. L’envoi par e-mail nécessite la connexion au backend.",
     inviteMember: "Inviter un membre",
     invitingMemberTo: "Invitation d'un membre dans",
     items: "Articles",
@@ -432,6 +437,8 @@ registerLanguage("fr", {
     invitationResent: "Invitation renvoyée",
     invitationResentTo: "Invitation renvoyée à {{email}}",
     invitationSent: "Invitation envoyée",
+    invitationDeliveryPending:
+      "Invitation enregistrée localement. L’envoi par e-mail nécessite la connexion au backend.",
     invited: "Invité",
     invitedOn: "Invité le",
     inviteMember: "Inviter un membre",
@@ -654,6 +661,11 @@ registerLanguage("fr", {
     emailAddress: "Adresse e-mail",
     firstName: "Prénom",
     groupName: "Nom du groupe",
+    invitationNotice:
+      "Vous avez été invité à rejoindre {{groupName}}. Inscrivez-vous avec l’adresse e-mail invitée pour continuer.",
+    inviteSuccessMessage:
+      "Vous avez rejoint le groupe avec succès. Vous pourrez compléter votre profil plus tard dans la gestion du profil.",
+    joinInvitedGroup: "Rejoindre le groupe invité",
     lastName: "Nom",
     password: "Mot de passe",
     register: "S’inscrire",

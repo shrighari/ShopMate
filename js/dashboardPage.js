@@ -23,7 +23,13 @@ if (categorySortSelect) {
   });
 }
 /* Initialize Dashboard - Restores the last viewed group and renders the dashboard. */
-function initializeDashboard() {
+async function initializeDashboard() {
+  // Start each dashboard visit with the budget card minimized, as requested by the default layout.
+  appState.dashboardBudgetExpanded = false;
+  const pendingInviteCode = localStorage.getItem("pendingInvite");
+  if (pendingInviteCode && getCurrentUser()) {
+    await joinGroupFromInvite(pendingInviteCode, false);
+  }
   if (ensureGroupColorsForCurrentUser()) {
     saveAppState();
   }
@@ -1034,7 +1040,7 @@ function clearInviteMemberValidation() {
   emailError.textContent = "";
 }
 /* Send Member Invitation */
-function sendMemberInvitation(groupName) {
+async function sendMemberInvitation(groupName) {
   if (!canManageGroup(groupName)) return;
   const emailInput = document.getElementById("inviteMemberEmailInput");
   const emailError = document.getElementById("inviteMemberEmailError");
@@ -1089,18 +1095,26 @@ function sendMemberInvitation(groupName) {
   }
   const invitation = {
     id: crypto.randomUUID(),
+    code: crypto.randomUUID(),
     groupId: groupName,
     groupName: groupName,
     email: email,
+    role: "member",
     invitedBy: currentUser.email,
     invitedAt: new Date().toISOString(),
     expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
     status: "pending",
   };
+  invitation.inviteUrl = createGroupInvitationUrl(invitation.code);
+  const inviteResult = await inviteMemberToGroup(invitation);
+  if (!inviteResult?.success) {
+    showToast(t("dashboard.invitationDeliveryPending"));
+    return;
+  }
   appState.pendingInvitations.push(invitation);
   saveAppState();
   closeBottomSheet();
-  showToast(t("dashboard.invitationSent"));
+  showToast(t("dashboard.invitationDeliveryPending"));
 }
 /* Rename Group */
 function renameGroup(groupName) {
