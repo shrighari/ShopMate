@@ -137,7 +137,12 @@
   overflow: hidden;
   border-radius: inherit;
   transition: opacity 0.15s ease;
+  opacity: 0;
   z-index: 1;
+}
+/* Reveal destructive and purchase actions only while the card is being swiped. */
+.swipeWrapper.isDragging .swipeBackground {
+  opacity: 1;
 }
 /* Swipe Purchased */
 .swipePurchased {

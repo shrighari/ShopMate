@@ -1,0 +1,76 @@
+/***************************************************************************************************
+ * FILE: glassSurfaces.css
+ *
+ * PURPOSE
+ * Applies the shared glass treatment to app panels that sit above the branded gradient backdrop.
+ ***************************************************************************************************/
+
+/* Keep broad content panels translucent so the app backdrop is visible through the blur. */
+.dashboardHeader,
+.modernHeader,
+.appFooter,
+.groupDropdownButton,
+.categoryCard,
+.itemCard,
+.notificationCard,
+.emptyStateCard,
+.budgetSummaryCard,
+.budgetAnalysisCard,
+.budgetInsightCard,
+.categoryBudgetCard,
+#categoryBudgetContainer > .emptyStateCard,
+.groupAccordionCard,
+.notificationFilterButton:not(.activeNotificationFilter),
+.profileSummaryCard,
+.sideDrawer,
+.bottomSheet,
+.appDialog,
+.toast,
+.snackbar,
+.bulkActionBar,
+.settingsCard,
+.profileCard,
+.notificationSettingsCard,
+.searchPanel {
+  background: var(--glassSurface);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
+}
+
+/* Keep child headers transparent so each accordion or budget panel reads as one glass card. */
+.groupAccordionHeader,
+.budgetSummaryHeader {
+  background: transparent;
+}
+
+/* Preserve a solid surface when the browser does not support backdrop filters. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .dashboardHeader,
+  .modernHeader,
+  .appFooter,
+  .groupDropdownButton,
+  .categoryCard,
+  .itemCard,
+  .notificationCard,
+  .emptyStateCard,
+  .budgetSummaryCard,
+  .budgetAnalysisCard,
+  .budgetInsightCard,
+  .categoryBudgetCard,
+  #categoryBudgetContainer > .emptyStateCard,
+  .groupAccordionCard,
+  .notificationFilterButton:not(.activeNotificationFilter),
+  .profileSummaryCard,
+  .sideDrawer,
+  .bottomSheet,
+  .appDialog,
+  .toast,
+  .snackbar,
+  .bulkActionBar,
+  .settingsCard,
+  .profileCard,
+  .notificationSettingsCard,
+  .searchPanel {
+    background: var(--cardColor);
+  }
+}

@@ -10,6 +10,7 @@ body.darkMode {
   --backgroundColor: #1f2937;
   --appBackground: #1b2230;
   --cardColor: #2a364a;
+  --glassSurface: rgba(36, 50, 68, 0.68);
 
   --overlayColor: rgba(0, 0, 0, 0.7);
   /* Text */
@@ -80,6 +81,12 @@ body.darkMode {
   --appLockAccessStart: #243b4c;
   --appLockAccessMiddle: #234348;
   --appLockAccessEnd: #25463b;
+  --appBackdrop: linear-gradient(
+    145deg,
+    var(--appLockAccessStart) 0%,
+    var(--appLockAccessMiddle) 52%,
+    var(--appLockAccessEnd) 100%
+  );
   --appLockTitleColor: var(--textOnDark);
   --appLockDescriptionColor: #cbd5e1;
   --appLockInputBorder: #52697b;

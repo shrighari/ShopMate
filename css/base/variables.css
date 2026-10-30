@@ -84,6 +84,7 @@
   /* Surfaces */
   --backgroundColor: #f4f7fb;
   --cardColor: #ffffff;
+  --glassSurface: rgba(255, 255, 255, 0.58);
   --surfaceColor: #f1f5f9;
   --surfaceRaised: #ffffff;
   --surfaceHover: #edf2f7;
@@ -172,6 +173,12 @@
   --appLockAccessStart: #d9f1f7;
   --appLockAccessMiddle: #dff3f1;
   --appLockAccessEnd: #e3f4e9;
+  --appBackdrop: linear-gradient(
+    145deg,
+    var(--appLockAccessStart) 0%,
+    var(--appLockAccessMiddle) 52%,
+    var(--appLockAccessEnd) 100%
+  );
   --appLockTitleColor: #123b49;
   --appLockDescriptionColor: #42616a;
   --appLockInputBorder: #a9d5df;
@@ -203,7 +210,7 @@ html {
 /* Body Defaults */
 body {
   min-height: 100%;
-  background: var(--appBackground);
+  background: var(--appBackdrop);
   color: var(--textColor);
   font-family: var(--fontFamily);
   overflow-x: hidden;
