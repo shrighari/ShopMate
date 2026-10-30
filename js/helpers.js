@@ -73,6 +73,32 @@
  * Business logic belongs inside the appropriate manager files.
  ***************************************************************************************************/
 let productDatabase = [];
+let pageSkeletonTimer = null;
+/* Start Page Skeleton - Marks a page busy and reveals its decorative skeleton after a short delay. */
+function startPageSkeleton(skeletonId, delay = 140) {
+  const skeleton = document.getElementById(skeletonId);
+  const pageContent = skeleton?.closest(".pageContent");
+  if (!skeleton || !pageContent) {
+    return;
+  }
+  clearTimeout(pageSkeletonTimer);
+  pageContent.setAttribute("aria-busy", "true");
+  pageSkeletonTimer = setTimeout(function () {
+    pageContent.classList.add("isLoading");
+  }, delay);
+}
+/* Finish Page Skeleton - Hides the loading placeholders after the page has rendered. */
+function finishPageSkeleton(skeletonId) {
+  const skeleton = document.getElementById(skeletonId);
+  const pageContent = skeleton?.closest(".pageContent");
+  clearTimeout(pageSkeletonTimer);
+  pageSkeletonTimer = null;
+  if (!pageContent) {
+    return;
+  }
+  pageContent.classList.remove("isLoading");
+  pageContent.setAttribute("aria-busy", "false");
+}
 /* Load Product Catalog - Loads the product catalog from the JSON file into memory. */
 async function loadProductCatalog() {
   try {

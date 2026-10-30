@@ -49,6 +49,20 @@
   border-radius: var(--radiusSmall);
   font-size: var(--fontSizeSmall);
 }
+/* Stack PIN setup content on phones so localized status text keeps its full width. */
+@media (max-width: 480px) {
+  .securityActionRow {
+    flex-wrap: wrap;
+  }
+
+  .securityActionRow .toggleContent {
+    flex: 1 1 100%;
+  }
+
+  .securityActionRow .securityActionButton {
+    margin-left: auto;
+  }
+}
 /* Styles the about shop mate content component and its layout. */
 .aboutShopMateContent {
   text-align: center;

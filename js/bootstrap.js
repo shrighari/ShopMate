@@ -13,6 +13,14 @@
  * 6. Dashboard
  ***************************************************************************************************/
 async function initializeApplication() {
+  const dashboardSkeletonId = document.getElementById(
+    "dashboardPageSkeleton",
+  )
+    ? "dashboardPageSkeleton"
+    : null;
+  if (dashboardSkeletonId && typeof startPageSkeleton === "function") {
+    startPageSkeleton(dashboardSkeletonId);
+  }
   try {
     if (typeof applyTheme === "function") {
       applyTheme();
@@ -62,5 +70,9 @@ async function initializeApplication() {
     }
   } catch (error) {
     console.error("ShopMate application initialization failed.", error);
+  } finally {
+    if (dashboardSkeletonId && typeof finishPageSkeleton === "function") {
+      finishPageSkeleton(dashboardSkeletonId);
+    }
   }
 }

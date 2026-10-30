@@ -1,0 +1,146 @@
+/***************************************************************************************************
+ * FILE: skeleton.css
+ *
+ * PURPOSE
+ * Provides reusable loading placeholders for pages that wait for data or localization.
+ ***************************************************************************************************/
+
+/* Keep loading placeholders hidden unless a page has remained busy past its short grace period. */
+.pageSkeleton {
+  display: none;
+}
+
+/* Replace page content with its structural placeholders while an async page load is active. */
+.pageContent.isLoading > :not(.pageSkeleton) {
+  display: none !important;
+}
+
+.pageContent.isLoading > .pageSkeleton {
+  display: grid;
+}
+
+.pageContent.isLoading ~ .floatingActionButton,
+.pageContent.isLoading ~ .bulkActionBar {
+  visibility: hidden;
+}
+
+/* Give each placeholder a themed surface and a restrained left-to-right shimmer. */
+.skeletonBlock {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--surfaceColor);
+  border: 1px solid var(--borderColor);
+  border-radius: var(--radiusMedium);
+}
+
+.skeletonBlock::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.38) 45%,
+    transparent 70%
+  );
+  background-size: 220% 100%;
+  animation: skeletonShimmer 1.35s ease-in-out infinite;
+  content: "";
+}
+
+@keyframes skeletonShimmer {
+  to {
+    background-position: -220% 0;
+  }
+}
+
+/* Match the dashboard's selector, budget widget, and category card silhouettes. */
+.dashboardPageSkeleton {
+  gap: var(--spacingMedium);
+}
+
+.skeletonGroupSelector {
+  min-height: 48px;
+  border-radius: 18px;
+}
+
+.skeletonBudgetCard,
+.skeletonCategoryCard,
+.skeletonItemCard {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  background-color: var(--cardColor);
+  box-shadow: var(--shadowSmall);
+}
+
+.skeletonBudgetCard {
+  min-height: 116px;
+}
+
+.skeletonCategoryCard {
+  min-height: 108px;
+}
+
+.skeletonLine {
+  display: block;
+  height: 12px;
+  border: 0;
+  border-radius: 999px;
+}
+
+.skeletonLineShort {
+  width: 36%;
+}
+
+.skeletonLineMedium {
+  width: 58%;
+}
+
+.skeletonLineFull {
+  width: 84%;
+}
+
+/* Mirror the list page's tabs, search, sort row, and item cards. */
+.categoryPageSkeleton {
+  gap: var(--spacingMedium);
+}
+
+.skeletonTabs {
+  min-height: 54px;
+  border-radius: 999px;
+}
+
+.skeletonSearch {
+  min-height: 46px;
+  border-radius: 16px;
+}
+
+.skeletonSortRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 42px;
+}
+
+.skeletonSortRow .skeletonLine {
+  width: 38%;
+}
+
+.skeletonSortControl {
+  width: 48%;
+  min-height: 38px;
+  border-radius: 14px;
+}
+
+.skeletonItemCard {
+  min-height: 128px;
+}
+
+/* Stop shimmer motion for users who request reduced animation. */
+@media (prefers-reduced-motion: reduce) {
+  .skeletonBlock::after {
+    animation: none;
+    background: transparent;
+  }
+}

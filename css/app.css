@@ -42,6 +42,7 @@
 @import url("./components/badges.css");
 @import url("./components/toast.css");
 @import url("./components/emptyState.css");
+@import url("./components/skeleton.css");
 /* Page Styles */
 @import url("./pages/dashboard.css");
 @import url("./pages/category.css");

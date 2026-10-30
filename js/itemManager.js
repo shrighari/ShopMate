@@ -90,7 +90,7 @@ function renderAddItemForm(itemName = "") {
           </div>
         </div>
       </div>
-      <div class="formField">
+      <div class="formField ${imageUrl ? "" : "hidden"}">
         <img
           id="itemImagePreview"
           class="itemImagePreview ${imageUrl ? "" : "hidden"}"
@@ -207,6 +207,7 @@ function renderEditItemForm(itemId) {
   if (!item) {
     return;
   }
+  const imageUrl = getProductImage(item.name);
   bottomSheetContent.innerHTML = `
     <div class="bottomSheetHeader">
       <h2>
@@ -278,7 +279,7 @@ function renderEditItemForm(itemId) {
           </div>
         </div>
       </div>
-      <div class="formField">
+      <div class="formField ${imageUrl ? "" : "hidden"}">
         <label class="formLabel">
           ${t("item.itemImage")}
         </label>
@@ -286,9 +287,9 @@ function renderEditItemForm(itemId) {
           id="editItemImagePreview"
           class="
             itemImagePreview
-            ${getProductImage(item.name) ? "" : "hidden"}
+            ${imageUrl ? "" : "hidden"}
           "
-          src="${getProductImage(item.name)}"
+          src="${imageUrl}"
           alt=""
         >
       </div>

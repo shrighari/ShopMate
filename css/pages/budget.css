@@ -30,7 +30,7 @@
 /* Styles the budget compact summary component and its layout. */
 .budgetCompactSummary {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   gap: 8px;
   padding: 0 14px 14px;
@@ -39,16 +39,21 @@
 }
 /* Styles the budget compact summary component and its layout. */
 .budgetCompactSummary span {
+  flex: 1 1 0;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  justify-content: center;
   min-width: 0;
+  gap: 3px;
+  overflow-wrap: normal;
+  font-size: clamp(11px, 3.4vw, var(--fontSizeCaption));
 }
 /* Styles the budget compact summary component and its layout. */
 .budgetCompactSummary strong {
   color: var(--textPrimary);
-  font-size: var(--fontSizeSmall);
-  white-space: nowrap;
+  font-size: clamp(11px, 3.4vw, var(--fontSizeSmall));
+  white-space: normal;
+  overflow-wrap: normal;
 }
 /* Budget Healthy Text */
 .budgetHealthyText {
@@ -195,7 +200,7 @@
   color: var(--textPrimary);
   font-weight: 700;
   text-align: right;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 /* Styles the analysis progress section component and its layout. */
@@ -313,7 +318,7 @@
 /* Styles the analysis card header component and its layout. */
 .analysisCardHeader h3 {
   min-width: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 /* Styles the budget status badge component and its layout. */
@@ -397,9 +402,73 @@
 
 /* Category Budget Summary */
 .categoryBudgetSummary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacingSmall);
   color: var(--textSecondary);
   font-size: var(--fontSizeCaption);
   line-height: 1.5;
+}
+
+/* Keep each category budget metric in the same column across translations. */
+.categoryBudgetMetric {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.categoryBudgetMetricLabel {
+  min-height: 2.6em;
+}
+
+/* Stack category metrics on phones so translated labels retain readable width. */
+@media (max-width: 480px) {
+  .categoryBudgetSummary {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .categoryBudgetMetric {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacingSmall);
+    min-height: 52px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--dividerColor);
+  }
+
+  .categoryBudgetMetric:last-child {
+    border-bottom: 0;
+  }
+
+  .categoryBudgetMetricLabel {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .categoryBudgetMetric strong {
+    flex: 0 1 auto;
+    max-width: 55%;
+    text-align: right;
+    overflow-wrap: break-word;
+  }
+}
+
+/* Stack budget row values on compact phones to keep long translations aligned. */
+@media (max-width: 380px) {
+  .analysisValue {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+    min-height: 56px;
+  }
+
+  .analysisValue > span:last-child {
+    text-align: left;
+  }
 }
 
 /* Styles the category budget summary component and its layout. */

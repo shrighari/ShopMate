@@ -29,6 +29,25 @@
       </header>
       <!-- Main Dashboard -->
       <main class="pageContent">
+        <!-- Dashboard loading placeholders stay hidden unless initialization takes long enough to show them. -->
+        <div class="pageSkeleton dashboardPageSkeleton" id="dashboardPageSkeleton" aria-hidden="true">
+          <div class="skeletonBlock skeletonGroupSelector"></div>
+          <div class="skeletonBlock skeletonBudgetCard">
+            <span class="skeletonBlock skeletonLine skeletonLineShort"></span>
+            <span class="skeletonBlock skeletonLine skeletonLineMedium"></span>
+            <span class="skeletonBlock skeletonLine skeletonLineFull"></span>
+          </div>
+          <div class="skeletonBlock skeletonCategoryCard">
+            <span class="skeletonBlock skeletonLine skeletonLineMedium"></span>
+            <span class="skeletonBlock skeletonLine skeletonLineFull"></span>
+            <span class="skeletonBlock skeletonLine skeletonLineShort"></span>
+          </div>
+          <div class="skeletonBlock skeletonCategoryCard">
+            <span class="skeletonBlock skeletonLine skeletonLineMedium"></span>
+            <span class="skeletonBlock skeletonLine skeletonLineFull"></span>
+            <span class="skeletonBlock skeletonLine skeletonLineShort"></span>
+          </div>
+        </div>
         <!-- Group Selector -->
         <section class="groupDropdownSection">
           <button

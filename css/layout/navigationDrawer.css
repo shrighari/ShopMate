@@ -129,7 +129,9 @@
 /* Styles the drawer profile details component and its layout. */
 .drawerProfileDetails {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
+  min-width: 0;
 }
 
 /* Drawer Profile Name */
@@ -137,7 +139,7 @@
   font-size: var(--fontSizeBodySmall);
   font-weight: 600;
   color: var(--textPrimary);
-  white-space: nowrap;
+  overflow-wrap: break-word;
 }
 
 /* Styles the drawer logout component and its layout. */

@@ -136,20 +136,18 @@ function renderCategories() {
           }
         </div>
         <div class="categoryBudgetSummary">
-          ${t("dashboard.budget")}
-          <strong>
-           ${categoryBudget > 0 ? getCurrencySymbol() + categoryBudget : t("dashboard.notSet")}
-          </strong>
-          &nbsp; • &nbsp;
-          ${t("dashboard.spent")}
-          <strong>
-            ${getCurrencySymbol()}${categorySpent}
-          </strong>
-          &nbsp; • &nbsp;
-          ${t("dashboard.left")}
-          <strong>
-            ${categoryBudget > 0 ? getCurrencySymbol() + categoryRemaining : "-"}
-          </strong>
+          <span class="categoryBudgetMetric">
+            <span class="categoryBudgetMetricLabel">${t("dashboard.budget")}</span>
+            <strong>${categoryBudget > 0 ? getCurrencySymbol() + categoryBudget : t("dashboard.notSet")}</strong>
+          </span>
+          <span class="categoryBudgetMetric">
+            <span class="categoryBudgetMetricLabel">${t("dashboard.spent")}</span>
+            <strong>${getCurrencySymbol()}${categorySpent}</strong>
+          </span>
+          <span class="categoryBudgetMetric">
+            <span class="categoryBudgetMetricLabel">${t("dashboard.left")}</span>
+            <strong>${categoryBudget > 0 ? getCurrencySymbol() + categoryRemaining : "-"}</strong>
+          </span>
         </div>
         <p class="categoryInfo">
           ${pendingCount}
@@ -1524,9 +1522,9 @@ function renderBudgetDashboardWidget() {
         class="budgetCompactSummary${isExpanded ? " hidden" : ""}"
         aria-hidden="${isExpanded}"
       >
-        <span>${t("dashboard.allocated")} <strong>${limit === 0 ? t("dashboard.unlimited") : getCurrencySymbol() + " " + limit}</strong></span>
-        <span>${t("dashboard.spent")} <strong>${getCurrencySymbol()} ${spent}</strong></span>
-        <span>${t("dashboard.remaining")} <strong>${limit === 0 ? t("dashboard.unlimited") : getCurrencySymbol() + " " + remaining}</strong></span>
+        <span>${t("dashboard.allocatedShort")} <strong>${limit === 0 ? t("dashboard.unlimitedShort") : getCurrencySymbol() + " " + limit}</strong></span>
+        <span>${t("dashboard.spentShort")} <strong>${getCurrencySymbol()} ${spent}</strong></span>
+        <span>${t("dashboard.remainingShort")} <strong>${limit === 0 ? t("dashboard.unlimitedShort") : getCurrencySymbol() + " " + remaining}</strong></span>
       </div>
       <div
         id="budgetSummaryBody"

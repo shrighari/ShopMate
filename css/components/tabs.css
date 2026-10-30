@@ -25,24 +25,29 @@
 .modernTabContainer {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px;
+  gap: 2px;
+  padding: 4px;
   margin-bottom: 18px;
   background: var(--surfaceColor);
   border-radius: var(--radiusPill);
   box-shadow: inset 0 2px 6px var(--shadowAmbientSoft);
 }
 /* Modern Tab Button */
-.modernTabButton {
-  flex: 1;
-  padding: 14px 0;
+.modernTabContainer .modernTabButton {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 48px;
+  padding: 8px 0;
   background: transparent;
   border: none;
   border-radius: var(--radiusPill);
   color: var(--mutedTextColor);
   cursor: pointer;
-  font-size: var(--fontSizeBodySmall);
+  font-size: clamp(11px, 3.5vw, var(--fontSizeBodySmall));
   font-weight: 600;
+  line-height: 1.2;
+  overflow-wrap: normal;
+  white-space: nowrap;
   transition:
     background 0.2s ease,
     color 0.2s ease,

@@ -23,6 +23,7 @@
   flex-direction: column;
   gap: var(--spacingMedium);
   margin-top: 0;
+  padding-bottom: 88px;
 }
 /* Item Name */
 .itemName {
@@ -97,6 +98,27 @@
   border: 2px dashed var(--borderColor);
   border-radius: var(--radiusRoomy);
   font-size: var(--fontSizeHero);
+}
+/* Give item details more room beside thumbnails on compact phone screens. */
+@media (max-width: 380px) {
+  .itemCard {
+    padding: 12px;
+  }
+
+  .itemCardContent {
+    gap: 10px;
+  }
+
+  .itemImageContainer,
+  .itemImage,
+  .itemImagePlaceholder {
+    width: 64px;
+    height: 64px;
+  }
+
+  .itemImageContainer {
+    margin-left: 0;
+  }
 }
 /* Swipe Wrapper */
 .swipeWrapper {

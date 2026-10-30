@@ -274,14 +274,14 @@
 }
 /* Category Menu Button */
 .categoryMoreButton {
-  position: absolute;
-  top: 16px;
-  right: 16px;
+  position: static;
+  flex: 0 0 var(--touchTargetMinimum);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: var(--touchTargetMinimum);
   height: var(--touchTargetMinimum);
+  margin-left: auto;
   padding: 0;
   border: 1px solid var(--primaryTint);
   border-radius: 50%;

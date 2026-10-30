@@ -42,7 +42,7 @@ function openSecuritySettings() {
         ${t("security.description")}
       </div>
       <!-- App PIN -->
-      <div class="toggleRow">
+      <div class="toggleRow securityActionRow">
         <div class="toggleContent">
           <div class="toggleTitle">
             ${t("security.pin")}

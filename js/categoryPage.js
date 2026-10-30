@@ -533,9 +533,21 @@ if (backButton) {
 }
 /* Initial Render */
 (async function () {
-  await loadProductCatalog();
-  if (typeof initializeLocalization === "function") {
-    await initializeLocalization();
+  const skeletonId = "categoryPageSkeleton";
+  if (typeof startPageSkeleton === "function") {
+    startPageSkeleton(skeletonId);
   }
-  initializeCategoryPage();
+  try {
+    await loadProductCatalog();
+    if (typeof initializeLocalization === "function") {
+      await initializeLocalization();
+    }
+    initializeCategoryPage();
+  } catch (error) {
+    console.error("Category page initialization failed.", error);
+  } finally {
+    if (typeof finishPageSkeleton === "function") {
+      finishPageSkeleton(skeletonId);
+    }
+  }
 })();

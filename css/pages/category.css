@@ -14,11 +14,14 @@
  ***************************************************************************************************/
 /* Category Title */
 .categoryTitle {
+  flex: 1 1 auto;
+  min-width: 0;
   margin: 0;
   padding-bottom: 15px;
   color: var(--textPrimary);
   font-size: var(--fontSizeXLargePlus);
   font-weight: 700;
+  overflow-wrap: break-word;
 }
 /* Category Information */
 .categoryInfo {

@@ -33,6 +33,18 @@
   width: 100%;
   margin-bottom: 18px;
 }
+/* Stack paired controls on compact phones to preserve usable input widths. */
+@media (max-width: 380px) {
+  .formRow {
+    flex-direction: column;
+  }
+
+  .halfWidthField {
+    flex: 0 1 auto;
+    width: 100%;
+    padding-right: 0;
+  }
+}
 /* Align sorting labels and compact selectors consistently on list pages. */
 .sortControl {
   display: flex;
@@ -44,13 +56,19 @@
 }
 /* Keep sorting selectors visually secondary to search and item content. */
 .sortControl label {
+  flex: 1 1 auto;
+  min-width: 0;
   color: var(--textSecondary);
   font-size: var(--fontSizeSmall);
   font-weight: 600;
+  overflow-wrap: break-word;
 }
 /* Style the shared compact sorting selector for dashboard and category pages. */
 .sortControlSelect {
-  max-width: 65%;
+  flex: 0 1 60%;
+  width: 60%;
+  min-width: 0;
+  max-width: 60%;
   min-height: 38px;
   padding: 0 var(--spacingMedium) 0 var(--spacingSmall);
   border: 1px solid var(--borderColor);
@@ -201,6 +219,10 @@
   font-weight: 700;
   line-height: 1.3;
 }
+/* Reserve the same two-line label slot for paired controls in every language. */
+.formRow .formLabel {
+  min-height: 2.6em;
+}
 /* Half Width Field */
 .halfWidthField {
   min-width: 0;
@@ -236,6 +258,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--spacingMedium);
+  min-width: 0;
   padding: 18px 0;
   border-bottom: 1px solid var(--borderColor);
 }
@@ -246,6 +269,7 @@
 /* Styles the toggle content component and its layout. */
 .toggleContent {
   flex: 1;
+  min-width: 0;
 }
 /* Styles the toggle title component and its layout. */
 .toggleTitle {
@@ -264,6 +288,7 @@
 .toggleSwitch {
   position: relative;
   display: inline-block;
+  flex: 0 0 52px;
   width: 52px;
   height: 30px;
 }
