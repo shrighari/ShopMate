@@ -94,6 +94,7 @@ function renderCategories() {
   categorySortControl?.classList.remove("hidden");
   if (categorySortSelect) {
     categorySortSelect.value = getCategorySortMode();
+    syncSplitSelectDisplay(categorySortSelect);
   }
   getSortedCategoriesForDisplay(categories).forEach(function (category) {
     const categoryBudget =

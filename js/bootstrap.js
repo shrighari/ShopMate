@@ -34,6 +34,10 @@ async function initializeApplication() {
       await initializeLocalization();
     }
 
+    if (typeof initializeSplitSelects === "function") {
+      initializeSplitSelects();
+    }
+
     if (typeof processRecurringItems === "function") {
       processRecurringItems();
     }

@@ -1,0 +1,208 @@
+/***************************************************************************************************
+ * FILE: splitSelect.css
+ *
+ * PURPOSE
+ * Styles the enhanced split value-and-chevron controls used for the four requested selectors.
+ ***************************************************************************************************/
+
+/* Keep each split selector visually joined while separating its value and menu trigger. */
+.splitSelect {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--borderColor);
+  border-radius: var(--radiusControl);
+  background: var(--surfaceColor);
+  transition:
+    border-color var(--animationSpeed) ease,
+    box-shadow var(--animationSpeed) ease;
+}
+
+/* Highlight the complete split control while either segment has keyboard focus. */
+.splitSelect:focus-within {
+  border-color: var(--primaryColor);
+  box-shadow: 0 0 0 3px var(--primaryTint);
+}
+
+/* Let the shared control ring show without adding separate button outlines inside the split. */
+.splitSelectValueButton:focus-visible,
+.splitSelectToggleButton:focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+}
+
+/* Match the width and height of the compact category and item sort controls. */
+.splitSelect--sort {
+  flex: 0 1 60%;
+  width: 60%;
+  max-width: 60%;
+  min-height: 38px;
+}
+
+/* Fit the unit selector into the existing combined quantity and unit field. */
+.splitSelect--unit {
+  flex: 0 0 72px;
+  width: 72px;
+  border: 0;
+  border-left: 1px solid var(--borderColor);
+  border-radius: 0;
+  background: transparent;
+}
+
+/* Reserve enough of the compact unit segment for its short unit label. */
+.splitSelect--unit .splitSelectValueButton {
+  padding-right: 6px;
+  padding-left: 6px;
+  text-align: center;
+}
+
+.splitSelect--unit .splitSelectToggleButton {
+  flex-basis: 24px;
+}
+
+/* Fill the form field where the user chooses an item recurrence interval. */
+.splitSelect--field {
+  width: 100%;
+  min-height: 52px;
+}
+
+/* Let the selected value use the larger segment and truncate only when necessary. */
+.splitSelectValueButton {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0 12px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--textPrimary);
+  font: inherit;
+  font-size: var(--fontSizeSmall);
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* Give the chevron its own touch-sized segment beside the selected value. */
+.splitSelectToggleButton {
+  display: inline-flex;
+  flex: 0 0 42px;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid var(--borderColor);
+  border-radius: 0;
+  background: transparent;
+  color: var(--textPrimary);
+  cursor: pointer;
+  transition: background-color var(--animationSpeed) ease;
+}
+
+/* Add a subtle hover tint to the split trigger without changing the control shape. */
+.splitSelectToggleButton:hover {
+  background: var(--surfaceHover);
+}
+
+/* Draw the compact chevron and rotate it while its anchored options menu is open. */
+.splitSelectChevron {
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform var(--animationSpeed) ease;
+}
+
+/* Turn the chevron toward the open option menu. */
+.splitSelect.isOpen .splitSelectChevron {
+  transform: translateY(2px) rotate(225deg);
+}
+
+/* Hide the native value source visually while keeping application reads and change events intact. */
+.splitSelect .splitSelectNative {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Place the custom options list above sheets and anchor it to the active split control. */
+.splitSelectMenu {
+  position: fixed;
+  z-index: 10020;
+  max-width: calc(100vw - 24px);
+  padding: 5px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--borderColor);
+  border-radius: 5px 5px 18px 18px;
+  background: var(--glassSurface);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  backdrop-filter: blur(24px) saturate(1.4);
+  box-shadow: var(--shadowLarge);
+}
+
+/* Give each menu choice a comfortable touch target and clear selected state. */
+.splitSelectOption {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: var(--radiusCompact);
+  background: transparent;
+  color: var(--textPrimary);
+  font: inherit;
+  font-size: var(--fontSizeSmall);
+  line-height: 1.35;
+  text-align: left;
+  white-space: normal;
+  cursor: pointer;
+}
+
+/* Mark the currently selected option without hiding neighboring choices. */
+.splitSelectOption[aria-selected="true"] {
+  background: var(--primaryTint);
+  color: var(--textPrimary);
+  font-weight: 700;
+}
+
+/* Show a restrained hover state for pointer users while preserving keyboard focus rings. */
+.splitSelectOption:hover:not(:disabled) {
+  background: var(--surfaceHover);
+}
+
+/* Keep disabled recurrence sorts visibly unavailable in the Favorites tab. */
+.splitSelectOption:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Allow smaller screens to use the full row for each split sort control. */
+@media (max-width: 380px) {
+  .splitSelect--sort {
+    flex-basis: 60%;
+    width: 60%;
+    max-width: 60%;
+  }
+
+  .splitSelect--unit {
+    flex-basis: 72px;
+    width: 72px;
+  }
+}

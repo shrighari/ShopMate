@@ -144,6 +144,7 @@ function updateItemSortSelector() {
     },
   );
   itemSortSelect.value = getItemSortMode();
+  syncSplitSelectDisplay(itemSortSelect);
 }
 /* Identify recurring item occurrences for display-only ordering. */
 function isRecurringSortItem(item) {

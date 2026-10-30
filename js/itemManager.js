@@ -69,6 +69,7 @@ function renderAddItemForm(itemName = "") {
             id="itemQuantityUnitInput"
             class="quantityUnitInput"
             aria-label="${t("item.quantityUnit")}"
+            data-split-select
           >${getQuantityUnitOptions("pcs")}
           </select>
           </div>
@@ -128,6 +129,7 @@ function renderAddItemForm(itemName = "") {
     <select
       id="itemRecurrenceFrequency"
       class="bottomSheetInput"
+      data-split-select
     >
       <option value="none">
         ${t("item.doesNotRepeat")}
@@ -254,6 +256,7 @@ function renderEditItemForm(itemId) {
         id="editItemQuantityUnitInput"
         class="quantityUnitInput"
         aria-label="${t("item.quantityUnit")}"
+        data-split-select
       >
         ${getQuantityUnitOptions(item.quantityUnit || "pcs")}
       </select>
@@ -323,6 +326,7 @@ function renderEditItemForm(itemId) {
     <select
       id="editItemRecurrenceFrequency"
       class="bottomSheetInput"
+      data-split-select
     >
       <option
         value="none"

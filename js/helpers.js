@@ -1145,6 +1145,279 @@ function getQuantityUnitOptions(selectedUnit = "pcs") {
     })
     .join("");
 }
+
+/* Enhance only marked native selects with a reusable split value-and-chevron menu. */
+function initializeSplitSelects(root = document) {
+  const selects = [];
+  if (root instanceof HTMLSelectElement && root.matches("[data-split-select]")) {
+    selects.push(root);
+  }
+  root.querySelectorAll?.("select[data-split-select]").forEach(function (select) {
+    selects.push(select);
+  });
+  selects.forEach(createSplitSelectControl);
+
+  if (!initializeSplitSelects.observer && document.body) {
+    initializeSplitSelects.observer = new MutationObserver(function (records) {
+      records.forEach(function (record) {
+        record.addedNodes.forEach(function (node) {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            initializeSplitSelects(node);
+          }
+        });
+        record.removedNodes.forEach(function (node) {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            const removedControls = [];
+            if (node.matches(".splitSelect")) removedControls.push(node);
+            node.querySelectorAll(".splitSelect").forEach(function (control) {
+              removedControls.push(control);
+            });
+            removedControls.forEach(function (control) {
+              control._closeSplitMenu?.();
+              control._splitMenu?.remove();
+              control._splitOptionsObserver?.disconnect();
+            });
+          }
+        });
+      });
+    });
+    initializeSplitSelects.observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  if (!initializeSplitSelects.handlersInstalled) {
+    document.addEventListener("pointerdown", function (event) {
+      document.querySelectorAll(".splitSelect.isOpen").forEach(function (control) {
+        if (!control.contains(event.target) && !control._splitMenu?.contains(event.target)) {
+          control._closeSplitMenu?.();
+        }
+      });
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        const openControl = document.querySelector(".splitSelect.isOpen");
+        if (!openControl) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        openControl._closeSplitMenu?.(true);
+      }
+    }, true);
+    window.addEventListener("resize", function () {
+      document.querySelectorAll(".splitSelect.isOpen").forEach(function (control) {
+        control._positionSplitMenu?.();
+      });
+    });
+    document.addEventListener("scroll", function (event) {
+      document.querySelectorAll(".splitSelect.isOpen").forEach(function (control) {
+        if (!control._splitMenu?.contains(event.target)) {
+          control._closeSplitMenu?.();
+        }
+      });
+    }, true);
+    initializeSplitSelects.handlersInstalled = true;
+  }
+}
+
+/* Refresh a split control after application code changes its native select value programmatically. */
+function syncSplitSelectDisplay(select) {
+  select?._syncSplitDisplay?.();
+}
+
+/* Build the split trigger and anchored option menu while retaining the native select as the value source. */
+function createSplitSelectControl(select) {
+  if (select.dataset.splitEnhanced === "true") return;
+
+  const selectParent = select.parentElement;
+  if (!selectParent) return;
+
+  const wrapper = document.createElement("div");
+  wrapper.className = select.classList.contains("quantityUnitInput")
+    ? "splitSelect splitSelect--unit"
+    : select.classList.contains("sortControlSelect")
+      ? "splitSelect splitSelect--sort"
+      : "splitSelect splitSelect--field";
+
+  const valueButton = document.createElement("button");
+  valueButton.type = "button";
+  valueButton.className = "splitSelectValueButton";
+  valueButton.id = `${select.id || "splitSelect"}Trigger`;
+  valueButton.setAttribute("role", "combobox");
+  valueButton.setAttribute("aria-haspopup", "listbox");
+  valueButton.setAttribute("aria-expanded", "false");
+
+  const toggleButton = document.createElement("button");
+  toggleButton.type = "button";
+  toggleButton.className = "splitSelectToggleButton";
+  toggleButton.setAttribute("aria-haspopup", "listbox");
+  toggleButton.setAttribute("aria-expanded", "false");
+  toggleButton.innerHTML = '<span class="splitSelectChevron" aria-hidden="true"></span>';
+
+  const menu = document.createElement("div");
+  menu.className = "splitSelectMenu";
+  menu.id = `${select.id || "splitSelect"}Options`;
+  menu.setAttribute("role", "listbox");
+  menu.hidden = true;
+  menu.addEventListener("focusout", function (event) {
+    if (!menu.contains(event.relatedTarget) && !wrapper.contains(event.relatedTarget)) {
+      window.setTimeout(function () {
+        if (!menu.hidden && !menu.contains(document.activeElement)) {
+          wrapper._closeSplitMenu?.();
+        }
+      }, 0);
+    }
+  });
+  valueButton.setAttribute("aria-controls", menu.id);
+  toggleButton.setAttribute("aria-controls", menu.id);
+
+  const label = select.labels?.[0] ||
+    select.closest(".formField")?.querySelector("label");
+  const labelText =
+    select.getAttribute("aria-label") || label?.textContent?.trim() || "Options";
+  valueButton.setAttribute("aria-label", labelText);
+  toggleButton.setAttribute("aria-label", `Show ${labelText} options`);
+  menu.setAttribute("aria-label", labelText);
+  if (label) {
+    if (!label.id) label.id = `${select.id || "splitSelect"}Label`;
+    valueButton.setAttribute("aria-labelledby", label.id);
+    label.htmlFor = valueButton.id;
+  }
+
+  select.dataset.splitEnhanced = "true";
+  select.classList.add("splitSelectNative");
+  select.setAttribute("aria-hidden", "true");
+  select.tabIndex = -1;
+  selectParent.insertBefore(wrapper, select);
+  wrapper.append(valueButton, toggleButton, select);
+  const oldArrow = selectParent.querySelector(":scope > .dropdownArrow");
+  oldArrow?.remove();
+  document.body.appendChild(menu);
+
+  /* Keep the split value and its accessibility text synchronized with the native option. */
+  const syncValue = function () {
+    const selectedOption = select.selectedOptions[0];
+    valueButton.textContent = selectedOption?.textContent.trim() || "Select";
+    valueButton.setAttribute(
+      "aria-valuetext",
+      selectedOption?.textContent.trim() || "Select",
+    );
+  };
+
+  /* Close this control's menu and optionally return keyboard focus to its main trigger. */
+  const closeMenu = function (restoreFocus = false) {
+    menu.hidden = true;
+    wrapper.classList.remove("isOpen");
+    valueButton.setAttribute("aria-expanded", "false");
+    toggleButton.setAttribute("aria-expanded", "false");
+    if (restoreFocus) valueButton.focus();
+  };
+
+  /* Position the options menu below the control or above it when viewport space is tight. */
+  const placeMenu = function () {
+    const bounds = wrapper.getBoundingClientRect();
+    const maxHeight = Math.min(300, window.innerHeight - 24);
+    const menuWidth = Math.min(
+      Math.max(bounds.width, 180),
+      window.innerWidth - 24,
+    );
+    menu.style.maxHeight = `${maxHeight}px`;
+    menu.style.width = `${menuWidth}px`;
+    const menuHeight = Math.min(menu.scrollHeight, maxHeight);
+    const roomBelow = window.innerHeight - bounds.bottom;
+    const top = roomBelow >= menuHeight + 10
+      ? bounds.bottom + 6
+      : Math.max(12, bounds.top - menuHeight - 6);
+    const maxLeft = window.innerWidth - menuWidth - 12;
+    menu.style.left = `${Math.max(12, Math.min(bounds.left, maxLeft))}px`;
+    menu.style.top = `${top}px`;
+  };
+
+  /* Rebuild options from the native select so current translations and disabled states are used. */
+  const renderOptions = function () {
+    syncValue();
+    menu.replaceChildren();
+    Array.from(select.options).forEach(function (option, index) {
+      if (option.hidden) return;
+      const optionButton = document.createElement("button");
+      optionButton.type = "button";
+      optionButton.className = "splitSelectOption";
+      optionButton.setAttribute("role", "option");
+      optionButton.setAttribute(
+        "aria-selected",
+        String(option.value === select.value),
+      );
+      optionButton.disabled = option.disabled;
+      optionButton.tabIndex = -1;
+      optionButton.textContent = option.textContent.trim();
+      optionButton.dataset.optionIndex = String(index);
+      optionButton.addEventListener("click", function () {
+        select.value = option.value;
+        select.dispatchEvent(new Event("change", { bubbles: true }));
+        syncValue();
+        closeMenu(true);
+      });
+      optionButton.addEventListener("keydown", function (event) {
+        const enabledOptions = Array.from(
+          menu.querySelectorAll(".splitSelectOption:not(:disabled)"),
+        );
+        const currentIndex = enabledOptions.indexOf(optionButton);
+        let nextIndex = currentIndex;
+        if (event.key === "ArrowDown") nextIndex = (currentIndex + 1) % enabledOptions.length;
+        else if (event.key === "ArrowUp") nextIndex = (currentIndex - 1 + enabledOptions.length) % enabledOptions.length;
+        else if (event.key === "Home") nextIndex = 0;
+        else if (event.key === "End") nextIndex = enabledOptions.length - 1;
+        else if (event.key === "Escape") {
+          event.preventDefault();
+          closeMenu(true);
+          return;
+        } else {
+          return;
+        }
+        event.preventDefault();
+        enabledOptions[nextIndex]?.focus();
+      });
+      menu.appendChild(optionButton);
+    });
+  };
+
+  /* Open or toggle the anchored options menu and focus the selected enabled choice. */
+  const openMenu = function () {
+    if (!menu.hidden) {
+      closeMenu();
+      return;
+    }
+    document.querySelectorAll(".splitSelect.isOpen").forEach(function (openControl) {
+      openControl._closeSplitMenu?.();
+    });
+    renderOptions();
+    menu.hidden = false;
+    wrapper.classList.add("isOpen");
+    valueButton.setAttribute("aria-expanded", "true");
+    toggleButton.setAttribute("aria-expanded", "true");
+    placeMenu();
+    menu.querySelector('[aria-selected="true"]:not(:disabled)')?.focus();
+  };
+
+  wrapper._closeSplitMenu = closeMenu;
+  wrapper._splitMenu = menu;
+  wrapper._positionSplitMenu = placeMenu;
+  select._syncSplitDisplay = syncValue;
+  valueButton.addEventListener("click", openMenu);
+  toggleButton.addEventListener("click", openMenu);
+  select.addEventListener("change", syncValue);
+  const optionObserver = new MutationObserver(syncValue);
+  optionObserver.observe(select, {
+    attributes: true,
+    attributeFilter: ["disabled", "label", "selected"],
+    characterData: true,
+    childList: true,
+    subtree: true,
+  });
+  wrapper._splitOptionsObserver = optionObserver;
+  syncValue();
+}
+
 /* Initialize Helpers - Registers helper event listeners and shared helper functionality. */
 function initializeHelpers() {
   initializeBottomSheetEvents();
